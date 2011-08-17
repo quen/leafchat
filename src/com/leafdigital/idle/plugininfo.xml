@@ -1,0 +1,150 @@
+<plugininfo>
+
+<!-- 
+ Name, used only for display to user 
+-->
+<name>Idle tracking and auto-away</name>
+
+
+<!-- 
+ Author, used only for display to user 
+ (you can include more than one <author> tag if there are multiple 
+ authors) 
+-->
+<author>Samuel Marshall</author>
+
+
+<!-- 
+ Version, used for display to user and for checking updates (see below). You
+ should update this number each time you make a public release of the plugin.
+ (Optionally, you can update it for private/limited releases too.)
+ 
+ Versioning follows the standard computer scheme where both values are treated
+ as full numbers. In other words, 1.10 (major="1" minor="10") is newer than 
+ 1.2 (major="1" minor="2").
+-->
+<version major="2" minor="3" sub="0"/>
+ 
+
+<!-- 
+ Description (about one paragraph), used only for display to user. 
+-->
+<description>
+Tracks idle time and automatically sets /away status.
+</description>
+
+<!-- 
+ Web details so that program can check for updates and provide a homepage link
+ go here. The <web> element is optional, as are the <homepage> and <update>
+ elements. If you include <update>, you must include both <jar> and <version>.
+
+ Example:
+ 
+ <web>
+  <homepage>http://www.example.com/lcplugin/</homepage> 
+  <update>
+   <jar>http://www.example.com/lcplugin/myplugin.jar</jar>
+   <version>http://www.example.com/lcplugin/myplugin.version.xml</version>
+  </update>
+ </web>
+ 
+ The jar location is used for automatic updates. In checking for updates,
+ leafChat works as follows:
+ 
+ * Retrieves the file specified in <version>, which must be well-formed XML of 
+   the following format (basically it's a one-liner):
+   
+   <version major="1" minor="0" sub=0"/>
+   
+ * Displays the result of this check to the user. If the version is newer than
+   current, then user has the chance to download the new file from <jar>.
+-->
+
+<!--
+ The names and versions of any API packages on which this plugin is dependent
+ must be listed inside the <dependencies> tag. API packages can be recognised 
+ because their names end in: .api
+
+ For example, if your code includes the line
+ 
+ import com.leafdigital.example.api.*;
+ 
+ and you were using version 1 of that package, then you would need to 
+ include the entry
+ 
+ <api>
+  <package>com.leafdigital.example.api</package>
+  <version>1</version>
+ </api>
+  
+ You can include as many <api> elements as are necessary.
+ 
+ API versions are not the same as plugin versions. You can see them on the
+ 'create plugin' screen.
+
+ API packages come from other plugins; including dependencies here ensures
+ that these other plugins are loaded before yours. Not including them can
+ result in confusing, unusual, or infrequent errors.
+
+ Packages named leafchat.* are part of the core system, not provided as
+ plugins, and need not be listed here even if they end in .api.
+-->
+<dependencies>
+  <api>
+    <package>com.leafdigital.prefs.api</package>
+    <version>1</version>
+  </api>
+  <api>
+    <package>com.leafdigital.irc.api</package>
+    <version>2</version>
+  </api>
+ <!-- You could include additional <api> sections here -->
+</dependencies>
+
+<!--
+ In the exports section, list any APIs your plugin provides, in the same format
+ as dependencies above. 
+ 
+ The only difference is that you can list more than one version number per API 
+ package. Do this if your plugin is still binary-compatible with code that
+ used an older version. (Your plugin is binary-compatible if you haven't removed
+ any public classes or methods from the exported packages, and if it will still
+ work correctly when its methods are called in the way they would have been
+ for the previous version.)
+ 
+ For example, if your plugin supports version 2 of the example API, but is still
+ compatible with version 1, you could use:
+ 
+ <api>
+  <package>com.leafdigital.example.api</package>
+  <version>1</version>
+  <version>2</version>
+ </api>
+ 
+ Version numbers here are strictly to indicate compatibility; if you haven't
+ changed the way the .api classes work, you don't need to increment this 
+ version number. Use your plugin version number to indicate plugin version
+ changes.
+-->   
+<exports>
+  <api>
+    <package>com.leafdigital.idle.api</package>
+    <version>1</version>
+    <version>2</version>
+  </api>
+</exports>
+
+<!-- 
+ Full Java classname for your class that implements Plugin. You can include
+ additional <class> entries here, if you want to combine multiple Plugin
+ implementors into a single 'plugin' jar file.
+-->
+<class>com.leafdigital.idle.IdlePlugin</class>
+
+<!-- 
+ Include this empty <debug/> tag if you want additional information in the system
+ log for this plugin.
+-->
+<debug/>
+
+</plugininfo>

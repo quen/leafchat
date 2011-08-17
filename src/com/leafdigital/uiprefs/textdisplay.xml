@@ -1,0 +1,50 @@
+<Page Title="Text display" OnSet="onSet">
+  <BorderPanel Spacing="8">
+    <north>
+		  <VerticalPanel Spacing="8">
+		  
+		  		<VerticalPanel>
+			  		<Label Text="You can control the appearance of text within chat windows."/>
+			  		<Label Small="y" Text="Text in dialogs is based on operating system settings and can't be altered within leafChat."/>
+			  	</VerticalPanel>
+			  	
+			  	<BorderPanel Spacing="8">
+			  		<west><Label WidthGroup="labels" Text="Font" BaseGroup="a"/></west>
+			  		<central><VerticalPanel>
+			  			<RadioButton Label="System default" id="fontDefault" Group="font" OnAction="actionDefault" BaseGroup="a"/>
+			  			<BorderPanel Spacing="8">
+				  			<west><RadioButton Label="Selected:" id="fontSelected" Group="font" OnAction="actionSelected" BaseGroup="b"/></west>
+				  			<central><Dropdown id="fontName" OnChange="selectionChangeFontName" BaseGroup="b"/></central>
+				  			<east><EditBox id="fontSize" Width="50" Require="[0-9]+" OnChange="changeFontSize" BaseGroup="b"/></east>
+				  		</BorderPanel>
+			  		</VerticalPanel></central>
+			  	</BorderPanel>
+			  	
+			  	<BorderPanel Spacing="8">
+			  		<west><Label WidthGroup="labels" Text="IRC colours" BaseGroup="c"/></west>
+			  		<central><VerticalPanel>
+			  			<CheckBox Label="Disable" id="coloursDisable" BaseGroup="c" OnChange="changeColoursDisable"/>
+			  			<Label Small="y" MacIndent="y" Text="Strips colour from received IRC messages."/>
+			  		</VerticalPanel></central>
+			  	</BorderPanel>
+			</VerticalPanel>
+		</north>
+		<central>
+		  	<BorderPanel Spacing="8">
+		  		<west><Label WidthGroup="labels" Text="Colours"/></west>
+		  		<central><ListBox id="colours" OnChange="changeColour" Sort="y"/></central>
+		  		<east>
+		  		  <BorderPanel Spacing="8">
+		  		  		<central><DecoratedPanel id="selectedColour" OnPaint="paintSelectedColour"/></central>
+		  		  		<south>
+		  		  		  <HorizontalPanel>
+			  		  			<Button id="changeColour" Label="Change" Enabled="n" OnAction="actionChangeColour"/>
+			  		  			<Button id="defaultColour" Enabled="n" Label="Default" OnAction="actionDefaultColour"/>
+			  		  		</HorizontalPanel>
+		  		  		</south>	  		  		
+		  		  </BorderPanel>
+		  		</east>
+		  	</BorderPanel>
+	  </central>	  	
+  	</BorderPanel>
+</Page>

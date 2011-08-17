@@ -1,0 +1,52 @@
+<Page Title="Notification pop-ups" OnSet="onSet">
+	<VerticalPanel Spacing="8">
+		<VerticalPanel>
+  	  <Label Text="leafChat can display notification popups that alert you to events."/>
+	    <Label Small="y" Text="These can help you notice hard-to-spot messages, such as when the window is minimized."/>
+	  </VerticalPanel>
+  	<ChoicePanel id="osPanel">
+		  <Page id="mac">
+		    <VerticalPanel Spacing="8">
+		  	  <Label Text="On Mac OS X, notification popups are displayed via the Growl system extension."/>
+		  	  <ChoicePanel id="growlPanel">
+		  	    <Page id="growl0">
+		  	      <Label Text="&lt;strong>Growl is installed and working&lt;/strong>. Please use Growl preferences, available via System Preferences, to enable or disable notifications."/>
+		  	    </Page>		  	  
+		  	    <Page id="growl2">
+    	        <Label Text="&lt;strong>leafChat cannot communicate with Growl due to a system problem&lt;/strong>. You will not receive popup notifications."/>
+		  	    </Page>		  	  
+		  	    <Page id="growl3">
+		  	      <VerticalPanel>
+  		  	      <Label Text="&lt;strong>Growl is not installed&lt;/strong>. If you'd like popup notifications, please install Growl, available from &lt;url>http://www.growl.info/&lt;/url>."/>
+  		  	      <Label Small="y" Text="Growl also adds notifications to many other programs such as Firefox 3."/>
+		  	      </VerticalPanel>
+		  	    </Page>		  	  
+		  	    <Page id="growl4">
+		  	      <Label Text="&lt;strong>An unexpected error occurred when initialising Growl&lt;/strong>. You will not receive popup notifications."/>
+		  	    </Page>		  	  
+		  	  </ChoicePanel>
+	  	  </VerticalPanel>
+	  	</Page>
+	  	<Page id="java6">
+		    <VerticalPanel Spacing="8">
+		  	  <Table id="notifications" OnChange="changeNotifications" Rows="10">
+		  	    <column name="Notification" type="string"/>
+		  	    <column name="On" type="boolean" editable="y" width="0"/>
+		  	  </Table>
+		  	</VerticalPanel>
+	  	</Page>
+	  	<Page id="oldjava">	  	  
+	  	  <VerticalPanel Spacing="8">
+		      <Label Text="Unfortunately, notification support requres Java version 1.6 (aka Java 6)."/>
+ 		      <Label id="osVersion"/>		    
+		      <Label id="javaLink" Text="You may be able to obtain the latest Java version from &lt;url>http://www.java.com/&lt;/url>."/>
+		    </VerticalPanel>
+	  	</Page>
+	  	<Page id="nosupport">	  	  
+	  	  <VerticalPanel Spacing="8">
+		      <Label Text="Unfortunately, your Java 1.6 runtime does not support desktop notification (java.awt.SystemTray). Popup notifications are not available on your platform."/>
+		    </VerticalPanel>
+	  	</Page>
+		</ChoicePanel>
+	</VerticalPanel>
+</Page>

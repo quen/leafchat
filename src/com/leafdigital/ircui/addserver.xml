@@ -1,0 +1,42 @@
+<Dialog Title="Add server or network" Resizable="n" OnClosed="closedAdd">
+<VerticalPanel Border="8">
+  <TabPanel id="addTabs" OnChange="changeAddTabs">
+    <Page Title="Server" id="addServerPage">
+      <VerticalPanel Spacing="4" Border="8">
+      		<BorderPanel Spacing="8">
+      			<west><Label Text="Address" BaseGroup="a"/></west>
+	      		<central><VerticalPanel Spacing="2">
+	      		  <EditBox Width="300" id="addServerAddress" OnChange="changeAddServerAddress" BaseGroup="a"/>
+	      		  <Label Small="y" MacIndent="y" Text="Internet address of server. Example: &lt;strong>irc.dal.net&lt;/strong>"/>
+	      		</VerticalPanel></central>
+      		</BorderPanel>
+      </VerticalPanel>
+    </Page>
+    <Page Title="Network" id="addNetworkPage">
+      <VerticalPanel Spacing="4" Border="8">
+      		<BorderPanel Spacing="8">
+      			<west><Label WidthGroup="widthnetwork" Text="Suffix" BaseGroup="b"/></west>
+	      		<central><VerticalPanel Spacing="2">
+	      		  <BorderPanel Spacing="2">
+		      			<west><Label MacIndent="y" Text="." BaseGroup="b"/></west>
+	      		  		<central><VerticalPanel><EditBox id="addNetworkSuffix" OnChange="changeAddNetworkSuffix" BaseGroup="b"/></VerticalPanel></central>
+	      		  	</BorderPanel>
+	      		  <Label Small="y" MacIndent="y" Text="Used to automatically assign servers. Example: &lt;strong>dal.net&lt;/strong>"/>
+	      		</VerticalPanel></central>
+      		</BorderPanel>
+      		<BorderPanel Spacing="8">
+      			<west><Label WidthGroup="widthnetwork" Text="Name" BaseGroup="c"/></west>
+	      		<central><VerticalPanel Spacing="2">
+	      		  <EditBox Width="300" id="addNetworkName" OnChange="changeAddNetworkName" BaseGroup="c"/>
+	      		  <Label Small="y" MacIndent="y" Text="For display only."/>
+	      		</VerticalPanel></central>
+      		</BorderPanel>
+      </VerticalPanel>
+    </Page>
+  </TabPanel>
+  <ButtonPanel>
+    <cancel><Button Label="Cancel" OnAction="actionAddCancel"/></cancel>
+    <yes><Button id="addAdd" Label="Add" OnAction="actionAddAdd" Default="y" Enabled="n"/></yes>
+  </ButtonPanel>
+</VerticalPanel>  
+</Dialog>

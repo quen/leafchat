@@ -1,0 +1,52 @@
+<Page Title="Themes" OnSet="onSet">
+  <BorderPanel Spacing="8">
+  
+  		<north><VerticalPanel>
+	  		<Label Text="Themes change the program's visual look."/>
+	  		<Label Small="y" Text="Themes can be installed inside application or per-user themes folders."/>
+	  	</VerticalPanel></north>
+
+	  <central><BorderPanel Spacing="16">
+	    <central>
+	  			<Table id="themes" Rows="16" Width="150" OnSelect="selectThemes" OnChange="changeThemes">
+	  				<column name="Name" type="string" editable="n"/>
+	  				<column name="Use" type="boolean" editable="y" width="0"/>
+	  			</Table>
+	  		</central>
+	  		<east>
+	  			<VerticalPanel>
+	  				<Label id="themeName" DefaultWidth="150"/>
+	  				<BorderPanel>
+			  			<west><Pic id="themePic"/></west>
+			  		</BorderPanel>
+			  		<Spacer Height="4"/>
+	  				<HorizontalPanel Spacing="8">
+	  					<Label WidthGroup="width_labels" Text="Description"/>
+	  					<Label id="themeDescription" DefaultWidth="150"/>
+	  				</HorizontalPanel>
+			  		<Spacer Height="4"/>
+	  				<HorizontalPanel Spacing="8">
+	  					<Label WidthGroup="width_labels" Text="Author(s)"/>
+	  					<Label id="themeAuthors" DefaultWidth="150"/>
+	  				</HorizontalPanel>
+			  		<Spacer Height="4"/>
+	  				<HorizontalPanel Spacing="8">
+	  					<Label WidthGroup="width_labels" Text="Location"/>
+	  					<Label id="themeLocation" DefaultWidth="150"/>
+	  				</HorizontalPanel>
+	  			</VerticalPanel>
+	  		</east>
+	  	</BorderPanel></central>
+	  	
+	  	<south>
+	  	  <BorderPanel Spacing="8">
+	  	   	<west><HorizontalPanel Spacing="8">
+	  	   	  <Button Label="Install..." OnAction="actionInstall" />
+	  	   	  <Button Label="Themes help" OnAction="actionHelp" />
+	  	   	</HorizontalPanel></west>
+	  	   	<central><Label Small="y" Text="Help about installing and creating themes. Appears in your Web browser." /></central>
+	  	  </BorderPanel>
+	  	</south>
+		
+  	</BorderPanel>
+</Page>

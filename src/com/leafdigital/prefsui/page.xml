@@ -1,0 +1,12 @@
+<Page Title="Frog">
+	<BorderPanel Border="4" Spacing="4" id="main">
+	  <north>
+	    <Label Text="Here's my test page"/>
+	  </north>
+	  <south>
+	    <BorderPanel Spacing="4">
+	      <east><Button Label="Test button" OnAction="actionTest"/></east>
+	    </BorderPanel>
+	  </south>
+	</BorderPanel>
+</Page>

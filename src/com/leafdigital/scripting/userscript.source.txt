@@ -1,0 +1,54 @@
+// Automatically-generated leafChat script
+import leafchat.core.api.*;
+%%SYSTEMIMPORTS%%
+%%DEPENDENCYIMPORTS%%
+%%ITEMIMPORTS%%
+
+public class %%CLASSNAME%% implements Plugin
+{
+  // Plugin context
+	private PluginContext context;
+%%ITEMFIELDS%%
+
+	public void init(PluginContext pluginContext, PluginLoadReporter reporter) throws GeneralException
+	{
+		context=pluginContext;
+%%ITEMINIT%%
+	}
+	
+	public void close() throws GeneralException
+	{
+%%ITEMCLOSE%%
+	}
+	
+%%ITEMMETHODS%%	
+
+  // Context for IRC commands
+  private Server commandServer;
+  private IRCUserAddress commandUser;
+  private String commandChan;
+  private MessageDisplay commandDisplay;
+  
+  // Function sets up this context, should be called at beginning of each 
+  // event
+  private void registerContext(Server s,IRCUserAddress user,String chan,MessageDisplay md)
+  {
+    commandServer=s;
+    commandUser=user;
+    commandChan=chan;
+    if(md==null)
+    {
+    	commandDisplay=((IRCUI)context.getSingleton(IRCUI.class)).getMessageDisplay(s);
+   	}
+    else
+    {
+   		commandDisplay=md;
+   	}
+  }
+
+	private void doCommand(String command)
+	{
+		((Commands)context.getSingleton(Commands.class)).doCommand(
+			command,commandServer,commandUser,commandChan,commandDisplay,false);
+	}
+}

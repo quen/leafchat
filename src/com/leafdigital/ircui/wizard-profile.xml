@@ -1,0 +1,28 @@
+<Page OnSet="onSet">
+	<VerticalPanel Spacing="8">
+		<Label Text="&lt;strong>Your identity&lt;/strong>"/>
+		<BorderPanel Spacing="12">
+			<west><Label WidthGroup="width_labels" Text="Nickname" BaseGroup="a"/></west>
+			<central><VerticalPanel>
+				<EditBox id="nickname" Require="[A-Za-z][A-Za-z0-9-_\[\]\\`^{}]*" OnFocus="focusNickname" OnChange="changeNickname" BaseGroup="a"/>
+				<Spacer Height="2"/>
+				<Label Small="y" Text="This is your primary name online."/>
+				<Label Small="y" Text="Once you connect, you might need to change your nickname if somebody else is using the same one. You can change by typing &lt;strong>/nick NewName&lt;/strong>."/>
+				<Label Small="y" Text="Some networks limit nicknames to 9 letters."/>
+			</VerticalPanel></central>
+		</BorderPanel>
+		<BorderPanel Spacing="12">
+			<west><Label WidthGroup="width_labels" Text="User name" BaseGroup="b"/></west>
+			<central><VerticalPanel>
+				<EditBox id="username" Require="[^ \r\n\00]+" OnFocus="focusUsername" OnChange="changeUsername" BaseGroup="b"/>
+				<Spacer Height="2"/>
+				<Label Small="y" Text="This appears before the @ when you join channels, and at some other times."/>
+			</VerticalPanel></central>
+		</BorderPanel>
+		<BorderPanel Spacing="12">
+			<west><Label WidthGroup="width_labels" Text="Sample join"/></west>
+			<central><TextView DefaultHeight="50" id="preview"/></central>
+		</BorderPanel>
+		<Label Small="y" Text="These settings can be altered later, or configured differently for different servers, via the Settings page in the Connect dialog."/>
+ 	</VerticalPanel>
+</Page>

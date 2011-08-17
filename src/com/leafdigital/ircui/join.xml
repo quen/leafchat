@@ -1,0 +1,99 @@
+<Window Title="Join" OnClosed="windowClosed" InitialSize="600,400">
+  <TabPanel Border="4" id="tabs">
+    <Page Title="Named channel">
+      <VerticalPanel Border="4" Spacing="16">
+      		<BorderPanel>
+      			<west>
+		      		<Dropdown id="server" OnChange="enableButtons"/>
+      			</west>
+      		</BorderPanel>
+    			<VerticalPanel>
+    				<Label Text="Enter the name of the channel you want to join (including the #) then click Join." MinWidth="300"/>
+      			<BorderPanel>
+      				<west>
+      					<BorderPanel Spacing="4">
+		      				<central>
+			            <EditBox id="channel" BaseGroup="a" OnChange="enableButtons" OnEnter="actionJoin" Width="300"/>
+		      				</central>
+		      				<east>
+		      					<Button id="join" Label="Join" Enabled="n" Default="y" OnAction="actionJoin" BaseGroup="a"/>
+		      				</east>
+      					</BorderPanel>
+      				</west>
+      			</BorderPanel>
+	      	</VerticalPanel>
+    			<VerticalPanel>
+    				<Label Text="In rare cases, some channels require a secret key. You can type this below." MinWidth="300"/>
+      			<BorderPanel>
+      				<west>
+      					<BorderPanel Spacing="4">
+		      				<central>
+			            <EditBox id="keyword" BaseGroup="b" OnChange="enableButtons" OnEnter="actionJoin" Width="200"/>
+		      				</central>
+		      				<east>
+			            <CheckBox id="savekeyword" BaseGroup="b" Label="Remember" Enabled="n" Checked="y"/>
+		      				</east>
+      					</BorderPanel>
+      				</west>
+      			</BorderPanel>
+	      	</VerticalPanel>
+      </VerticalPanel>
+		</Page>
+		<Page Title="Favourite channels" id="favouritesPage">
+			<BorderPanel Border="4">
+				<central>
+				  <Table id="favourites" OnChange="favouritesChange" OnEditing="favouritesEditing" OnSelect="favouritesSelect" Width="400" Rows="10" MultiSelect="y" OnAction="favouritesJoin">
+            <column name="Name" type="string" editable="n"/>
+            <column name="Network/server" type="string" editable="n"/>
+            <column name="Auto-join" type="boolean" editable="y" width="0"/>
+            <column name="Key" type="string" editable="y" width="100"/>
+          </Table>         			
+				</central>
+				<southwest>
+  					<Button id="delete" Label="Delete" Enabled="n" OnAction="actionDelete"/>					
+				</southwest>
+				<southeast>
+  					<Button id="joinFavourites" Label="Join" Enabled="n" Default="y" OnAction="favouritesJoin"/>					
+				</southeast>
+			</BorderPanel>
+		</Page>
+		<Page Title="Channel list">
+			<BorderPanel Border="4">
+				<northwest>
+	      		<Dropdown id="server2" OnChange="server2Changed"/>
+				</northwest>
+				<central>
+					<ChoicePanel id="listchoice">
+						<Page id="noserver">
+							<Label Text="When connected to a server, you can list available channels here."/>
+						</Page>
+						<Page id="nosupport">
+							<Label Text="This server does not support smart listing in a format leafChat understands. Please list channels manually using the /list command."/>
+						</Page>
+						<Page id="ok">
+							<BorderPanel Spacing="4">
+								<north>
+									<HorizontalPanel Spacing="4">
+										<Label Text="Minimum number of users:" BaseGroup="c" />
+										<EditBox id="minusers" Width="60" Value="50" BaseGroup="c" OnChange="changeMinUsers" OnEnter="actionSearch" />
+										<Button id="search" BaseGroup="c" Label="search" OnAction="actionSearch"/>
+									</HorizontalPanel>
+								</north>
+								<central>
+									<Table id="searchresults" Width="400" Rows="10" MultiSelect="y" OnAction="actionJoinSearch" OnSelect="selectSearch">
+										<column name="Name" type="string" width="150"/>
+										<column name="# users" type="string" width="50"/>
+										<column name="Topic" type="string"/>
+									</Table>
+								</central>
+								<southeast>
+				  					<Button id="joinSearch" Label="Join" Enabled="n" OnAction="actionJoinSearch"/>					
+								</southeast>
+							</BorderPanel>
+						</Page>
+					</ChoicePanel>
+				</central>
+			</BorderPanel>
+		</Page>
+	</TabPanel>
+</Window>

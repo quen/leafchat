@@ -1,0 +1,20 @@
+<Page>
+  <BorderPanel>
+    <north>
+    	<BorderPanel>
+    		<central><Dropdown id="server"/></central>
+   			<east><Pic id="close" Property="close/normal" Hover="close/hover" OnAction="actionClose" Visible="n"/></east>
+    	</BorderPanel>
+    </north>
+    <south>
+   		<BorderPanel>
+   			<north>
+	    		<Label Text="IRC command" Small="y" MacIndent="y"/>
+		    </north>
+		    <south>
+		      <EditBox id="command" OnEnter="enterCommand"/>				           
+	    	</south>
+	  	</BorderPanel>
+    </south>
+  </BorderPanel>		    
+</Page>

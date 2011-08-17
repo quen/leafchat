@@ -1,0 +1,36 @@
+<Page>
+  <VerticalPanel Spacing="8">
+
+		<HorizontalPanel Spacing="8">
+	    <Label Text="Name" BaseGroup="c" WidthGroup="a"/>
+		  <VerticalPanel Spacing="2">
+		    <EditBox id="name" OnChange="change" BaseGroup="c"/>
+		    <Label Small="y" Text="Must match Java name rules"/>
+		  </VerticalPanel>
+	  </HorizontalPanel>
+  
+		<HorizontalPanel Spacing="8">
+	    <Label Text="Type" BaseGroup="a" WidthGroup="a"/>
+		  <VerticalPanel Spacing="4">
+		    <RadioButton BaseGroup="a" id="typeString" Group="type" Label="String (text)" OnAction="change"/>
+		    <RadioButton id="typeInt" Group="type" Label="int (whole number)" OnAction="change"/>
+		    <HorizontalPanel Spacing="8">
+			    <RadioButton id="typeOther" Group="type" Label="Other:" BaseGroup="b" OnAction="actionOther"/>
+			    <VerticalPanel Spacing="2">
+				    <EditBox id="other" OnChange="change" BaseGroup="b"/>
+				    <Label Small="y" Text="Full Java class/primitive name"/>
+				  </VerticalPanel>
+			  </HorizontalPanel>
+		  </VerticalPanel>
+	  </HorizontalPanel>
+	  
+		<HorizontalPanel Spacing="8">
+	    <Label Text="Initial value" BaseGroup="d" WidthGroup="a"/>
+		  <VerticalPanel Spacing="2">
+		    <EditBox id="initial" OnChange="change" BaseGroup="d"/>
+		    <Label Small="y" Text="Set when script starts up"/>
+		  </VerticalPanel>
+	  </HorizontalPanel>
+  
+	</VerticalPanel>	  
+</Page>

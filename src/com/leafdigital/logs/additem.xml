@@ -1,0 +1,15 @@
+<Dialog Title="Add item" Resizable="n">
+<VerticalPanel Border="8" Spacing="4">
+	<Label Text="Enter a channel name beginning with #, or a nickname." MinWidth="300"/>
+	<EditBox id="addItem" OnChange="changeAddItem" OnEnter="actionAddItemSet"/>
+	<Label Text="	You can use * as a wildcard." Small="y"/>
+  <BorderPanel>
+    <east>
+      <HorizontalPanel>
+		    <Button Label="Cancel" OnAction="actionAddItemCancel"/>
+		    <Button id="addItemSet" Label="Add" OnAction="actionAddItemSet" Default="y" Enabled="n"/>
+		  </HorizontalPanel>
+    </east>
+  </BorderPanel>
+</VerticalPanel>  
+</Dialog>

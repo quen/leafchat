@@ -1,0 +1,21 @@
+<Dialog Resizable="n">
+<BorderPanel Border="8" Spacing="4" id="check">
+  <central>
+    <BorderPanel>
+	    	<central>
+  			  <Label id="message" DefaultWidth="350"/>
+  			</central>
+  			<south>
+  				<CheckBox id="remember" Label="Remember this choice" OnChange="changeRemember"/>
+  			</south>
+  		</BorderPanel>  			
+  </central>  
+  <south>
+  	  	<ButtonPanel>
+	  		<yes><Button id="yes" Label="Yes" OnAction="actionYes"/></yes>
+	  		<no><Button id="no" Label="No" OnAction="actionNo"/></no>
+	  		<cancel><Button id="cancel" Label="Cancel" OnAction="actionCancel"/></cancel>
+	  	</ButtonPanel>	  	
+  </south>
+</BorderPanel>
+</Dialog>

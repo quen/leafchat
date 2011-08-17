@@ -1,0 +1,238 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>leafChat themes</title>
+<link rel="stylesheet" href="../basic.css" type="text/css" />
+</head>
+<body>
+<h1>leafChat themes</h1>
+<h2>Theme files</h2>
+<p>A theme is a single file with a name ending in <strong>.leafChatTheme</strong>.</p>
+<h2>Installing themes</h2>
+<p>
+The easiest way to install a theme is to click the <strong>Install...</strong>
+button. You can then select a .leafChatTheme file. The file will be checked
+to make sure it's a valid theme, and then installed. You should see it appear
+on the theme list immediately.
+</p>
+<h3>Theme locations</h3>
+<p>
+You can also install themes manually if you like, although this isn't 
+recommended since your theme won't be checked before it is installed. (If there
+is an error in the theme, this will of course still be displayed at some point.)
+</p>
+<p>
+leafChat will recognise a theme if you put it in one of the following locations:
+</p>
+<ul>
+<li>The <strong>Themes</strong> sub-folder of the <strong>application 
+folder</strong>. If you put themes here, they are accessible to all users.
+<div class="detail">
+<div><span class="os">OS X</span>: Right-click on the leafChat application icon 
+and choose <strong>Show package contents</strong>. Then open the <strong>Themes</strong> folder.</div>
+<div><span class="os">Windows &amp; Unix</span>: Find the folder where you installed leafChat. Then open the <strong>Themes</strong> folder.</div>
+</div>
+</li>
+<li>The <strong>Themes</strong> sub-folder of your <strong>per-user settings 
+folder</strong>. If you put themes here, they are accessible only when logged
+in as you. This is usually where you should put new themes.
+<div class="detail">
+<div><span class="os">OS X</span>: Open your <strong>home directory</strong> 
+(the one with the house icon). Double click on <strong>Library</strong>, then
+<strong>leafChat</strong>, then <strong>Themes</strong>.</div>
+<div><span class="os">Windows</span>: Open <strong>c:\Documents and Settings</strong>.
+Double-click on <strong>your username</strong>, then on <strong>Application settings</strong>,
+<strong>leafChat</strong>, and <strong>Themes</strong>.</div>
+<div><span class="os">Unix</span>: Within your home folder, open 
+<strong>.leafChat</strong> and then <strong>Themes</strong>.</div>
+</div>
+</li>
+</ul>
+<p>
+You don't have to restart leafChat to install a new theme, even if you do
+it manually. Once you put the
+theme in place, close and reopen the <strong>Options</strong> window.
+Your theme should be listed in the <strong>Themes</strong> page and you can
+select it for use.
+</p>
+
+<h2>Creating new themes</h2>
+<h3>Intended audience</h3>
+<p>
+You need a reasonable degree of technical knowledge to create new themes for 
+leafChat &ndash; you don't have to be a programmer, but you must
+be comfortable with editing text files.
+</p>
+<h3>Be careful</h3>
+<ul>
+<li>Don't remove or modify the standard theme (<strong>shared</strong>) or the
+default <strong>leaves</strong> theme. This might cause leafChat to stop working.</li>
+<li>If leafChat gives an error and won't start up because of your theme, remove
+your theme.</li>
+</ul>
+<h3>Getting started</h3>
+<p>
+The first thing you need to know is that <strong>themes are actually zip files</strong>.
+In order to create a theme all you need to do is get a collection of files,
+zip them up, and rename the zip to <strong>.leafChatTheme</strong>.
+</p>
+<p>
+The best way to understand themes is to start with an existing one. If you
+don't already have it, download the Stars and Hearts theme (<strong>stars.leafChatTheme</strong>).
+Install the theme as above and select it to see what it does. Then make a copy
+of the theme and rename the copy to end in <strong>.zip</strong>. You should
+now be able to unpack the theme and see what's inside.
+</p>
+<h3>Theme contents</h3>
+<ul>
+<li>
+The theme contains a number of <strong>images in PNG format</strong>.
+These correspond to various buttons and other decorations. PNG format is used
+because it supports transparency. You'll want to use an image editor that can
+save transparent PNG images, such as <strong>The Gimp</strong> or 
+<strong>Photoshop</strong>.
+</li>
+<li>
+A <strong>theme.xml</strong> file controls how the images are used around
+the program. It also has metadata about the theme.
+</li>
+<li>
+The image <strong>theme.png</strong> is a screenshot of the theme. It should be
+<strong>210 pixels wide</strong> and around 150 pixels high.
+</li>
+</ul>
+<h3>Detailed explanation of theme.xml</h3>
+<p>
+Here are some sections from the <strong>theme.xml</strong> in the Stars and Hearts
+theme.
+</p>
+<pre>
+&lt;theme>
+ &lt;meta>
+  &lt;name>Stars and hearts&lt;/name>
+  &lt;description>A night-time theme in yellow and pink.&lt;/description>
+  &lt;authors>Samuel Marshall&lt;/authors>
+ &lt;/meta>
+</pre>
+<p>
+The theme opens with a <strong>&lt;theme></strong> tag. This tag encloses
+the whole theme.
+</p>
+<p>
+After that, the <strong>&lt;meta></strong> tag contains metadata &ndash; information 
+about the theme.
+</p>
+<ul>
+<li>The <strong>name of the theme</strong>, which should be reasonably short, goes in the <strong>&lt;name></strong> tag.</li>
+<li>A <strong>description of the theme</strong> goes in the <strong>&lt;description></strong> tag.</li>
+<li>Names of the <strong>theme authors</strong> are placed in the <strong>&lt;authors></strong> tag.</li>
+</ul>
+<pre>
+ &lt;connectButton>
+  &lt;normal>connect.png&lt;/normal>
+  &lt;hover>connect.heart.png&lt;/hover>
+  &lt;pressed>connect.png&lt;/pressed>
+ &lt;/connectButton>
+</pre>
+<p>The <strong>&lt;connectButton></strong> tag defines images used for the 
+Connect button.</p>
+<ul>
+<li><strong>&lt;normal></strong> &ndash; the image that normally appears for the button.</li>
+<li><strong>&lt;hover></strong> &ndash; used when the mouse pointer hovers over the button.</li>
+<li><strong>&lt;pressed></strong> &ndash; used while the button is being clicked.</li>
+</ul>
+<p>Each image filename refers to a PNG file included within the theme. This 
+theme re-uses the same image for two button states, but you can 
+provide different images if you want.</p>
+<p>To ensure the program looks good, it's best to make your images <strong>48 by 48 pixels</strong>.</p>
+<p>If you don't include this tag, the Connect button will use its
+default images. If you do include it, you should specify all three images 
+(otherwise one will be left default, which is probably confusing).</p>
+<p>
+So that's the Connect button; all the other toolbar buttons work the same way.
+</p>
+<pre>
+ &lt;toolbar>
+  &lt;tilePic>toolbar.png&lt;/tilePic>		
+ &lt;/toolbar>
+</pre>
+<p>
+This defines the image used as a tiled background on the toolbar. The image will
+be tiled horizontally. It should be <strong>82 pixels high</strong>, and can be any width, but
+something like 100 pixels is probably sensible. (Since this image doesn't need
+to be transparent, you can use a JPEG file instead of a PNG
+if you prefer.)
+</p>
+<p>
+If you don't include a &lt;toolbar> section, leafChat will use your operating
+system's default background colour.
+</p>
+<pre>	
+ &lt;channel>
+  &lt;topPic>top.png&lt;/topPic>
+  &lt;topLeftPic>topstar.png&lt;/topLeftPic>
+ &lt;/channel>
+</pre>
+<p>
+This section controls how channel windows appear. You can place images along
+the four sides of the window (top, left, bottom, right) and in the four corners
+(topLeft, topRight, bottomLeft, and bottomRight.)
+</p>
+<p>
+The side images are drawn first. These images are tiled along the edge of the
+window. After that, the corner images are drawn on top.
+</p>
+<p>
+Other window definitions, most notably <strong>&lt;message></strong>, work in
+the same way.
+</p>
+<pre>
+&lt;/theme>
+</pre>
+<p>You've got to include a closing tag to finish off the theme file.</p>
+<h3>Tips</h3>
+<ul>
+<li>Theme zip files must include all files at the root level, so make sure 
+you don't include path or folder information in the zip.</li>
+<li>When building your first theme, start by changing only one small part of
+the <strong>stars</strong> theme, and check it still works. This helps you
+sort out any confusing problems at the start.</li>
+<li>leafChat won't recognise modifications to a theme until you switch theme.
+So, if working on a theme while leafChat is open, switch to a different theme
+then back to your theme to see the changes.</li>
+<li>If leafChat still doesn't recognise your changed theme, save it under a
+different name or else restart leafChat.</li>
+</ul>
+<h3>Zip trouble?</h3>
+<p>
+If you're having trouble making a theme work, it could be because you aren't
+zipping it correctly. Zip programs with graphical interfaces often do things 
+you don't expect, such as putting all the files within a folder in the zip. 
+This means the theme won't work.
+</p>
+<p>
+The most reliable way to ensure that your theme is zipped correctly is to use a 
+command-line tool. On Linux and OS X, this is already provided; if you use
+Windows you will have to download
+the <strong>zip</strong> command-line tool from 
+<a href="http://www.info-zip.org/">Info-ZIP</a>.
+Once you have the program (zip.exe), put it somewhere on your system's PATH.
+(If you don't know how to do all this, please ask a friend who knows computers 
+to help.) Then you can use it to compress themes:</p>
+<ol>
+<li>Run a command prompt.</li>
+<li>Use <strong>cd</strong> to change into the folder that contains all your
+theme files. For example, if you type <strong>dir</strong>, you should see
+a list of the files including <strong>theme.xml</strong>.</li>
+<li>Type <strong>zip ../mytheme.zip *</strong>. This will create a zip file
+called <strong>mytheme.zip</strong> in the parent folder, containing all the
+theme files.</li>
+<li>Rename the zip file to leafChatTheme, for example with the command: 
+<strong>ren ../mytheme.zip ../mytheme.leafChatTheme</strong> (the command
+given is for Windows. On other platforms, use <strong>mv</strong> instead of
+<strong>ren</strong>.)</li>
+</ol>
+</body>
+</html>

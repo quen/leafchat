@@ -1,0 +1,21 @@
+<theme>
+
+	<meta>
+		<name>Leaves</name>
+		<description>Default leafChat design with leaves in corners.</description>
+		<authors>Samuel Marshall</authors>
+	</meta>
+	
+	<channel>
+		<bottomLeftPic>greenleaf.png</bottomLeftPic>
+	</channel>
+	
+	<message>
+		<bottomLeftPic>brownleaf.png</bottomLeftPic>
+	</message>
+	
+	<toolbar>
+		<tilePic>toolbar.png</tilePic>		
+	</toolbar>
+	
+</theme>

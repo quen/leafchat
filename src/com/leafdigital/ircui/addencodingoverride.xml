@@ -1,0 +1,68 @@
+<Dialog Title="Add encoding override" Resizable="n" OnClosed="closedAdd">
+<VerticalPanel Border="8" Spacing="8">
+  <TabPanel id="addTabs" OnChange="changeAdd">
+    <Page Title="Server" id="addServerPage">
+    		<BorderPanel Border="8" Spacing="2">
+    			<central>
+	    		  <TreeBox Height="100" id="addServerTree"/>
+	    		</central>
+	    		<south>
+					<Label Text="Select a server or network." Small="y"/>
+	    		</south>
+			</BorderPanel>
+    </Page>
+    <Page Title="Channel" id="addChannelPage">
+    		<VerticalPanel Border="8">
+      		<Label MacIndent="y" Text="Name"/>
+				<EditBox id="addChannel" OnChange="changeAdd"/>
+      		<Spacer Height="2"/>
+				<Label MacIndent="y" Text="Enter channel name including #." Small="y"/>
+			</VerticalPanel>
+    </Page>
+    <Page Title="User" id="addUserPage">
+    		<VerticalPanel Spacing="2" Border="8">
+				<HorizontalPanel Spacing="4">
+					<VerticalPanel>
+						<Label MacIndent="y" Text="Nickname"/>
+						<EditBox id="addNick" OnChange="changeAdd" Value="*" OnFocus="focusAddNick" Width="100"/>
+					</VerticalPanel>
+					<VerticalPanel>
+						<Label MacIndent="y" Text="Username"/>
+						<EditBox id="addUser" OnChange="changeAdd" Value="*" OnFocus="focusAddUser" Width="100"/>
+					</VerticalPanel>
+					<VerticalPanel>
+						<Label MacIndent="y" Text="Host name"/>
+						<EditBox id="addHost" OnChange="changeAdd" Value="*" OnFocus="focusAddHost" Width="200"/>
+					</VerticalPanel>
+				</HorizontalPanel>
+				<Label MacIndent="y" Small="y" Text="Enter a pattern that matches the user. You can use * as a wildcard."/>
+			</VerticalPanel>
+    </Page>
+  </TabPanel>
+	<BorderPanel Spacing="8">
+		<west>
+			<Label Text="Received text" WidthGroup="width-labels" BaseGroup="a"/>
+		</west>
+		<central>
+			<VerticalPanel>
+				<Dropdown id="addIncoming" BaseGroup="a"/>
+				<CheckBox id="addUTF8" Label="Try UTF-8 first"/>
+			</VerticalPanel>
+		</central>
+	</BorderPanel>
+	<BorderPanel Spacing="8">
+		<west>
+			<Label Text="Sent text" WidthGroup="width-labels" BaseGroup="b"/>
+		</west>
+		<central>
+			<VerticalPanel Spacing="2">
+				<Dropdown id="addOutgoing" BaseGroup="b"/>
+			</VerticalPanel>
+			</central>
+	</BorderPanel>
+  <ButtonPanel>
+    <cancel><Button Label="Cancel" OnAction="actionAddCancel"/></cancel>
+    <yes><Button id="addAdd" Label="Add" OnAction="actionAddAdd" Default="y" Enabled="n"/></yes>
+  </ButtonPanel>
+</VerticalPanel>  
+</Dialog>

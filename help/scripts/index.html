@@ -1,0 +1,70 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>leafChat scripts</title>
+<link rel="stylesheet" href="../basic.css" type="text/css" />
+</head>
+<body>
+<h1>leafChat scripts</h1>
+<h2>Overview</h2>
+<p>A script is a collection of customisations. You can use scripts to create 
+new commands or to make your client automatically react to events.</p>
+<h2>Script files</h2>
+<p>Each script is a single file with a name ending in <strong>.leafChatScript</strong>. 
+When a script is installed in leafChat, subsidiary files will include the compiled code 
+or any errors.</p>
+<p>Scripts are stored in the <strong>Scripts</strong> sub-folder of your <strong>per-user settings 
+folder</strong>. You don't normally need to look in this folder as it is possible
+to manage scripts within the application. (Currently it is not possible to make
+scripts that apply to all users of a computer. Scripts are stored per-user.)</p>
+<p>Script files are standard XML, so advanced users might want to examine or 
+modify them using ordinary XML tools.</p>
+
+<h2>Importing scripts</h2>
+<p>If a friend has created a script you want to use, you should obtain from them
+the <strong>.leafChatScript</strong> file. Then use the <strong>Import</strong>
+button in the <strong>Scripting</strong> window to install the script into your
+leafChat copy.</p>
+<p>Scripts can <strong>damage your computer</strong> so be sure not to install 
+scripts from any source you don't entirely trust.</p>
+
+<h2>Troubleshooting</h2>
+
+<p>
+Scripts run inside leafChat on the same level as other parts of the program.
+Some scripts can prevent standard functionality from working (intentionally
+or by accident) or even cause the program to freeze or suddenly exit. Malicious
+scripts could do much worse, such as delete all your files or install trojan
+software to spy out your credit card number.
+</p>
+
+<p>
+If you experience any bugs, try disabling all your scripts to see if this solves 
+the problem. If a script prevents leafChat from starting up to the point where
+you can disable it, find the script file on disk and delete it manually.
+</p>
+
+<h2>Creating new scripts</h2>
+<h3>Intended audience</h3>
+<p>
+You need a degree of technical knowledge to create new scripts for 
+leafChat &ndash; you don't have to be a programmer (unless you want to do the
+advanced stuff) but you do need to be familiar with IRC.
+</p>
+<p>
+<a href="creating.html">Get started here</a>.
+</p>
+
+<h2>Compiler credits</h2>
+<p>
+leafChat's Java-based scripting uses the Eclipse JDT compiler, which is released
+under the <a href="../../lib/eclipsejdt/epl-v10.html">Eclipse Public License</a>.
+</p>
+<p>
+Eclipse JDT core &copy; Eclipse contributors and others 2000, 2007. All rights reserved.
+</p>
+
+</body>
+</html>

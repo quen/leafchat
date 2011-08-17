@@ -1,0 +1,4 @@
+This jar file (redistributed from Apple under license conditions in
+apple.readme.txt) is necessary to compile the app on non-Mac platforms.
+
+It is not needed at runtime on any platform.

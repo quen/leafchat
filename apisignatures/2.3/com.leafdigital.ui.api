@@ -1,0 +1,581 @@
+#Signature file v4.1
+#Version 
+
+CLSS public abstract interface com.leafdigital.ui.api.BorderPanel
+fld public final static int CENTRAL = 8
+fld public final static int CORNERS_HORIZONTALFILL = 0
+fld public final static int CORNERS_LEAVEBLANK = 2
+fld public final static int CORNERS_VERTICALFILL = 1
+fld public final static int EAST = 2
+fld public final static int NORTH = 0
+fld public final static int NORTHEAST = 1
+fld public final static int NORTHWEST = 7
+fld public final static int SOUTH = 4
+fld public final static int SOUTHEAST = 3
+fld public final static int SOUTHWEST = 5
+fld public final static int WEST = 6
+intf com.leafdigital.ui.api.Panel
+meth public abstract com.leafdigital.ui.api.Widget get(int)
+meth public abstract void set(int,com.leafdigital.ui.api.Widget)
+meth public abstract void setBorder(int)
+meth public abstract void setCornerHandling(int)
+meth public abstract void setSpacing(int)
+
+CLSS public abstract interface com.leafdigital.ui.api.Button
+intf com.leafdigital.ui.api.SupportsBaseGroup
+intf com.leafdigital.ui.api.Widget
+meth public abstract boolean isEnabled()
+meth public abstract void focus()
+meth public abstract void setDefault(boolean)
+meth public abstract void setEnabled(boolean)
+meth public abstract void setLabel(java.lang.String)
+meth public abstract void setOnAction(java.lang.String)
+
+CLSS public abstract interface com.leafdigital.ui.api.ButtonPanel
+fld public final static int CANCEL = 2
+fld public final static int NO = 1
+fld public final static int YES = 0
+intf com.leafdigital.ui.api.Panel
+meth public abstract void set(int,com.leafdigital.ui.api.Widget)
+meth public abstract void setSpacing(int)
+
+CLSS public abstract interface com.leafdigital.ui.api.CallbackHandler
+meth public abstract boolean callHandleErrors(java.lang.String)
+meth public abstract boolean callHandleErrors(java.lang.String,java.lang.Object[])
+meth public abstract void call(java.lang.String)
+meth public abstract void call(java.lang.String,java.lang.Object[])
+meth public abstract void check(java.lang.String)
+meth public abstract void check(java.lang.String,java.lang.Class[])
+
+CLSS public abstract interface com.leafdigital.ui.api.CheckBox
+intf com.leafdigital.ui.api.SupportsBaseGroup
+intf com.leafdigital.ui.api.Widget
+meth public abstract boolean isChecked()
+meth public abstract void setChecked(boolean)
+meth public abstract void setEnabled(boolean)
+meth public abstract void setLabel(java.lang.String)
+meth public abstract void setOnChange(java.lang.String)
+
+CLSS public abstract interface com.leafdigital.ui.api.ChoicePanel
+intf com.leafdigital.ui.api.Panel
+meth public abstract java.lang.String getDisplayed()
+meth public abstract void add(com.leafdigital.ui.api.Page)
+meth public abstract void display(java.lang.String)
+
+CLSS public abstract interface com.leafdigital.ui.api.DecoratedPanel
+intf com.leafdigital.ui.api.Panel
+meth public abstract void repaint()
+meth public abstract void setOnPaint(java.lang.String)
+meth public abstract void setPadding(int,int,int,int)
+
+CLSS public abstract interface com.leafdigital.ui.api.Dialog
+intf com.leafdigital.ui.api.WidgetOwner
+meth public abstract void close()
+meth public abstract void setCloseable(boolean)
+meth public abstract void setContents(com.leafdigital.ui.api.Widget)
+meth public abstract void setContents(org.w3c.dom.Element)
+meth public abstract void setInitialSize(int,int)
+meth public abstract void setMinSize(int,int)
+meth public abstract void setOnClosed(java.lang.String)
+meth public abstract void setResizable(boolean)
+meth public abstract void setTitle(java.lang.String)
+meth public abstract void show(com.leafdigital.ui.api.WidgetOwner)
+
+CLSS public abstract interface com.leafdigital.ui.api.Dropdown
+intf com.leafdigital.ui.api.SupportsBaseGroup
+intf com.leafdigital.ui.api.Widget
+meth public abstract boolean isEnabled()
+meth public abstract java.lang.Object getSelected()
+meth public abstract void addValue(java.lang.Object,java.lang.String)
+meth public abstract void clear()
+meth public abstract void setEnabled(boolean)
+meth public abstract void setOnChange(java.lang.String)
+meth public abstract void setSelected(java.lang.Object)
+
+CLSS public abstract interface com.leafdigital.ui.api.EditArea
+intf com.leafdigital.ui.api.SupportsBaseGroup
+intf com.leafdigital.ui.api.Widget
+meth public abstract boolean isEnabled()
+meth public abstract java.lang.String getValue()
+meth public abstract void focus()
+meth public abstract void highlightErrorLines(int[])
+meth public abstract void selectAll()
+meth public abstract void setAutoStretch(boolean)
+meth public abstract void setEnabled(boolean)
+meth public abstract void setHeight(int)
+meth public abstract void setOnChange(java.lang.String)
+meth public abstract void setOnFocus(java.lang.String)
+meth public abstract void setValue(java.lang.String)
+meth public abstract void setWidth(int)
+
+CLSS public abstract interface com.leafdigital.ui.api.EditBox
+fld public final static int FLAG_DIM = 1
+fld public final static int FLAG_ERROR = 2
+fld public final static int FLAG_NORMAL = 0
+fld public final static int LINEBYTES_NOLIMIT = -1
+innr public abstract interface static TabCompletion
+intf com.leafdigital.ui.api.SupportsBaseGroup
+intf com.leafdigital.ui.api.Widget
+meth public abstract boolean isEnabled()
+meth public abstract int getFlag()
+meth public abstract java.lang.String getValue()
+meth public abstract java.lang.String[] getValueLines()
+meth public abstract void focus()
+meth public abstract void selectAll()
+meth public abstract void setEnabled(boolean)
+meth public abstract void setFlag(int)
+meth public abstract void setLineBytes(int)
+meth public abstract void setLineWrap(boolean)
+meth public abstract void setOnChange(java.lang.String)
+meth public abstract void setOnEnter(java.lang.String)
+meth public abstract void setOnFocus(java.lang.String)
+meth public abstract void setOnMultiLine(java.lang.String)
+meth public abstract void setRemember(java.lang.String,java.lang.String)
+meth public abstract void setRequire(java.lang.String)
+meth public abstract void setTabCompletion(com.leafdigital.ui.api.EditBox$TabCompletion)
+meth public abstract void setTextView(java.lang.String)
+meth public abstract void setUseFontSettings(boolean)
+meth public abstract void setValue(java.lang.String)
+meth public abstract void setWidth(int)
+
+CLSS public abstract interface static com.leafdigital.ui.api.EditBox$TabCompletion
+ outer com.leafdigital.ui.api.EditBox
+meth public abstract java.lang.String[] complete(java.lang.String,boolean)
+
+CLSS public abstract interface com.leafdigital.ui.api.GroupPanel
+intf com.leafdigital.ui.api.Panel
+meth public abstract void set(com.leafdigital.ui.api.Widget)
+meth public abstract void setInternalBorder(int)
+meth public abstract void setTitle(java.lang.String)
+
+CLSS public abstract interface com.leafdigital.ui.api.HorizontalPanel
+intf com.leafdigital.ui.api.Panel
+meth public abstract void add(com.leafdigital.ui.api.Widget)
+meth public abstract void setSpacing(int)
+
+CLSS public abstract interface com.leafdigital.ui.api.Label
+intf com.leafdigital.ui.api.SupportsBaseGroup
+intf com.leafdigital.ui.api.SupportsMacIndent
+intf com.leafdigital.ui.api.Widget
+meth public abstract java.lang.String getText()
+meth public abstract void setAction(java.lang.String,com.leafdigital.ui.api.TextView$ActionHandler)
+meth public abstract void setDefaultWidth(int)
+meth public abstract void setMinWidth(int)
+meth public abstract void setSmall(boolean)
+meth public abstract void setText(java.lang.String)
+meth public abstract void setWidthGroup(java.lang.String)
+
+CLSS public abstract interface com.leafdigital.ui.api.ListBox
+intf com.leafdigital.ui.api.Widget
+meth public abstract boolean isEnabled()
+meth public abstract java.lang.Object getSelectedData()
+meth public abstract java.lang.Object[] getData(java.lang.Class)
+meth public abstract java.lang.Object[] getMultiSelectedData()
+meth public abstract java.lang.String getSelected()
+meth public abstract java.lang.String[] getItems()
+meth public abstract java.lang.String[] getMultiSelected()
+meth public abstract void addItem(java.lang.String)
+meth public abstract void addItem(java.lang.String,java.lang.Object)
+meth public abstract void clear()
+meth public abstract void clearSelection()
+meth public abstract void removeData(java.lang.Object)
+meth public abstract void removeItem(java.lang.String)
+meth public abstract void setBold(java.lang.String,boolean)
+meth public abstract void setEnabled(boolean)
+meth public abstract void setFaint(java.lang.String,boolean)
+meth public abstract void setMultiSelect(boolean)
+meth public abstract void setOnAction(java.lang.String)
+meth public abstract void setOnChange(java.lang.String)
+meth public abstract void setOnMenu(java.lang.String)
+meth public abstract void setSelected(java.lang.String,boolean)
+meth public abstract void setSelectedData(java.lang.Object,boolean)
+meth public abstract void setSort(boolean)
+meth public abstract void setUseFontSettings(boolean)
+meth public abstract void setWidth(int)
+
+CLSS public abstract interface com.leafdigital.ui.api.Page
+intf com.leafdigital.ui.api.Widget
+intf com.leafdigital.ui.api.WidgetOwner
+meth public abstract java.lang.String getTitle()
+meth public abstract void setContents(com.leafdigital.ui.api.Widget)
+meth public abstract void setContents(org.w3c.dom.Element)
+meth public abstract void setOnSet(java.lang.String)
+meth public abstract void setTitle(java.lang.String)
+
+CLSS public abstract interface com.leafdigital.ui.api.PageTool
+intf com.leafdigital.ui.api.Tool
+meth public abstract com.leafdigital.ui.api.Page getPage()
+
+CLSS public abstract interface com.leafdigital.ui.api.Panel
+intf com.leafdigital.ui.api.Widget
+meth public abstract void remove(com.leafdigital.ui.api.Widget)
+meth public abstract void removeAll()
+meth public abstract void setBorder(int)
+
+CLSS public abstract interface com.leafdigital.ui.api.Pic
+intf com.leafdigital.ui.api.Widget
+meth public abstract void setHover(java.lang.String)
+meth public abstract void setOnAction(java.lang.String)
+meth public abstract void setProperty(java.lang.String)
+meth public abstract void setThemeFile(com.leafdigital.ui.api.Theme,java.lang.String)
+meth public abstract void setTooltip(java.lang.String)
+
+CLSS public abstract interface com.leafdigital.ui.api.PopupMenu
+meth public abstract void addItem(java.lang.String,java.lang.Runnable)
+meth public abstract void addSeparator()
+
+CLSS public abstract interface com.leafdigital.ui.api.Progress
+intf com.leafdigital.ui.api.Widget
+meth public abstract boolean isIndeterminate()
+meth public abstract int getProgress()
+meth public abstract int getRange()
+meth public abstract void setIndeterminate()
+meth public abstract void setProgress(int)
+meth public abstract void setRange(int)
+
+CLSS public abstract interface com.leafdigital.ui.api.RadioButton
+intf com.leafdigital.ui.api.SupportsBaseGroup
+intf com.leafdigital.ui.api.Widget
+meth public abstract boolean isEnabled()
+meth public abstract boolean isSelected()
+meth public abstract void setEnabled(boolean)
+meth public abstract void setGroup(java.lang.String)
+meth public abstract void setLabel(java.lang.String)
+meth public abstract void setOnAction(java.lang.String)
+meth public abstract void setSelected()
+meth public abstract void setWidthGroup(java.lang.String)
+
+CLSS public abstract interface com.leafdigital.ui.api.ScrollPanel
+intf com.leafdigital.ui.api.Panel
+meth public abstract void set(com.leafdigital.ui.api.Widget)
+meth public abstract void setOutline(boolean)
+meth public abstract void setPreferredSize(int,int)
+meth public abstract void setScrollAmount(int)
+
+CLSS public abstract interface com.leafdigital.ui.api.SimpleTool
+intf com.leafdigital.ui.api.Tool
+meth public abstract java.lang.String getLabel()
+meth public abstract java.lang.String getThemeType()
+meth public abstract void clicked() throws leafchat.core.api.GeneralException
+
+CLSS public abstract interface com.leafdigital.ui.api.SizeInfo
+meth public abstract int getPreferredHeight(int)
+meth public abstract int getPreferredWidth()
+
+CLSS public abstract interface com.leafdigital.ui.api.Spacer
+intf com.leafdigital.ui.api.Widget
+meth public abstract void setHeight(int)
+meth public abstract void setWidth(int)
+
+CLSS public abstract interface com.leafdigital.ui.api.SplitPanel
+fld public final static int SIDE_EAST = 1
+fld public final static int SIDE_NORTH = 0
+fld public final static int SIDE_SOUTH = 2
+fld public final static int SIDE_WEST = 3
+intf com.leafdigital.ui.api.Panel
+meth public abstract int getSplitSize()
+meth public abstract void setMain(com.leafdigital.ui.api.Widget)
+meth public abstract void setSide(int)
+meth public abstract void setSplit(com.leafdigital.ui.api.Widget)
+meth public abstract void setSplitSize(int)
+
+CLSS public abstract interface com.leafdigital.ui.api.SupportsBaseGroup
+meth public abstract void setBaseGroup(java.lang.String)
+
+CLSS public abstract interface com.leafdigital.ui.api.SupportsMacIndent
+meth public abstract void setMacIndent(boolean)
+
+CLSS public abstract interface com.leafdigital.ui.api.TabPanel
+intf com.leafdigital.ui.api.Panel
+meth public abstract java.lang.String getDisplayed()
+meth public abstract void add(com.leafdigital.ui.api.Page)
+meth public abstract void display(java.lang.String)
+meth public abstract void setOnChange(java.lang.String)
+
+CLSS public abstract interface com.leafdigital.ui.api.Table
+fld public final static int NONE = -1
+innr public static EditingControl
+intf com.leafdigital.ui.api.SupportsMacIndent
+intf com.leafdigital.ui.api.Widget
+meth public abstract boolean getBoolean(int,int)
+meth public abstract boolean isDim(int,int)
+meth public abstract boolean isEditable(int,int)
+meth public abstract boolean isOverwrite(int,int)
+meth public abstract int addItem()
+meth public abstract int getNumItems()
+meth public abstract int getSelectedIndex()
+meth public abstract int[] getSelectedIndices()
+meth public abstract java.lang.String getString(int,int)
+meth public abstract void clear()
+meth public abstract void removeItem(int)
+meth public abstract void setBoolean(int,int,boolean)
+meth public abstract void setDim(int,int,boolean)
+meth public abstract void setEditable(int,int,boolean)
+meth public abstract void setMultiSelect(boolean)
+meth public abstract void setOnAction(java.lang.String)
+meth public abstract void setOnChange(java.lang.String)
+meth public abstract void setOnEditing(java.lang.String)
+meth public abstract void setOnSelect(java.lang.String)
+meth public abstract void setOverwrite(int,int,boolean)
+meth public abstract void setRows(int)
+meth public abstract void setSelectedIndex(int)
+meth public abstract void setSelectedIndices(int[])
+meth public abstract void setString(int,int,java.lang.String)
+meth public abstract void setWidth(int)
+
+CLSS public static com.leafdigital.ui.api.Table$EditingControl
+ outer com.leafdigital.ui.api.Table
+cons public <init>()
+meth public boolean isDim()
+meth public boolean isError()
+meth public void markDim()
+meth public void markError()
+supr java.lang.Object
+hfds dim,error
+
+CLSS public abstract interface com.leafdigital.ui.api.TextView
+fld public final static int LINELIMIT_NONE = 0
+innr public abstract interface static ActionHandler
+innr public abstract interface static MenuHandler
+intf com.leafdigital.ui.api.Widget
+meth public abstract boolean hasMark()
+meth public abstract boolean hasSelection()
+meth public abstract boolean isAtEnd()
+meth public abstract void addLine(java.lang.String) throws leafchat.core.api.GeneralException
+meth public abstract void addPara(java.lang.String) throws leafchat.core.api.GeneralException
+meth public abstract void addXML(java.lang.String) throws leafchat.core.api.GeneralException
+meth public abstract void clear()
+meth public abstract void copy()
+meth public abstract void fadeMark(int)
+meth public abstract void markPosition()
+meth public abstract void removeMark()
+meth public abstract void scrollToEnd()
+meth public abstract void selectAll()
+meth public abstract void selectNone()
+meth public abstract void setAction(java.lang.String,com.leafdigital.ui.api.TextView$ActionHandler)
+meth public abstract void setDefaultHeight(int)
+meth public abstract void setDefaultWidth(int)
+meth public abstract void setLineLimit(int)
+meth public abstract void setMenuHandler(com.leafdigital.ui.api.TextView$MenuHandler)
+meth public abstract void setOnScroll(java.lang.String)
+meth public abstract void setScrolledUpWarning(boolean)
+meth public abstract void setStyleSheet(java.io.InputStream) throws leafchat.core.api.GeneralException
+meth public abstract void setStyleSheet(java.lang.String) throws leafchat.core.api.GeneralException
+meth public abstract void setThemeType(java.lang.String)
+
+CLSS public abstract interface static com.leafdigital.ui.api.TextView$ActionHandler
+ outer com.leafdigital.ui.api.TextView
+meth public abstract void action(org.w3c.dom.Element,java.awt.event.MouseEvent) throws leafchat.core.api.GeneralException
+
+CLSS public abstract interface static com.leafdigital.ui.api.TextView$MenuHandler
+ outer com.leafdigital.ui.api.TextView
+meth public abstract void addItems(com.leafdigital.ui.api.PopupMenu,org.w3c.dom.Node)
+
+CLSS public abstract interface com.leafdigital.ui.api.Theme
+fld public final static java.lang.String META = "meta"
+fld public final static java.lang.String META_AUTHORS = "authors"
+fld public final static java.lang.String META_DESCRIPTION = "description"
+fld public final static java.lang.String META_NAME = "name"
+fld public final static java.lang.String META_PREVIEW = "preview"
+meth public abstract boolean getBooleanProperty(java.lang.String,java.lang.String,boolean)
+meth public abstract int getIntProperty(java.lang.String,java.lang.String,int)
+meth public abstract java.awt.image.BufferedImage getImageProperty(java.lang.String,java.lang.String,boolean,java.lang.Class,java.lang.String)
+meth public abstract java.io.File getLocation()
+meth public abstract java.lang.String getStringProperty(java.lang.String,java.lang.String,java.lang.String)
+meth public abstract textlayout.stylesheet.Stylesheet[] getStylesheets()
+
+CLSS public abstract interface com.leafdigital.ui.api.Tool
+meth public abstract int getDefaultPosition()
+meth public abstract void removed()
+
+CLSS public abstract interface com.leafdigital.ui.api.TreeBox
+innr public abstract interface static DragSingleSelectionHandler
+innr public abstract interface static Handler
+innr public abstract interface static Item
+innr public abstract interface static MultiSelectionHandler
+innr public abstract interface static SingleSelectionHandler
+intf com.leafdigital.ui.api.Widget
+meth public abstract void select(com.leafdigital.ui.api.TreeBox$Item)
+meth public abstract void select(com.leafdigital.ui.api.TreeBox$Item[])
+meth public abstract void setHandler(com.leafdigital.ui.api.TreeBox$Handler)
+meth public abstract void setHeight(int)
+meth public abstract void setWidth(int)
+meth public abstract void update()
+
+CLSS public abstract interface static com.leafdigital.ui.api.TreeBox$DragSingleSelectionHandler
+ outer com.leafdigital.ui.api.TreeBox
+intf com.leafdigital.ui.api.TreeBox$SingleSelectionHandler
+meth public abstract boolean canDrag(com.leafdigital.ui.api.TreeBox$Item)
+meth public abstract boolean canDragTo(com.leafdigital.ui.api.TreeBox$Item,com.leafdigital.ui.api.TreeBox$Item,int)
+meth public abstract void dragTo(com.leafdigital.ui.api.TreeBox$Item,com.leafdigital.ui.api.TreeBox$Item,int)
+
+CLSS public abstract interface static com.leafdigital.ui.api.TreeBox$Handler
+ outer com.leafdigital.ui.api.TreeBox
+meth public abstract boolean isRootDisplayed()
+meth public abstract com.leafdigital.ui.api.TreeBox$Item getRoot()
+
+CLSS public abstract interface static com.leafdigital.ui.api.TreeBox$Item
+ outer com.leafdigital.ui.api.TreeBox
+meth public abstract boolean isLeaf()
+meth public abstract com.leafdigital.ui.api.TreeBox$Item getParent()
+meth public abstract com.leafdigital.ui.api.TreeBox$Item[] getChildren()
+meth public abstract java.awt.Image getIcon()
+meth public abstract java.lang.String getText()
+
+CLSS public abstract interface static com.leafdigital.ui.api.TreeBox$MultiSelectionHandler
+ outer com.leafdigital.ui.api.TreeBox
+intf com.leafdigital.ui.api.TreeBox$Handler
+meth public abstract void selected(com.leafdigital.ui.api.TreeBox$Item[])
+
+CLSS public abstract interface static com.leafdigital.ui.api.TreeBox$SingleSelectionHandler
+ outer com.leafdigital.ui.api.TreeBox
+intf com.leafdigital.ui.api.TreeBox$Handler
+meth public abstract void selected(com.leafdigital.ui.api.TreeBox$Item)
+
+CLSS public abstract interface com.leafdigital.ui.api.UI
+fld public final static int BUTTON_CANCEL = 4
+fld public final static int BUTTON_NO = 2
+fld public final static int BUTTON_YES = 1
+fld public final static int UISTYLE_MULTIWINDOW = 2
+fld public final static int UISTYLE_SINGLEWINDOW = 1
+fld public final static int UISTYLE_TABBED = 3
+intf leafchat.core.api.Singleton
+meth public abstract boolean isAppActive()
+meth public abstract com.leafdigital.ui.api.BorderPanel newBorderPanel()
+meth public abstract com.leafdigital.ui.api.Button newButton()
+meth public abstract com.leafdigital.ui.api.ButtonPanel newButtonPanel()
+meth public abstract com.leafdigital.ui.api.CheckBox newCheckBox()
+meth public abstract com.leafdigital.ui.api.ChoicePanel newChoicePanel()
+meth public abstract com.leafdigital.ui.api.DecoratedPanel newDecoratedPanel()
+meth public abstract com.leafdigital.ui.api.Dialog createDialog(org.w3c.dom.Document,java.lang.Object)
+meth public abstract com.leafdigital.ui.api.Dialog newDialog(java.lang.Object)
+meth public abstract com.leafdigital.ui.api.Dropdown newDropdown()
+meth public abstract com.leafdigital.ui.api.EditArea newEditArea()
+meth public abstract com.leafdigital.ui.api.EditBox newEditBox()
+meth public abstract com.leafdigital.ui.api.GroupPanel newGroupPanel()
+meth public abstract com.leafdigital.ui.api.HorizontalPanel newHorizontalPanel()
+meth public abstract com.leafdigital.ui.api.Label newLabel()
+meth public abstract com.leafdigital.ui.api.ListBox newListBox()
+meth public abstract com.leafdigital.ui.api.Page createPage(org.w3c.dom.Document,java.lang.Object)
+meth public abstract com.leafdigital.ui.api.Page newPage()
+meth public abstract com.leafdigital.ui.api.Page newPage(java.lang.Object)
+meth public abstract com.leafdigital.ui.api.Pic newPic()
+meth public abstract com.leafdigital.ui.api.PopupMenu newPopupMenu()
+meth public abstract com.leafdigital.ui.api.Progress newProgress()
+meth public abstract com.leafdigital.ui.api.RadioButton newRadioButton()
+meth public abstract com.leafdigital.ui.api.ScrollPanel newScrollPanel()
+meth public abstract com.leafdigital.ui.api.Spacer newSpacer()
+meth public abstract com.leafdigital.ui.api.SplitPanel newSplitPanel()
+meth public abstract com.leafdigital.ui.api.TabPanel newTabPanel()
+meth public abstract com.leafdigital.ui.api.Table newTable()
+meth public abstract com.leafdigital.ui.api.TextView newTextView()
+meth public abstract com.leafdigital.ui.api.Theme getTheme()
+meth public abstract com.leafdigital.ui.api.Theme[] getAvailableThemes()
+meth public abstract com.leafdigital.ui.api.TreeBox newTreeBox()
+meth public abstract com.leafdigital.ui.api.VerticalPanel newVerticalPanel()
+meth public abstract com.leafdigital.ui.api.Widget createWidget(org.w3c.dom.Document,com.leafdigital.ui.api.WidgetOwner)
+meth public abstract com.leafdigital.ui.api.Widget newJComponentWrapper(javax.swing.JComponent)
+meth public abstract com.leafdigital.ui.api.Window createWindow(org.w3c.dom.Document,java.lang.Object)
+meth public abstract com.leafdigital.ui.api.Window newWindow(java.lang.Object)
+meth public abstract int getUIStyle()
+meth public abstract int showOptionalQuestion(java.lang.String,com.leafdigital.ui.api.WidgetOwner,java.lang.String,java.lang.String,int,java.lang.String,java.lang.String,java.lang.String,int)
+meth public abstract int showQuestion(com.leafdigital.ui.api.WidgetOwner,java.lang.String,java.lang.String,int,java.lang.String,java.lang.String,java.lang.String,int)
+meth public abstract java.awt.Color showColourSelect(com.leafdigital.ui.api.WidgetOwner,java.lang.String,java.awt.Color)
+meth public abstract java.io.File getThemeFolder(boolean)
+meth public abstract java.io.File showFileSelect(com.leafdigital.ui.api.WidgetOwner,java.lang.String,boolean,java.io.File,java.io.File,java.lang.String[],java.lang.String)
+meth public abstract java.io.File showFolderSelect(com.leafdigital.ui.api.WidgetOwner,java.lang.String,java.io.File)
+meth public abstract void activate()
+meth public abstract void installUserTheme(java.io.File) throws leafchat.core.api.GeneralException
+meth public abstract void refreshTheme()
+meth public abstract void registerTool(com.leafdigital.ui.api.Tool)
+meth public abstract void resizeToolbar()
+meth public abstract void runInThread(java.lang.Runnable)
+meth public abstract void setTheme(com.leafdigital.ui.api.Theme)
+meth public abstract void setUIStyle(int)
+meth public abstract void showUserError(com.leafdigital.ui.api.WidgetOwner,java.lang.String,java.lang.String)
+meth public abstract void unregisterTool(com.leafdigital.ui.api.Tool)
+
+CLSS public abstract interface com.leafdigital.ui.api.UIPrefs
+fld public final static java.lang.String PREFDEFAULT_FONTNAME = "Arial"
+fld public final static java.lang.String PREFDEFAULT_FONTSIZE = "14"
+fld public final static java.lang.String PREFDEFAULT_IRCCOLOURS = "t"
+fld public final static java.lang.String PREFDEFAULT_MINIMISE_TO_TRAY = "f"
+fld public final static java.lang.String PREFDEFAULT_SYSTEMFONT = "t"
+fld public final static java.lang.String PREFDEFAULT_UISTYLE = "classic"
+fld public final static java.lang.String PREFGROUP_COLOURS = "colours"
+fld public final static java.lang.String PREFVALUE_UISTYLE_CLASSIC = "classic"
+fld public final static java.lang.String PREFVALUE_UISTYLE_SEPARATE = "separate"
+fld public final static java.lang.String PREFVALUE_UISTYLE_TABS = "tabs"
+fld public final static java.lang.String PREF_FONTNAME = "fontname"
+fld public final static java.lang.String PREF_FONTSIZE = "fontsize"
+fld public final static java.lang.String PREF_IRCCOLOURS = "irccolours"
+fld public final static java.lang.String PREF_KEYWORD = "keyword"
+fld public final static java.lang.String PREF_MINIMISE_TO_TRAY = "minimise-to-tray"
+fld public final static java.lang.String PREF_RGB = "rgb"
+fld public final static java.lang.String PREF_SYSTEMFONT = "systemfont"
+fld public final static java.lang.String PREF_UISTYLE = "uistyle"
+
+CLSS public abstract interface com.leafdigital.ui.api.VerticalPanel
+intf com.leafdigital.ui.api.Panel
+meth public abstract void add(com.leafdigital.ui.api.Widget)
+meth public abstract void setSpacing(int)
+
+CLSS public abstract interface com.leafdigital.ui.api.Widget
+meth public abstract boolean isVisible()
+meth public abstract com.leafdigital.ui.api.WidgetOwner getOwner()
+meth public abstract java.lang.String getID()
+meth public abstract void informClosed()
+meth public abstract void setOwner(com.leafdigital.ui.api.WidgetOwner)
+meth public abstract void setVisible(boolean)
+
+CLSS public abstract interface com.leafdigital.ui.api.WidgetOwner
+meth public abstract com.leafdigital.ui.api.CallbackHandler getCallbackHandler()
+meth public abstract com.leafdigital.ui.api.RadioButton getGroupSelected(java.lang.String)
+meth public abstract com.leafdigital.ui.api.Widget getWidget(java.lang.String)
+meth public abstract void setWidgetID(java.lang.String,com.leafdigital.ui.api.Widget)
+
+CLSS public abstract interface com.leafdigital.ui.api.Window
+intf com.leafdigital.ui.api.WidgetOwner
+meth public abstract boolean getCanClearAttention()
+meth public abstract boolean isActive()
+meth public abstract boolean isClosed()
+meth public abstract boolean isHidden()
+meth public abstract boolean isMinimized()
+meth public abstract java.lang.String getExtraRemember()
+meth public abstract java.lang.String getTitle()
+meth public abstract void activate()
+meth public abstract void attention()
+meth public abstract void close()
+meth public abstract void minimize()
+meth public abstract void setCanClearAttention(boolean)
+meth public abstract void setClosable(boolean)
+meth public abstract void setContents(com.leafdigital.ui.api.Widget)
+meth public abstract void setContents(org.w3c.dom.Element)
+meth public abstract void setExtraRemember(java.lang.String)
+meth public abstract void setIcon(java.awt.Image)
+meth public abstract void setInitialSize(int,int)
+meth public abstract void setMinSize(int,int)
+meth public abstract void setOnActive(java.lang.String)
+meth public abstract void setOnClosed(java.lang.String)
+meth public abstract void setOnClosing(java.lang.String)
+meth public abstract void setRemember(java.lang.String,java.lang.String)
+meth public abstract void setResizable(boolean)
+meth public abstract void setTitle(java.lang.String)
+meth public abstract void show(boolean)
+
+CLSS public java.lang.Object
+cons public <init>()
+meth protected java.lang.Object clone() throws java.lang.CloneNotSupportedException
+meth protected void finalize() throws java.lang.Throwable
+meth public boolean equals(java.lang.Object)
+meth public final java.lang.Class<?> getClass()
+meth public final void notify()
+meth public final void notifyAll()
+meth public final void wait() throws java.lang.InterruptedException
+meth public final void wait(long) throws java.lang.InterruptedException
+meth public final void wait(long,int) throws java.lang.InterruptedException
+meth public int hashCode()
+meth public java.lang.String toString()
+
+CLSS public abstract interface leafchat.core.api.Singleton
+

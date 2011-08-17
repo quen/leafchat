@@ -1,0 +1,11 @@
+<Dialog Title="Confirm quit" MinSize="400,100">
+<VerticalPanel Border="12" Spacing="4">
+  <Label Text="You are currently connected to:"/>
+  <Label id="serverList"/>
+  <Spacer Height="8"/>
+  <ButtonPanel>
+  	  <yes><Button Label="Disconnect and quit" OnAction="actionQuit"/></yes>
+  	  <cancel><Button Label="Cancel" OnAction="actionCancel"/></cancel>
+  </ButtonPanel>
+</VerticalPanel>
+</Dialog>

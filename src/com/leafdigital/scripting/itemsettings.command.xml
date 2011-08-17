@@ -1,0 +1,40 @@
+<Page>
+  <VerticalPanel Spacing="8">
+		<HorizontalPanel Spacing="8">
+	    <Label Text="Command" BaseGroup="a" WidthGroup="a"/>
+		  <VerticalPanel>
+		    <HorizontalPanel>
+	  		    <Label Text="/" BaseGroup="a"/>
+			    <EditBox id="command" Require="[a-z]+" OnChange="change" BaseGroup="a"/>
+			  </HorizontalPanel>
+		    <Label Small="y" Text="The IRC command you are defining."/>
+		  </VerticalPanel>
+	  </HorizontalPanel>
+		<HorizontalPanel Spacing="8">
+	    <Label Text="Parameters" BaseGroup="b" WidthGroup="a"/>
+		  <VerticalPanel>
+		    <HorizontalPanel Spacing="8">
+			  		<Dropdown id="class0" BaseGroup="b" OnChange="change"/>
+			    <EditBox id="name0" BaseGroup="b" Require="[A-Za-z][A-Za-z0-9_]*" OnChange="change"/>
+			  </HorizontalPanel>
+		    <HorizontalPanel Spacing="8">
+			  		<Dropdown id="class1" BaseGroup="c" OnChange="change"/>
+			    <EditBox id="name1" BaseGroup="c" Require="[A-Za-z][A-Za-z0-9_]*" OnChange="change"/>
+			  </HorizontalPanel>
+		    <HorizontalPanel Spacing="8">
+			  		<Dropdown id="class2" BaseGroup="d" OnChange="change"/>
+			    <EditBox id="name2" BaseGroup="d" Require="[A-Za-z][A-Za-z0-9_]*" OnChange="change"/>
+			  </HorizontalPanel>
+		    <HorizontalPanel Spacing="8">
+			  		<Dropdown id="class3" BaseGroup="e" OnChange="change"/>
+			    <EditBox id="name3" BaseGroup="e" Require="[A-Za-z][A-Za-z0-9_]*" OnChange="change"/>
+			  </HorizontalPanel>
+		    <HorizontalPanel Spacing="8">
+			  		<Dropdown id="class4" BaseGroup="f" OnChange="change"/>
+			    <EditBox id="name4" BaseGroup="f" Require="[A-Za-z][A-Za-z0-9_]*" OnChange="change"/>
+			  </HorizontalPanel>
+			  <Label Small="y" Text="Parameters that must be typed after the command. Give each parameter a name so you can refer to it in code. Parameters need to be given a type, either &lt;key>String&lt;/key> (any text) or &lt;key>int&lt;/key> (a whole number)."/>
+		  </VerticalPanel>
+		</HorizontalPanel>
+	</VerticalPanel>	  
+</Page>

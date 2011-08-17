@@ -1,0 +1,14 @@
+These API signature files contain lists of all the public classes and methods
+in the API packages and also in the included 'util.jar' library. They are used
+to check that leafChat maintains binary compatibility with plugins and user
+scripts created for earlier versions.
+
+To create API signature files for a particular version, run the 'makesignatures'
+Ant target after setting 'sigbase' to point to a leafChat installation.
+
+NOTE: In versions prior to 2.4, I manually edited the sig files to remove
+the following line from 'util' Base64:
+
+meth public final static void main(java.lang.String[])
+
+This was removed in 2.4 release. There's no chance anything depended on it.

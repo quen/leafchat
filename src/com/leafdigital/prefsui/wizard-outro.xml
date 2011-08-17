@@ -1,0 +1,11 @@
+<Page>
+	<VerticalPanel Spacing="8">
+		<Label Text="&lt;strong>All done!&lt;/strong>"/>
+		<VerticalPanel>
+			<Label Text="After closing this wizard, begin by connecting to a server using the &lt;strong>Connect&lt;/strong> button."/>
+			<Label Small="y" Text="Don't know a server? Ask friends who use IRC, or try &lt;strong>irc.dal.net&lt;/strong>."/>
+		</VerticalPanel>
+ 		<Label Text="Once you've connected, you can join a channel with the &lt;strong>Join&lt;/strong> button."/>
+ 		<Label Text="Thanks for trying leafChat. I hope you like it!"/>
+ 	</VerticalPanel>
+</Page>

@@ -1,0 +1,13 @@
+<Dialog Resizable="n" Title="Did you donate?">
+<BorderPanel Border="8" Spacing="4">
+  <central>
+    <Label id="message" DefaultWidth="350" Text="&lt;para>You recently clicked the Donate button in leafChat. Did you actually make a donation?&lt;/para>&lt;small>Don't worry, nothing bad happens if you click No! And this information isn't sent to anyone. The program just uses it so messages in the donation request prompt are accurate. Clicking No will make the prompt go away for a few months.&lt;/small>"/>
+  </central>  
+  <south>
+  	  	<ButtonPanel>
+	  		<yes><Button id="yes" Label="Yes, I did" OnAction="actionYep"/></yes>
+	  		<no><Button id="no" Label="No, maybe later" OnAction="actionLater"/></no>
+	  	</ButtonPanel>	  	
+  </south>
+</BorderPanel>
+</Dialog>

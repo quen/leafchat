@@ -1,0 +1,162 @@
+<Window Title="Logs" OnClosed="windowClosed" InitialSize="600,400">
+  <TabPanel Border="4" id="tabs">
+    <Page Title="View">
+			<BorderPanel Border="4" Spacing="12" CornerHandling="CORNERS_VERTICALFILL">
+			  <central>
+			  	<BorderPanel Spacing="4">
+			  		<central>
+		    			<TextView id="tv" ThemeType="log"/>				  
+			  		</central>
+					  <southeast>
+					  	<Button id="export" Label="Export..." OnAction="actionExport" Enabled="n"/>
+			 			</southeast>
+			  	</BorderPanel>
+			  </central>
+			  <west>
+					<BorderPanel Spacing="12">
+						<north>
+							<BorderPanel Spacing="4">
+								<north>
+						  		<ChoicePanel id="searchChoice">
+						  			<Page id="searchInput">
+										<BorderPanel Spacing="4">
+											<central>
+												<EditBox id="search" OnChange="changeSearch" OnEnter="actionSearch"/>
+											</central>
+											<southwest>
+												<HorizontalPanel Spacing="4">
+												  <Button id="searchButton" Label="Search" OnAction="actionSearch" Enabled="n"/>
+												  <Button id="clearSearch" Label="Clear" OnAction="clearSearch" Enabled="n"/>
+												</HorizontalPanel>
+											</southwest>
+										</BorderPanel>				  		
+									</Page>
+									<Page id="searchActive">
+										<BorderPanel Spacing="4">
+											<central>
+												<Progress id="searchProgress"/>
+											</central>
+											<southwest>
+											  <Button id="cancelSearch" Label="Cancel" OnAction="actionCancelSearch"/>
+											</southwest>
+										</BorderPanel>				  		
+									</Page>
+								</ChoicePanel>
+								</north>
+								<central>
+								  <BorderPanel Spacing="4">
+								    <north><Label MacIndent="edit" Text="Date"/></north>
+								    <central>
+											<ListBox MacIndent="edit" id="dates" MultiSelect="y" Width="150" OnChange="selectionDates"/>
+										</central>
+									</BorderPanel>
+								</central>
+							</BorderPanel>
+						</north>
+						<central>
+						  <BorderPanel Spacing="4">
+						    <north><Label MacIndent="edit" Text="Channel / nickname"/></north>
+						    <central>
+									<ListBox MacIndent="edit" id="items" MultiSelect="y" Width="150" OnChange="selectionItems"/>
+								</central>
+							</BorderPanel>
+						</central>
+					</BorderPanel>
+			  </west>
+			</BorderPanel>
+		</Page>
+		<Page Title="Settings">
+			<BorderPanel Spacing="12" Border="4">
+				<west>
+					<BorderPanel Spacing="4">
+						<north>
+							<VerticalPanel>
+								<Label Text="Log"/>
+								<RadioButton id="logEverything" OnAction="actionLogChanged" Group="log" Label="Everything"/>
+								<RadioButton id="logSelected" OnAction="actionLogChanged" Group="log" Label="Only specified channels or nicks:"/>
+							</VerticalPanel>
+						</north>
+						<central>
+							<ListBox id="selected" Width="500" Sort="y" OnChange="selectionSelected" Enabled="n"/>
+						</central>
+						<south>
+							<HorizontalPanel>
+								<Button id="selectedAdd" Label="Add" OnAction="actionSelectedAdd" Enabled="n"/>
+								<Button id="selectedDelete" Label="Delete" OnAction="actionSelectedDelete" Enabled="n"/>
+							</HorizontalPanel>
+						</south>
+					</BorderPanel>
+				</west>
+				<east>
+					<BorderPanel>
+						<west>
+							<BorderPanel Spacing="4">
+								<north>
+									<Label Text="Do not log"/>
+								</north>
+								<central>
+									<ListBox id="doNotLog" Width="500" Sort="y" OnChange="selectionDoNotLog"/>
+								</central>
+								<south>
+									<HorizontalPanel>
+										<Button Label="Add" OnAction="actionDoNotLogAdd"/>
+										<Button id="doNotLogDelete" Label="Delete" OnAction="actionDoNotLogDelete"/>
+									</HorizontalPanel>
+								</south>
+							</BorderPanel>
+						</west>
+					</BorderPanel>
+				</east>
+				<south>
+					<HorizontalPanel>
+						<Label Text="Days are considered to end at " BaseGroup="b"/>
+						<EditBox id="rolloverHour" OnChange="changeRolloverHour" Width="30" BaseGroup="b"/>
+						<Label Text=":00 hours." BaseGroup="b"/>
+					</HorizontalPanel>
+				</south>
+			</BorderPanel>
+		</Page>
+		<Page Title="Storage">
+			<BorderPanel Spacing="24" Border="4">			
+				<west>
+					<VerticalPanel>
+						<Label Text="Keep logs for"/>
+						<RadioButton id="keep14" OnAction="actionKeepChanged" Group="keep" Label="14 days"/>
+						<RadioButton id="keep30" OnAction="actionKeepChanged" Group="keep" Label="30 days"/>
+						<RadioButton id="keep90" OnAction="actionKeepChanged" Group="keep" Label="90 days"/>
+						<RadioButton id="keep365" OnAction="actionKeepChanged" Group="keep" Label="A year"/>
+						<RadioButton id="keep0" OnAction="actionKeepChanged" Group="keep" Label="Never remove any logs"/>
+						<Spacer Height="12"/>
+						<Label Small="y" Text="Keeping a very large quantity of logs makes leafChat slow to start up."/>
+						<Spacer Height="18"/>
+						<Label Text="When removing logs"/>
+						<RadioButton id="archiveOff" OnAction="actionArchiveOff" Group="delete" Label="Delete permanently"/>
+						<RadioButton id="archiveOn" OnAction="actionArchiveOn" Group="delete" Label="Move to archive folder"/>
+						<Spacer Height="12"/>
+						<Label Small="y" Text="Archived logs cannot be viewed or searched within leafChat."/>
+					</VerticalPanel>
+				</west>
+				<central>
+					<BorderPanel>
+						<west>
+							<BorderPanel Spacing="4">
+								<north>
+									<Label Text="Keep forever"/>
+								</north>
+								<central>
+									<ListBox id="neverDelete" Width="300" Sort="y" OnChange="selectionNeverDelete"/>
+								</central>
+								<south>
+									<HorizontalPanel>
+										<Button Label="Add" OnAction="actionNeverDeleteAdd"/>
+										<Button id="neverDeleteDelete" Label="Delete" OnAction="actionNeverDeleteDelete"/>
+									</HorizontalPanel>
+								</south>
+							</BorderPanel>
+						</west>
+					</BorderPanel>
+				</central>
+			</BorderPanel>
+		</Page>
+	</TabPanel>
+</Window>

@@ -1,0 +1,23 @@
+<Page Title="Interface style" OnSet="onSet">
+  <VerticalPanel Spacing="8">
+		<Label Text="&lt;strong>Theme&lt;/strong>"/>
+  
+  		<Label Text="leafChat comes with two themes: with leaves or without."/>
+  		
+  		<HorizontalPanel Spacing="24">
+  		  <VerticalPanel Spacing="4">
+			  	<RadioButton Label="With leaves" Group="themes" id="leaves" OnAction="actionLeaves"/>
+		    <Pic id="leavesPic"/>
+  		  </VerticalPanel>
+  		  <VerticalPanel Spacing="4">
+			  	<RadioButton Label="Without leaves" Group="themes" id="shared" OnAction="actionShared"/>
+		    <Pic id="sharedPic"/>
+  		  </VerticalPanel>
+  		</HorizontalPanel>
+  		
+  		<Spacer Height="4"/>
+
+		<Label Small="y" Text="This can be changed later in the Options dialog. You can also download more themes."/>
+		
+  	</VerticalPanel>
+</Page>

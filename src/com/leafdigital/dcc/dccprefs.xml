@@ -1,0 +1,19 @@
+<Page Title="File transfers">
+  <VerticalPanel Spacing="8">
+    <VerticalPanel>
+     	<Label Text="These settings control what happens when you send or receive files using DCC."/>
+     	<Label Small="y" Text="To send a file, right click on somebody's name and choose &lt;strong>Send file&lt;/strong>."/>
+    </VerticalPanel>
+		<BorderPanel Spacing="4">
+		  <west>
+			  	<Label Text="Download location" BaseGroup="a" MinWidth="130"/>
+			</west>
+			<central>
+			  <Label id="downloadLocation" BaseGroup="a" />
+			</central>
+			<east>
+				<Button Label="Set..." OnAction="actionDownloadLocation" BaseGroup="a"/>
+			</east>
+		</BorderPanel>
+  	</VerticalPanel>
+</Page>

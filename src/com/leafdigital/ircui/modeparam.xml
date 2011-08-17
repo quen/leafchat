@@ -1,0 +1,20 @@
+<Dialog Title="Set mode value" Resizable="n">
+<VerticalPanel Border="8" Spacing="4">
+  <BorderPanel Spacing="4">
+  		<west>
+		  <Label id="modeletter" Text="l=" BaseGroup="a"/>
+		</west>
+		<central>
+			<EditBox id="value" OnChange="changeValue" OnEnter="actionSet" BaseGroup="a"/>
+		</central>
+	</BorderPanel>
+  <BorderPanel>
+    <east>
+      <HorizontalPanel>
+		    <Button Label="Cancel" OnAction="actionCancel"/>
+		    <Button id="set" Label="Set" OnAction="actionSet" Default="y" Enabled="n"/>
+		  </HorizontalPanel>
+    </east>
+  </BorderPanel>
+</VerticalPanel>  
+</Dialog>

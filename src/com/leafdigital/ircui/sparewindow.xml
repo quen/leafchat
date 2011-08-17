@@ -1,0 +1,11 @@
+<Window OnClosed="windowClosed" InitialSize="600,400">
+  <BorderPanel>
+    <central>
+	    <TextView id="tv" OnScroll="actionScroll" ThemeType="spare"/>
+	  </central>
+	  <south>
+	    <CheckBox id="autoClose" Label="Close this window after another one opens"
+	      OnChange="changeAutoClose"/>
+	  </south>
+	</BorderPanel>
+</Window>

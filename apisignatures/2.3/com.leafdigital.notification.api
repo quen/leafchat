@@ -1,0 +1,50 @@
+#Signature file v4.1
+#Version 
+
+CLSS public abstract interface com.leafdigital.notification.api.Notification
+intf leafchat.core.api.Singleton
+meth public abstract void notify(java.lang.String,java.lang.String,java.lang.String)
+
+CLSS public com.leafdigital.notification.api.NotificationListMsg
+cons public <init>()
+meth public java.lang.String[] getDefaultTypes()
+meth public java.lang.String[] getTypes()
+meth public void addType(java.lang.String,boolean)
+supr leafchat.core.api.Msg
+hfds defaultTypes,types
+
+CLSS public java.lang.Object
+cons public <init>()
+meth protected java.lang.Object clone() throws java.lang.CloneNotSupportedException
+meth protected void finalize() throws java.lang.Throwable
+meth public boolean equals(java.lang.Object)
+meth public final java.lang.Class<?> getClass()
+meth public final void notify()
+meth public final void notifyAll()
+meth public final void wait() throws java.lang.InterruptedException
+meth public final void wait(long) throws java.lang.InterruptedException
+meth public final void wait(long,int) throws java.lang.InterruptedException
+meth public int hashCode()
+meth public java.lang.String toString()
+
+CLSS public abstract leafchat.core.api.Msg
+cons public <init>()
+fld public final static int PRIORITY_AFTERNORMAL = 9000
+fld public final static int PRIORITY_BEFORENORMAL = 11000
+fld public final static int PRIORITY_EARLY = 12000
+fld public final static int PRIORITY_FIRST = 14000
+fld public final static int PRIORITY_LAST = 6000
+fld public final static int PRIORITY_LATE = 8000
+fld public final static int PRIORITY_NORMAL = 10000
+meth public boolean isHandled()
+meth public boolean isStopped()
+meth public boolean sequenceBefore(leafchat.core.api.Msg)
+meth public void markHandled()
+meth public void markStopped()
+meth public void setSequence(java.lang.String,int)
+meth public void setSequence(leafchat.core.api.Msg)
+supr java.lang.Object
+hfds handled,sequenceName,sequenceNumber,stopped
+
+CLSS public abstract interface leafchat.core.api.Singleton
+

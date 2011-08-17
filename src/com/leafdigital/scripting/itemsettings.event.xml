@@ -1,0 +1,39 @@
+<Page>
+	<BorderPanel Spacing="8">
+		<west>
+			<TreeBox Width="200" id="messages"/>
+		</west>
+		<central>
+			<VerticalPanel Spacing="8">
+			  <Label id="description"/>
+				<BorderPanel Spacing="8">
+				  <west>
+						<Label Text="Variables" BaseGroup="b" WidthGroup="labels"/>
+					</west>
+					<central>
+						<Label id="variables" BaseGroup="b"/>
+					</central>
+				</BorderPanel>
+				<BorderPanel Spacing="8">
+				  <west>
+				    <Label Text="Priority" WidthGroup="labels" BaseGroup="c"/>
+				  </west>
+				  <central>
+				    <Dropdown id="priority" BaseGroup="c" OnChange="change"/>
+				  </central> 
+				</BorderPanel>
+			  <VerticalPanel Spacing="8">
+					<BorderPanel Spacing="8">
+					  <west>
+							<Label Text="Filter" BaseGroup="a" WidthGroup="labels"/>
+						</west>
+						<central>
+							<Dropdown id="filter" BaseGroup="a" OnChange="changeFilter"/>
+						</central>
+					</BorderPanel>				
+					<VerticalPanel Spacing="8" id="filterSettings"/>
+				</VerticalPanel>
+			</VerticalPanel>
+		</central>
+	</BorderPanel>	  
+</Page>

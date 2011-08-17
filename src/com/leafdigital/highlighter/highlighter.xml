@@ -1,0 +1,38 @@
+<Page Title="Highlighter" OnSet="onSet">
+	<VerticalPanel Spacing="8">
+		<VerticalPanel>
+  	  <Label Text="You can highlight selected words in colour."/>
+	    <Label Small="y" Text="To change highlight colour, use the text display preferences."/>
+	  </VerticalPanel>
+	  
+	  <CheckBox id="nick" Label="Highlight current nickname" OnChange="changeNick"/>
+
+	 	<HorizontalPanel Spacing="4">
+	 		<Label Text="Play sound on highlight" BaseGroup="x"/>
+	 		<VerticalPanel Spacing="4">
+		 		<Dropdown id="sound" BaseGroup="x" OnChange="selectSound"/>
+		 		<CheckBox id="restrictSound" OnChange="changeRestrict" Label="Not more than once per minute"/>
+	 		</VerticalPanel>
+	 	</HorizontalPanel>
+	  
+	  <BorderPanel Spacing="4">
+  		<north>
+  			<VerticalPanel>
+	 		    <Label Text="Highlight words"/>
+	 		    <Label Text="You can enter any word to highlight here. Words will only be highlighted if they appear as whole words, not inside other words. Highlighting is not case-sensitive." Small="y"/>
+	 		  </VerticalPanel>
+  		</north>
+	  	<central>
+	  		<ListBox id="words" OnChange="selectWords" OnAction="actionEdit" Sort="y"/> 
+	 		</central>
+			<south>
+				<HorizontalPanel Spacing="4">
+					<Button Label="Add..." OnAction="actionAdd"/>
+					<Button id="edit" Label="Edit..." OnAction="actionEdit" Enabled="n"/>
+					<Button id="remove" Label="Remove" OnAction="actionRemove" Enabled="n"/>
+				</HorizontalPanel>
+			</south>
+	 	</BorderPanel>
+	 	
+	</VerticalPanel>
+</Page>

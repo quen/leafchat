@@ -1,0 +1,377 @@
+@rgb nick "Nicknames" rgb(0,0,128);
+@rgb chan "Channel names" rgb(0,0,128);
+@rgb server "Server messages" rgb(128,0,0);
+@rgb joinpart "Joins and parts" rgb(0,128,0);
+@rgb quit "Quits" rgb(0,128,0);
+@rgb owntext "Own text" rgb(80,80,80);
+@rgb kick "Kicks" rgb(128,0,0);
+@rgb ctcp "CTCP messages" rgb(128,128,0);
+@rgb status "Status info" rgb(0,128,128);
+@rgb url "URLs" rgb(0,0,255);
+@rgb unhandled "Unhandled data" rgb(80,80,80);
+@rgb highlight "Highlighted words" rgb(255, 0, 128);
+
+@rgb key "Emphasised words" rgb(0,80,0);
+@rgb error "System errors" rgb(128,0,0);
+
+internalaction
+{
+	type:inline;
+	text-rgb:url;
+	font-size:0.8f;
+}
+
+key
+{
+	type:inline;
+	text-rgb:key;
+}
+chan
+{
+	type:inline;
+	text-rgb:chan;
+}
+nick
+{
+	type:inline;
+	text-rgb:nick;
+}
+server
+{
+	type:inline;
+	text-rgb:server;
+}
+join
+{
+	type:inline;
+	text-rgb:joinpart;
+}
+part
+{
+	type:inline;
+	text-rgb:joinpart;
+}
+kick
+{
+	type:inline;
+  text-rgb:kick;
+}
+quit
+{
+	type:inline;
+  text-rgb:quit;
+}
+owntext
+{
+	type:inline;
+  text-rgb:owntext;
+}
+ctcp
+{
+	type:inline;
+  text-rgb:ctcp;
+}
+mode
+{
+	type:inline;
+  text-rgb:status;
+}
+nickchange
+{
+	type:inline;
+  text-rgb:status;
+}
+topic
+{
+	type:inline;
+  text-rgb:status;
+}
+chaninfo
+{
+	type:inline;
+  text-rgb:status;
+}
+url
+{
+	type:inline;
+  text-rgb:url;
+}
+unhandled
+{
+	type:inline;
+	text-rgb:unhandled;
+}
+error
+{
+	type:inline;
+	text-rgb:error;
+}
+italic
+{
+	type:inline;
+	font-style:italic;
+}
+highlight
+{
+	type:inline;
+	text-rgb:highlight;
+}
+
+knownuser
+{
+	type:block;
+	font-size:0.8f;
+}
+
+@rgb boxborder "Infobox border" #bbb;
+@rgb boxbg "Infobox background" #eee;
+
+theme_channel > line,theme_message > line, theme_log > line,
+theme_channel > * > box,theme_message > * > box, theme_log > * > box
+{
+	gap-left:33;
+}
+line > timestamp
+{
+	type:margin-block;
+	margin-width:33;
+	font-size:10; /* 0.8f */
+	match-baseline:1.25f;
+	outline:bg 75%;
+}
+datestamp
+{
+	gap-top:0.5f;
+	type:block;
+	font-size:10;	
+	outline:bg 75%;
+}
+
+motd
+{
+	type:block;
+}
+box
+{
+	type:block;
+	border-top:1;
+	border-bottom:1;
+	border-rgb:boxborder;
+	background-rgb:boxbg;
+	gap-top:0.5f;
+	gap-bottom:0.5f;
+	pad-bottom:4;
+}
+boxstart
+{
+	type:block;
+	gap-top:1;
+	gap-bottom:2;
+	pad-bottom:2;
+	pad-left:4;
+	border-bottom:1;
+	border-rgb:boxborder;
+}
+motd > box > line
+{
+	font-name:"Andale Mono","Monaco","Courier New",Monospaced;		
+	font-size:0.8f;
+}
+box > line
+{
+	gap-left:4;
+	gap-right:4;	
+}
+
+indent, searchresult > line
+{
+	type:block;
+	border-rgb:boxborder;
+	border-left:1;
+	pad-left:0.5f;
+	gap-left:0.5f;
+}
+line
+{
+	text-indent:20;
+	text-first-indent:-20;
+}
+searchresult > line,searchresult > file > searchserver
+{
+	font-size:0.8f;
+	font-weight:normal;
+}
+searchresult > file
+{
+	font-weight:bold;
+}
+searchresult
+{
+	gap-bottom:0.5f;
+}
+searchresult found
+{
+	font-weight:bold;
+}
+
+irc-b
+{
+	type:inline;
+	font-weight:bold;
+}
+irc-u
+{
+	type:inline;
+	font-underline:solid;
+}
+irc-fg0
+{
+	type:inline;
+	text-rgb:bg;
+}
+irc-fg2
+{
+	type:inline;
+	text-rgb:#000080;
+}
+irc-fg3
+{
+	type:inline;
+	text-rgb:#008000;
+}
+irc-fg4
+{
+	type:inline;
+	text-rgb:#ff0000;
+}
+irc-fg5
+{
+	type:inline;
+	text-rgb:#804040;
+}
+irc-fg6
+{
+	type:inline;
+	text-rgb:#8000ff;
+}
+irc-fg7
+{
+	type:inline;
+	text-rgb:#808000;
+}
+irc-fg8
+{
+	type:inline;
+	text-rgb:#ffff00;
+}
+irc-fg9
+{
+	type:inline;
+	text-rgb:#00ff00;
+}
+irc-fg10
+{
+	type:inline;
+	text-rgb:#008080;
+}
+irc-fg11
+{
+	type:inline;
+	text-rgb:#00ffff;
+}
+irc-fg12
+{
+	type:inline;
+	text-rgb:#0000ff;
+}
+irc-fg13
+{
+	type:inline;
+	text-rgb:#ff00ff;
+}
+irc-fg14
+{
+	type:inline;
+	text-rgb:#808080;
+}
+irc-fg15
+{
+	type:inline;
+	text-rgb:#c0c0c0;
+}
+
+irc-bg1
+{
+	type:inline;
+	text-background-rgb:_windowText;
+}
+irc-bg2
+{
+	type:inline;
+	text-background-rgb:#000080;
+}
+irc-bg3
+{
+	type:inline;
+	text-background-rgb:#008000;
+}
+irc-bg4
+{
+	type:inline;
+	text-background-rgb:#ff0000;
+}
+irc-bg5
+{
+	type:inline;
+	text-background-rgb:#804040;
+}
+irc-bg6
+{
+	type:inline;
+	text-background-rgb:#8000ff;
+}
+irc-bg7
+{
+	type:inline;
+	text-background-rgb:#808000;
+}
+irc-bg8
+{
+	type:inline;
+	text-background-rgb:#ffff00;
+}
+irc-bg9
+{
+	type:inline;
+	text-background-rgb:#00ff00;
+}
+irc-bg10
+{
+	type:inline;
+	text-background-rgb:#008080;
+}
+irc-bg11
+{
+	type:inline;
+	text-background-rgb:#00ffff;
+}
+irc-bg12
+{
+	type:inline;
+	text-background-rgb:#0000ff;
+}
+irc-bg13
+{
+	type:inline;
+	text-background-rgb:#ff00ff;
+}
+irc-bg14
+{
+	type:inline;
+	text-background-rgb:#808080;
+}
+irc-bg15
+{
+	type:inline;
+	text-background-rgb:#c0c0c0;
+}

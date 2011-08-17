@@ -1,0 +1,11 @@
+#Signature file v4.1
+#Version 
+
+CLSS public abstract interface com.leafdigital.logs.api.Logger
+fld public final static java.lang.String CATEGORY_CHAN = "chan"
+fld public final static java.lang.String CATEGORY_USER = "user"
+intf leafchat.core.api.Singleton
+meth public abstract void log(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)
+
+CLSS public abstract interface leafchat.core.api.Singleton
+

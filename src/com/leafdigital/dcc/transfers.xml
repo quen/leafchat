@@ -1,0 +1,6 @@
+<Window Title="File transfers" OnClosed="windowClosed" InitialSize="300,400">
+  <ScrollPanel Outline="n">
+    <VerticalPanel Border="4" Spacing="4" id="contents">
+    </VerticalPanel>
+  </ScrollPanel>
+</Window>

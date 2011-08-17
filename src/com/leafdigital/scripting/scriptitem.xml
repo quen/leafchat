@@ -1,0 +1,33 @@
+<Page>
+  <DecoratedPanel Padding="0,8,0,16" OnPaint="paintBackground">
+    <BorderPanel Spacing="8">
+      <north>
+        <VerticalPanel>
+        		<BorderPanel>
+        		  <west>
+        		    <Label id="title" BaseGroup="a"/>
+        		  </west>
+        		  <east>
+        		    <HorizontalPanel>
+        		      <CheckBox id="enabled" Label="Enabled" BaseGroup="a" OnChange="changeEnabled"/>
+        		      <Button id="settings" Label="Settings" BaseGroup="a" OnAction="actionSettings"/>
+        		      <Button id="delete" Label="Delete" BaseGroup="a" OnAction="actionDelete"/>
+        		    </HorizontalPanel>
+        		  </east>
+        		</BorderPanel>
+        		<Label id="summary"/>
+        		<Label Small="y" id="variables"/>
+        </VerticalPanel>
+      </north>
+      <central>
+        <EditArea id="code" OnChange="changeCode" OnFocus="focusCode" AutoStretch="y"/>
+      </central>
+      <south>
+        <VerticalPanel>
+          <Spacer id="noError" Height="4"/>
+	        <Label Small="y" id="error"/>
+	      </VerticalPanel>
+      </south>      
+    </BorderPanel>
+  </DecoratedPanel>
+</Page>

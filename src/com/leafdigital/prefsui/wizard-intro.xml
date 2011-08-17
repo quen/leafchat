@@ -1,0 +1,12 @@
+<Page>
+	<VerticalPanel Spacing="8">
+		<Label Text="&lt;strong>Welcome to leafChat!&lt;/strong>"/>
+		<VerticalPanel>
+  			<Label Text="leafChat is an IRC (Internet Relay Chat) client. Using it, you can connect to an IRC server and chat with your friends online."/>
+			<Label Small="y" Text="leafChat is &lt;strong>free&lt;/strong> for personal, noncommercial use. If you like the program, please consider giving a voluntary donation - you'll be prompted occasionally."/>
+		</VerticalPanel>
+		<Label Text="This wizard helps you get started with the program. When you complete it, you'll be ready to connect."/>
+		<Label Text="All the settings in this wizard can be changed later. You can also re-run the wizard from the Options dialog."/>
+ 		<Label Text="Get started by clicking Next."/>
+ 	</VerticalPanel>
+</Page>

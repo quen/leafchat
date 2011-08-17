@@ -1,0 +1,20 @@
+<Dialog Title="Error" OnClosed="closedErrorDialog" InitialSize="450,500">
+<BorderPanel Border="8" Spacing="8">
+  <north>
+    <VerticalPanel>
+		  <Label Text="&lt;para>&lt;strong>A program error has occurred.&lt;/strong>&lt;/para>&lt;para>leafChat will continue running, but may be unreliable. Quit and re-launch if you have problems.&lt;/para>"/>
+		  <Label id="reportInfo" Text="&lt;para>This error will automatically be reported to the &lt;em>leafdigital&lt;/em> web server so that we can improve the program in future.&lt;/para>"/>
+		  <Label Text="&lt;small>The report doesn't contain any personal information, only what you see below.&lt;/small>"/>
+		</VerticalPanel>
+	</north>
+	<central>
+		 <TextView id="errorMessage"/>
+	</central>
+	<southeast>
+	  <HorizontalPanel Spacing="8">
+	    <CheckBox id="report" Label="Report to developer" BaseGroup="x"/>
+		  <Button Label="Close" OnAction="actionCloseErrorDialog" Default="y" BaseGroup="x"/>
+		</HorizontalPanel>
+	</southeast>
+</BorderPanel>
+</Dialog>

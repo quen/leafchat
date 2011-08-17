@@ -1,0 +1,23 @@
+<Page Title="Ignore list">
+  <BorderPanel Spacing="4">
+  		<north>
+  			<Label Text="All messages from people on your ignore list are hidden. You use the ignore list when somebody annoys you."/>
+  		</north>
+  		<central>
+  			<Table id="ignoreList" OnSelect="selectIgnoreList" Width="200" Rows="10">
+  				<column name="Nickname" type="string"/>
+  				<column name="User name" type="string"/>
+  				<column name="Host name" type="string"/>
+  			</Table>
+  		</central>
+  		<south>
+  			<VerticalPanel Spacing="4">
+	  			<HorizontalPanel Spacing="4">
+	  				<Button Label="Add" OnAction="actionAdd"/>
+	  				<Button id="delete" Label="Remove" OnAction="actionRemove" Enabled="n"/>
+	  			</HorizontalPanel>
+	  			<Label Small="y" Text="You can also add entries to this list using the /ignore command."/>
+	  		</VerticalPanel>
+  		</south>
+  	</BorderPanel>
+</Page>

@@ -1,0 +1,62 @@
+body 
+{
+	font: 0.85em Verdana, sans-serif;
+	background: url('cornerleaf.jpg') top left no-repeat;
+	padding-left:120px;
+	padding-top:10px;
+	padding-bottom:30px;
+	max-width:40em;
+	line-height:1.4;
+	border-bottom:4px solid #235c0b;
+	margin:0;
+}
+h1
+{
+	font-size:1.4em;
+	font-weight:normal;
+	padding-bottom:4px;
+	border-bottom:2px solid #235c0b;
+	margin:0;	
+}
+h2
+{
+	font-size:1em;
+	font-weight:bold;
+	margin:1em 0 0.5em;
+}
+h3
+{
+	font-size:1em;
+	font-weight:bold;
+	margin:1em 0 0.5em;
+	color:#454;
+}
+strong
+{
+	color:#564;
+	font-size:0.95em;
+}
+p,ul,li
+{
+	margin:0 0 0.5em;
+}
+li ul 
+{
+	margin-top:0.5em;
+}
+.detail
+{
+	font-size:0.85em;
+	margin-top:0.2em;
+	line-height:1.65;
+}
+.os
+{
+	color:#8877ee;
+	font-weight:bold;
+}
+pre
+{
+	border:1px solid #235c0b;
+	padding:4px;
+}

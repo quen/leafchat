@@ -1,0 +1,12 @@
+<Dialog Resizable="n">
+<BorderPanel Border="8" Spacing="4">
+  <central>
+    <Label id="message" DefaultWidth="350"/>
+  </central>  
+  <south>
+  	  	<ButtonPanel>
+	  		<yes><Button Label="OK" OnAction="actionOK"/></yes>
+	  	</ButtonPanel>	  	
+  </south>
+</BorderPanel>
+</Dialog>

@@ -1,0 +1,61 @@
+<project name="%%SHORTNAME%%" default="all" basedir=".">
+	
+	<!-- Temporary build folder location -->
+	<property name="build" location="/tmp/build"/>
+	
+	<!-- Target folder where the plugin will be saved. 
+	     Default is to your user plugins folder -->
+	<property name="targetfolder" location="%%USERPLUGINS%%"/>
+	
+	<!-- Name of plugin -->
+	<property name="name" value="%%SHORTNAME%%"/>
+	
+	<description>
+	   Builds: %%DISPLAYNAME%%.
+	</description>
+
+  <target name="init">
+    <delete dir="${build}"/>
+    <mkdir dir="${build}"/>
+    <mkdir dir="${targetfolder}"/>
+  </target>
+	
+	<macrodef name="compile">
+		<attribute name="srcdir"/>
+		<sequential>
+			<!-- Note that leafChat 2.0 supports Java 1.4 in order to run on 
+			     OS X 10.3. Future versions may require 1.5. Until then this setting
+			     is correct. -->
+	  	  <javac srcdir="@{srcdir}" destdir="${build}/classes" 
+	  	  		source="1.4" target="1.4" encoding="UTF-8" debug="true" optimize="true">
+	  	  		<classpath>
+          <fileset dir="lib">
+            <include name="*.jar"/>
+          </fileset>
+        </classpath>       
+	  	  </javac>
+			<copy todir="${build}/classes">
+				<fileset dir="@{srcdir}">
+					<exclude name="**/*.java"/>
+				</fileset>
+			</copy>
+		</sequential>
+	</macrodef>
+	
+  <target name="compile" depends="init">
+    <mkdir dir="${build}/classes"/>
+    <compile srcdir="src"/>
+  </target>
+	
+	<target name="jar" depends="compile">
+		<delete file="${targetfolder}/${name}.jar"/>
+    <jar jarfile="${targetfolder}/${name}.jar" basedir="${build}/classes"/>
+	</target>
+	
+	<target name="clean">
+    <delete dir="${build}"/>
+	</target>
+	
+	<target name="all" depends="jar,clean" description="Build plugin"/>
+	
+</project>	

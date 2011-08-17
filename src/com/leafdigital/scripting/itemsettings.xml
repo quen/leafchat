@@ -1,0 +1,19 @@
+<Dialog Title="Add item" MinSize="500,400">
+  <BorderPanel Border="12" Spacing="8">
+  		<north>
+   		<HorizontalPanel Spacing="8" id="topBit">
+		    <Label Text="Type" BaseGroup="a" WidthGroup="labels"/>
+    			<Dropdown id="type" BaseGroup="a" OnChange="changeType"/>
+		  </HorizontalPanel>
+	  </north>
+	  <central>
+	    <Page id="settings"/>
+	  	</central>
+	  	<south>
+	  	  <ButtonPanel>
+	  		  <yes><Button Default="y" id="ok" Label="Add" OnAction="actionOK"/></yes>
+	  	  		<cancel><Button Label="Cancel" OnAction="actionCancel"/></cancel>
+		  </ButtonPanel>
+		</south>
+	</BorderPanel>
+</Dialog>

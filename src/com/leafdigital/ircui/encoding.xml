@@ -1,0 +1,60 @@
+<Page Title="Character encoding">
+  <BorderPanel Spacing="8">
+  		<north>
+  			<VerticalPanel Spacing="8">
+  			<VerticalPanel>
+				  <Label Text="Character encoding controls how IRC data is converted into text for display."/>
+				  <Label Small="y" Text="In most situations you can leave these options at default values."/>
+				</VerticalPanel>
+				<BorderPanel Spacing="8">
+					<west>
+						<Label Text="Received text" WidthGroup="width-labels" BaseGroup="a"/>
+					</west>
+					<central>
+						<VerticalPanel>
+							<Dropdown id="incoming" OnChange="selectionChangeIncoming" BaseGroup="a"/>
+ 							<CheckBox id="utf8" Label="Try UTF-8 first" OnChange="changeUTF8"/>
+ 						</VerticalPanel>
+ 					</central>
+				</BorderPanel>
+				<BorderPanel Spacing="8">
+					<west>
+						<Label Text="Sent text" WidthGroup="width-labels" BaseGroup="b"/>
+					</west>
+					<central>
+						<VerticalPanel Spacing="2">
+							<Dropdown id="outgoing" OnChange="selectionChangeOutgoing" BaseGroup="b"/>
+							<Label MacIndent="y" Small="y" Text="leafChat always sends UTF-8 if you type something that can't be represented in the selected encoding."/>
+						</VerticalPanel>
+ 					</central>
+				</BorderPanel>
+			</VerticalPanel>
+  		</north>
+  		<central>
+  		  <BorderPanel Spacing="4">
+  		  		<north>
+  		  			<VerticalPanel>
+		  		    <Label Text="Overrides"/>
+		  		    <Label Text="If particular channels, servers, or individuals need different settings you can specify them here." Small="y"/>
+		  		  </VerticalPanel>
+  		  		</north>
+	  		  	<central>
+		  			<Table id="overrides" OnSelect="selectOverrides" Width="200" Rows="10">
+		  				<column name="Context" type="string" width="0"/>
+		  				<column name="Name" type="string"/>
+		  				<column name="Received" type="string"/>
+		  				<column name="UTF" type="boolean" width="0"/>
+		  				<column name="Sent" type="string"/>
+		  			</Table>
+		  		</central>
+		  		<south>
+		  			<HorizontalPanel Spacing="4">
+		  				<Button Label="Add..." OnAction="actionAdd"/>
+		  				<Button id="edit" Label="Edit..." OnAction="actionEdit" Enabled="n"/>
+		  				<Button id="remove" Label="Remove" OnAction="actionRemove" Enabled="n"/>
+		  			</HorizontalPanel>
+		  		</south>
+		  	</BorderPanel>
+  		</central>
+  	</BorderPanel>
+</Page>

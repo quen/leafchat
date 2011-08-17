@@ -1,0 +1,16 @@
+<Dialog Resizable="n" Title="License agreement">
+<BorderPanel Border="8" Spacing="4">
+  <north>
+    <Label DefaultWidth="400" Text="In order to use leafChat, you must accept the license agreement below. Read the agreement and click Accept if you accept its terms."/>
+  </north>
+  <central>
+    <TextView id="licenseText"/>
+  </central>  
+  <south>
+  	  	<ButtonPanel>
+	  		<yes><Button Label="Accept" OnAction="actionLicenseAgree"/></yes>
+	  		<no><Button Label="Close" OnAction="actionLicenseDisagree"/></no>
+	  	</ButtonPanel>	  	
+  </south>
+</BorderPanel>
+</Dialog>

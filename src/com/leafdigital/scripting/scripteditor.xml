@@ -1,0 +1,45 @@
+<Window OnClosed="closed" OnClosing="closing" InitialSize="600,400">
+	<BorderPanel Border="8" Spacing="2">
+	  <north>
+	    <VerticalPanel>
+	      <BorderPanel>
+	        <west>
+				    <HorizontalPanel Spacing="4">
+				      <Button id="save" Enabled="n" OnAction="actionSave" Label="Save" BaseGroup="x"/>
+				      <Button id="revert" Enabled="n" OnAction="actionRevert" Label="Revert" BaseGroup="x"/>
+				      <Progress id="progress" Visible="n"/>
+				    </HorizontalPanel>
+				  </west>
+				  <east>
+    		      <CheckBox id="enabled" Label="Enabled" BaseGroup="x" OnChange="changeEnabled"/>
+				  </east>
+				</BorderPanel>
+		    <Spacer Height="6"/>
+		  </VerticalPanel>
+	  </north>
+	  <central>
+	    <BorderPanel Spacing="2">
+	      <central>
+			    <ScrollPanel ScrollAmount="30">
+			      <VerticalPanel Spacing="4" id="items"/>
+			    </ScrollPanel>
+			  </central>
+			  <south>
+  	      		<Label Small="y" id="status"/>
+			  </south>
+			</BorderPanel>
+	  </central>
+	  <south>
+	    <BorderPanel>
+	    		<west>
+			    <HorizontalPanel Spacing="4">
+			      <Button id="add" OnAction="actionAdd" Label="Add item"/>
+			    </HorizontalPanel>
+			  </west>
+			  <east>
+		      <Button OnAction="actionHelp" Label="Scripting help"/>
+			  </east>
+			</BorderPanel>
+	  </south>
+	</BorderPanel>
+</Window>

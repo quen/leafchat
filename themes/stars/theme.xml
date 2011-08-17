@@ -1,0 +1,53 @@
+<theme>
+
+	<meta>
+		<name>Stars and hearts</name>
+		<description>A night-time theme in yellow and pink.</description>
+		<authors>Samuel Marshall</authors>
+	</meta>
+	
+	<connectButton>
+		<normal>connect.png</normal>
+		<hover>connect.heart.png</hover>
+		<pressed>connect.png</pressed>
+	</connectButton>
+	
+	<joinButton>
+		<normal>join.png</normal>
+		<hover>join.heart.png</hover>
+		<pressed>join.png</pressed>
+	</joinButton>
+	
+	<logsButton>
+		<normal>log.png</normal>
+		<hover>log.heart.png</hover>
+		<pressed>log.png</pressed>
+	</logsButton>
+	
+	<optionsButton>
+		<normal>options.png</normal>
+		<hover>options.heart.png</hover>
+		<pressed>options.png</pressed>
+	</optionsButton>
+	
+	<scriptingButton>
+		<normal>scripting.png</normal>
+		<hover>scripting.heart.png</hover>
+		<pressed>scripting.png</pressed>
+	</scriptingButton>
+	
+	<toolbar>
+		<tilePic>toolbar.png</tilePic>		
+	</toolbar>
+	
+	<channel>
+		<topPic>top.png</topPic>
+		<topLeftPic>topstar.png</topLeftPic>
+	</channel>
+	
+	<message>
+		<topPic>top.png</topPic>
+		<topLeftPic>topheart.png</topLeftPic>
+	</message>
+	
+</theme>

@@ -1,0 +1,171 @@
+<Window Title="Scripting" OnClosed="windowClosed" InitialSize="600,400">
+  <TabPanel Border="4" id="tabs">
+    <Page Title="Scripts">
+    		<BorderPanel Border="4" Spacing="8">
+	    		<central>
+	    		  <ChoicePanel id="scriptMain">
+	    		    <Page id="tableChoice">
+	    		      <BorderPanel Spacing="8">
+	    		        <central>
+					    			<Table id="scripts" Rows="10" Width="250" OnSelect="selectScripts" OnChange="changeScripts">
+					    				<column name="Script" type="string" editable="n"/>
+					    				<column name="Error status" type="string" width="0" editable="n"/>
+					    				<column name="Enabled" type="boolean" width="0" editable="y"/>
+					    			</Table>
+					    		</central>
+					    		<east>
+					    		  <VerticalPanel>
+						    			<Label Text="A script is a collection of customisations. You can use scripts to create new commands and menu items, or to make your client automatically react to events."/>
+						    			<Label Small="y" Text="Enable or disable scripts using the checkboxes. You can only enable scripts if they don't have errors. Scripts that have unsaved changes are shown in grey and can't be enabled or disabled."/>
+						    		</VerticalPanel>
+					    		</east>
+					    	</BorderPanel>
+			    		</Page>
+			    		<Page id="noneChoice">
+			    		  <Label Text="&lt;para>A script is a collection of customisations. You can use scripts to create new commands or to make your client automatically react to events.&lt;/para>&lt;para>If you want to customise leafChat, begin by creating a new script.&lt;/para>&lt;para>1. Click &lt;strong>New&lt;/strong>.&lt;/para>&lt;para>2. Type a name for your script and create it.&lt;/para>&lt;para>3. &lt;strong>Edit&lt;/strong> the script and add your customisations.&lt;/para>&lt;para>4. Save the script.&lt;/para>&lt;para>Scripts only take effect once they are saved and enabled.&lt;/para>"/>
+			    		</Page>
+			    	</ChoicePanel>
+	    		</central>
+	    		<south>
+	    		  <HorizontalPanel Spacing="4">
+	    		    <Button OnAction="actionNewScript" Label="New"/>
+	    		    <Button OnAction="actionImportScript" Label="Import"/>
+	    		    <Button id="editScript" OnAction="actionEditScript" Label="Edit"/>
+	    		    <Button id="exportScript" OnAction="actionExportScript" Label="Export"/>
+	    		    <Button id="deleteScript" OnAction="actionDeleteScript" Label="Delete"/>
+    		      <Button OnAction="actionHelp" Label="Scripting help"/>
+	    		  </HorizontalPanel>
+	    		</south>
+	    	</BorderPanel>
+    </Page>
+    <Page Title="Plugins">
+    		<BorderPanel Border="4" Spacing="8">
+    		  <north>
+	    			<Label Text="Plugins can be installed inside application or per-user plugins folders."/>
+	    		</north>
+	    		<central>
+	    		  <BorderPanel Spacing="16">
+	    		    <central>
+			    			<Table id="plugins" Rows="10" Width="250" OnSelect="selectPlugins">
+			    				<column name="Plugin" type="string" editable="n"/>
+			    				<column name="Version" type="string" editable="n" width="80"/>
+			    			</Table>
+			    		</central>
+			    		<east>
+			    			<VerticalPanel Spacing="8">
+			    				<Label id="pluginName"/>
+			    				<HorizontalPanel Spacing="8">
+			    					<Label WidthGroup="width_plugins" Text="Description"/>
+			    					<Label id="pluginDescription" MinWidth="200"/>
+			    				</HorizontalPanel>
+			    				<HorizontalPanel Spacing="8">
+			    					<Label WidthGroup="width_plugins" Text="Author(s)"/>
+			    					<Label id="pluginAuthors"/>
+			    				</HorizontalPanel>
+			    				<HorizontalPanel Spacing="8">
+			    					<Label WidthGroup="width_plugins" Text="Location"/>
+			    					<Label id="pluginLocation"/>
+			    				</HorizontalPanel>
+			    			</VerticalPanel>
+			    		</east>
+			    	</BorderPanel>
+	    		</central>
+	    		<south>
+	    			<CheckBox id="showSystem" OnChange="changeShowSystem" Label="Show system plugins"/>
+	    		</south>
+	    	</BorderPanel>
+    </Page>
+    <Page Title="Create plugin">
+    		<BorderPanel Border="4" Spacing="8">
+    		  <north>
+	    			<Label Text="This page initialises a project Java developers can use to build a leafChat plugin."/>
+	    		</north>
+	    		<central>
+	    			<BorderPanel Spacing="24">
+	    				<central>
+	    					<BorderPanel>
+	    					  <north><Label Text="Dependencies"/></north>
+	    					  <central>
+								  <Table id="dependencies" Width="400" Rows="10">
+				            <column name="Package" type="string" editable="n"/>
+				            <column name="Ver" type="string" editable="n" width="0"/>
+				            <column name="Use" type="boolean" editable="y" width="0"/>
+				          </Table>         			    		
+				        </central>
+				        <south>
+				        		<VerticalPanel>
+					          <Spacer Height="2"/>
+					          <Label Small="y" Text="Your plugin only has access to packages from other plugins if you select them here. (You also have leafchat.* and util.*.)"/>			
+					          <Spacer Height="8"/>
+					          <ButtonPanel><yes><Button id="create" Default="y" Label="Create" OnAction="actionCreate" Enabled="n"/></yes></ButtonPanel>
+					        </VerticalPanel>
+					      </south>
+			        </BorderPanel>
+	    				</central>
+	    					
+	    				<west>
+	    					<VerticalPanel Spacing="4">
+	
+	    						<BorderPanel Spacing="8">
+	    							<west><Label WidthGroup="width_create" Text="Short name" BaseGroup="a"/></west>
+	    							<central><VerticalPanel Spacing="2">
+	    								<EditBox id="shortName" Require="[a-z]+" OnChange="changeShortName" BaseGroup="a"/>
+			    						<Label MacIndent="y" Small="y" Text="An identifier, used in package name."/>
+	    							</VerticalPanel></central>    							
+	    						</BorderPanel>
+	
+	    						<BorderPanel Spacing="8">
+	    							<west><Label WidthGroup="width_create" Text="Display name" BaseGroup="b"/></west>
+	    							<central><VerticalPanel Spacing="2">
+	    							  <EditBox id="displayName" Require=".+" OnChange="changeEdit" BaseGroup="b"/>
+			    						<Label MacIndent="y" Small="y" Text="Name of plugin for display to users."/>
+	    							</VerticalPanel></central>    							
+	    						</BorderPanel>
+	
+	    						<BorderPanel Spacing="8">
+	    							<west><Label WidthGroup="width_create" Text="Class name" BaseGroup="c"/></west>
+	    							<central><VerticalPanel>
+	    								<BorderPanel Spacing="2">
+	    									<central><EditBox Width="100" id="className" OnChange="changeClassName" Require="[A-Z][a-zA-Z0-9]*" BaseGroup="c"/></central>
+			    							<east><Label Text="Plugin" BaseGroup="c"/></east>	
+			    						</BorderPanel>    									
+			    						<Label MacIndent="y" Small="y" Text="Plugin main class name (no package)."/>
+	    							</VerticalPanel></central>    							
+	    						</BorderPanel>
+	    						<Spacer Height="8"/>
+	    	
+	    						<BorderPanel Spacing="8">
+	    							<west><Label WidthGroup="width_create" Text="Author" BaseGroup="d"/></west>
+	    							<central><VerticalPanel Spacing="2">
+	    								<EditBox id="author" Require=".+" OnChange="changeEdit" BaseGroup="d"/>
+			    						<Label MacIndent="y" Small="y" Text="Your own name."/>
+	    							</VerticalPanel></central>    							
+	    						</BorderPanel>
+	
+	    						<BorderPanel Spacing="8">
+	    							<west><Label WidthGroup="width_create" Text="Your domain" BaseGroup="e"/></west>
+	    							<central><VerticalPanel Spacing="2">
+	    							  <EditBox id="domain" Require="[a-z][a-z0-9]*(\.[a-z][a-z0-9]*)*" OnChange="changeEdit" BaseGroup="e"/>
+			    						<Label MacIndent="y" Small="y" Text="An Internet domain you control."/>
+	    							</VerticalPanel></central>    							
+	    						</BorderPanel>
+	
+	    						<BorderPanel Spacing="8">
+	    							<west><Label WidthGroup="width_create" Text="Parent folder" BaseGroup="f"/></west>
+	    							<central><VerticalPanel Spacing="2">
+	    								<BorderPanel Spacing="2">
+	    									<central><EditBox Width="100" id="target" BaseGroup="f" OnChange="changeTarget"/></central>
+			    							<east><Button Label="Browse..." OnAction="actionBrowse" BaseGroup="f"/></east>	
+			    						</BorderPanel>    									
+			    						<Label MacIndent="y" Small="y" Text="Project folder will be created inside."/>
+	    							</VerticalPanel></central>    							
+	    						</BorderPanel>
+	
+	    					</VerticalPanel>
+	    				</west>
+	    			</BorderPanel>
+	    		</central>
+    		</BorderPanel>
+    	</Page>
+	</TabPanel>
+</Window>

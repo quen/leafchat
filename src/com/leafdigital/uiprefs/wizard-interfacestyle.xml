@@ -1,0 +1,29 @@
+<Page Title="Interface style" OnSet="onSet">
+  <VerticalPanel Spacing="8">
+		<Label Text="&lt;strong>Interface style&lt;/strong>"/>
+ 		<Label Text="leafChat provides three different styles of interface which control how windows are arranged. You can use whichever one you prefer."/>
+
+ 		<HorizontalPanel Spacing="24">
+
+ 		  <VerticalPanel Spacing="4">
+		  	<RadioButton Label="Classic" Group="interface" id="classic" OnAction="actionInterface"/>
+		    <Pic Property="uiprefs/exampleClassic"/>
+		    <Label Small="y" DefaultWidth="100" Text="Main window containing smaller windows"/>
+ 		  </VerticalPanel>
+ 		  <VerticalPanel Spacing="4">
+		  	<RadioButton Label="Tabs" Group="interface" id="tabs" OnAction="actionInterface"/>
+		    <Pic Property="uiprefs/exampleTabs"/>
+		    <Label Small="y" DefaultWidth="100" Text="Main window containing tabs"/>
+ 		  </VerticalPanel>
+ 		  <VerticalPanel Spacing="4">
+		  	<RadioButton Label="Separate" Group="interface" id="separate" OnAction="actionInterface"/>
+		    <Pic Property="uiprefs/exampleSeparate"/>
+		    <Label Small="y" DefaultWidth="120" Text="Separate small windows and a toolbar, all floating on your desktop"/>
+ 		  </VerticalPanel>
+
+ 		</HorizontalPanel>
+
+		<CheckBox id="trayMinimise" Label="Minimise to tray" OnChange="changeTrayMinimise"/>
+
+ 	</VerticalPanel>
+</Page>

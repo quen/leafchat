@@ -1,0 +1,18 @@
+<Dialog Resizable="n" Title="New version available">
+<BorderPanel Border="8" Spacing="4">
+  <central>
+    <VerticalPanel Spacing="4">
+	    <Label DefaultWidth="350" Text="A new version of leafChat is available."/>
+	    <Label id="version"/>
+	    <Label Text="Because updates might include security fixes, we strongly recommend that you download and install the latest version."/>
+	    <Label Small="y" Text="If you don't want to download right now, just cancel this request. It'll appear again in a few weeks."/>
+	  </VerticalPanel>
+  </central>  
+  <south>
+  	  	<ButtonPanel>
+	  		<yes><Button Default="y" Label="Download" OnAction="actionDownload"/></yes>
+	  		<cancel><Button Label="Cancel" OnAction="actionCancel"/></cancel>
+	  	</ButtonPanel>	  	
+  </south>
+</BorderPanel>
+</Dialog>

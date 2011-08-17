@@ -1,0 +1,18 @@
+<Window OnClosed="windowClosed" Resizable="n" MinSize="400,70">
+  <VerticalPanel Border="8" Spacing="4">
+	  	<Label id="nickText" Text="&lt;nick>%NICK%&lt;/nick> (&lt;key>%IP%&lt;/key>) wants to send you a file:"/>
+	  	<Label id="fileText" Text="&lt;key>%FILENAME%&lt;/key> (&lt;key>%SIZE%&lt;/key>)"/>
+    <Label id="existingText" Text="You already have a &lt;key>%EXISTINGSIZE%&lt;/key> file of this name."/>
+    <Label id="resumeOffer" Text="Would you like to resume a partial transfer?"/>
+	  	<ButtonPanel>
+	  		<yes><Button id="resume" Label="Resume partial transfer" Default="y" OnAction="actionResume"/></yes>
+	  		<no>
+	  			<HorizontalPanel Spacing="4">
+	  				<Button Label="Overwrite" OnAction="actionOverwrite"/>
+	  				<Button id="rename" Label="Rename" OnAction="actionRename"/>
+	  			</HorizontalPanel>
+	  		</no>
+	  		<cancel><Button Label="Ignore offer" OnAction="actionIgnore"/></cancel>
+	  	</ButtonPanel>	  	
+  </VerticalPanel>
+</Window>

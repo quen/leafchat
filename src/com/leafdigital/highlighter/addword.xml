@@ -1,0 +1,14 @@
+<Dialog Title="Add word" Resizable="n" OnClosed="dialogClosed">
+<VerticalPanel Border="8" Spacing="4">
+  <Label Text="Enter a word to highlight."/>
+  <EditBox id="word" OnChange="changeWord" OnEnter="actionAddWord"/>
+  <BorderPanel>
+    <east>
+      <HorizontalPanel>
+		    <Button Label="Cancel" OnAction="actionCancel"/>
+		    <Button id="set" Label="Add word" OnAction="actionAddWord" Default="y"/>
+		  </HorizontalPanel>
+    </east>
+  </BorderPanel>
+</VerticalPanel>  
+</Dialog>

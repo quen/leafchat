@@ -1,0 +1,11 @@
+#Signature file v4.1
+#Version 
+
+CLSS public abstract interface com.leafdigital.idle.api.Idle
+fld public final static java.lang.String AWAKE_COMMAND = "command"
+fld public final static java.lang.String AWAKE_UNAWAY = "unaway"
+intf leafchat.core.api.Singleton
+meth public abstract void userAwake(java.lang.String)
+
+CLSS public abstract interface leafchat.core.api.Singleton
+

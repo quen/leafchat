@@ -1,0 +1,9 @@
+<plugininfo>
+<name>[User script]</name>
+<author>[Scripting system]</author>
+<version major="1" minor="0" sub="0"/>
+<description>User-created script</description>
+<dependencies>%%DEPENDENCIES%%</dependencies>
+<exports></exports>
+<class>%%CLASSNAME%%</class>
+</plugininfo>

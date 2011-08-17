@@ -1,0 +1,31 @@
+<Page OnSet="onSet">
+	<VerticalPanel Spacing="8">
+		<Label Text="&lt;strong>Personal touches&lt;/strong>"/>
+		<BorderPanel Spacing="12">
+			<west><Label WidthGroup="width_labels" Text="Quit message" BaseGroup="a"/></west>
+			<central><VerticalPanel>
+				<EditBox id="quit" OnFocus="focusQuit" OnChange="changeQuit" BaseGroup="a"/>
+				<Spacer Height="2"/>
+				<Label Small="y" Text="This message displays when you disconnect from a server, unless you supply a different one by typing &lt;strong>/quit A different message&lt;/strong>."/>
+			</VerticalPanel></central>
+		</BorderPanel>
+		<BorderPanel Spacing="12">
+			<west><Label WidthGroup="width_labels" Text="Sample quit"/></west>
+			<central><TextView DefaultHeight="50" id="previewQuit"/></central>
+		</BorderPanel>
+		<BorderPanel Spacing="12">
+			<west><Label WidthGroup="width_labels" Text="Real name" BaseGroup="b"/></west>
+			<central><VerticalPanel>
+				<EditBox id="realname" Require=".+" OnFocus="focusRealname" OnChange="changeRealname" BaseGroup="b"/>
+				<Spacer Height="2"/>
+				<Label id="realnameInfo" Small="y"/>
+				<Label Small="y" Text="Most people do not type their actual real name. You can use this space for a witty comment or for information about yourself."/>
+			</VerticalPanel></central>
+		</BorderPanel>
+		<BorderPanel Spacing="12">
+			<west><Label WidthGroup="width_labels" Text="Sample whois"/></west>
+			<central><TextView DefaultHeight="50" id="previewRealname"/></central>
+		</BorderPanel>
+		<Label Small="y" Text="These settings can be altered later, or configured differently for different servers, via the Settings page in the Connect dialog."/>
+ 	</VerticalPanel>
+</Page>

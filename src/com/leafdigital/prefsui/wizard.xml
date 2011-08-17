@@ -1,0 +1,17 @@
+<Dialog Title="Welcome to leafChat" OnClosed="windowClosed" InitialSize="520,400">
+	<BorderPanel Border="12" Spacing="12" id="main">
+	  <northeast>
+	    <Label id="progress" Small="y"/>
+	  </northeast>
+	  <central>
+      <Page id="currentPage"/>
+	  </central>
+	  <southeast>
+	  	  <HorizontalPanel Spacing="4">
+		  	  <Button id="back" Label="&lt; Back" OnAction="actionBack"/>
+		  	  <Button id="next" Label="Next &gt;" OnAction="actionNext"/>
+		  	  <Button id="close" OnAction="close"/>
+		  	</HorizontalPanel>
+	  </southeast>
+	</BorderPanel>
+</Dialog>

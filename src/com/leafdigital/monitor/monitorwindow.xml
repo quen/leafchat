@@ -1,0 +1,10 @@
+<Window OnClosed="windowClosed" InitialSize="600,400" Title="IRC debug monitor">
+	<BorderPanel>
+	  <central>
+  			<TextView id="view"/>
+	  </central>
+	  <south>
+	    <CheckBox id="scroll" Label="Scroll for new messages" Checked="y"/>
+	  </south>
+	</BorderPanel>
+</Window>

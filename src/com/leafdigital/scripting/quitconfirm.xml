@@ -1,0 +1,9 @@
+<Dialog Title="Confirm quit" MinSize="400,100">
+<VerticalPanel Border="12" Spacing="8">
+  <Label Text="You have unsaved script changes. If you quit now, you will lose those changes."/>
+  <ButtonPanel>
+  	  <yes><Button Label="Quit and discard changes" OnAction="actionQuit"/></yes>
+  	  <cancel><Button Label="Cancel" OnAction="actionCancel"/></cancel>
+  </ButtonPanel>
+</VerticalPanel>
+</Dialog>

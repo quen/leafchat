@@ -1,0 +1,22 @@
+<Page>
+  <VerticalPanel Spacing="8">
+
+		<HorizontalPanel Spacing="8">
+	    <Label Text="Name" BaseGroup="c" WidthGroup="a"/>
+		  <VerticalPanel Spacing="2">
+		    <EditBox id="name" OnChange="changeName" BaseGroup="c"/>
+		    <Label Small="y" Text="Displayed in menu"/>
+		  </VerticalPanel>
+	  </HorizontalPanel>
+  
+		<HorizontalPanel Spacing="8">
+	    <Label Text="Applies to" BaseGroup="a" WidthGroup="a"/>
+		  <VerticalPanel Spacing="4">
+		    <RadioButton BaseGroup="a" id="categoryUser" Group="category" Label="User"/>
+		    <RadioButton id="categoryChan" Group="category" Label="Channel"/>
+		    <RadioButton id="categoryUserChan" Group="category" Label="User in channel"/>
+		  </VerticalPanel>
+	  </HorizontalPanel>
+  
+	</VerticalPanel>	  
+</Page>

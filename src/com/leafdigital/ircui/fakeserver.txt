@@ -1,0 +1,156 @@
+!!! Received: :dream.esper.net NOTICE AUTH :*** Looking up your hostname...
+!!! Received: :dream.esper.net NOTICE AUTH :*** Found your hostname
+!!! Sent: USER dsfg sdg sdg sdg
+!!! Sent: NICK quentesting1
+!!! Received: :dream.esper.net 001 quentesting1 :Welcome to the EsperNet IRC Network quentesting1!dsfg@example.com
+!!! Received: :dream.esper.net 002 quentesting1 :Your host is dream.esper.net, running version bahamut-1.8(03)
+!!! Received: :dream.esper.net 003 quentesting1 :This server was created Tue Sep 20 2005 at 20:52:56 EDT
+!!! Received: :dream.esper.net 004 quentesting1 dream.esper.net bahamut-1.8(03) aAbcdefFghiIjkKmnoOrRswxXy bceiIjklLmMnoOprRstv
+!!! Received: :dream.esper.net 005 quentesting1 NETWORK=EsperNet SAFELIST MAXBANS=100 MAXCHANNELS=20 CHANNELLEN=32 KICKLEN=307 NICKLEN=30 TOPICLEN=307 MODES=6 CHANTYPES=# CHANLIMIT=#:20 PREFIX=(ov)@+ STATUSMSG=@+ :are available on this server
+!!! Received: :dream.esper.net 005 quentesting1 CASEMAPPING=ascii WATCH=128 SILENCE=10 ELIST=cmntu EXCEPTS INVEX CHANMODES=beI,k,jl,cimMnOprRst MAXLIST=b:100,e:45,I:45 TARGMAX=DCCALLOW:,JOIN:,KICK:4,KILL:20,NOTICE:20,PART:,PRIVMSG:20,WHOIS:,WHOWAS: :are available on this server
+!!! Received: :dream.esper.net 251 quentesting1 :There are 13 users and 1717 invisible on 9 servers
+!!! Received: :dream.esper.net 252 quentesting1 27 :IRC Operators online
+!!! Received: :dream.esper.net 254 quentesting1 1158 :channels formed
+!!! Received: :dream.esper.net 255 quentesting1 :I have 417 clients and 1 servers
+!!! Received: :dream.esper.net 265 quentesting1 :Current local users: 417 Max: 688
+!!! Received: :dream.esper.net 266 quentesting1 :Current global users: 1730 Max: 2147
+!!! Received: :dream.esper.net NOTICE quentesting1 :*** Notice -- motd was last changed at 20/9/2005 20:58
+!!! Received: :dream.esper.net 375 quentesting1 :- dream.esper.net Message of the Day - 
+!!! Received: :dream.esper.net 372 quentesting1 :- 25/9/2005 7:02
+!!! Received: :dream.esper.net 372 quentesting1 :- Welcome to...
+!!! Received: :dream.esper.net 376 quentesting1 :End of /MOTD command.
+!!! Received: :quentesting1 MODE quentesting1 :+i
+!!! Sent: JOIN #quentesting
+!!! Received: :quentesting1!dsfg@example.com JOIN :#quentesting
+!!! Received: :dream.esper.net 366 quentesting1 #quentesting :End of /NAMES list.
+!!! Received: :dream.esper.net 353 quentesting1 = #quentesting :@quentesting1 frog fickle fool tadpole froat toad s1 s2 s3 s4
+
+Invites:
+
+!PAUSE
+<< :zibble!zibble@1.2.3.1 INVITE quentesting1 #frogs
+<< :zobble!zobble@1.2.3.2 JOIN :#quentesting
+<< :zibble!zibble@1.2.3.1 PRIVMSG quentesting1 :Is this working now?
+!PAUSE
+<< :zibble!zibble@1.2.3.1 PRIVMSG quentesting1 :Is this working now?
+!PAUSE
+<< :zibble!zibble@1.2.3.1 PRIVMSG quentesting1 :Is this working now?
+!PAUSE
+<< :zibble!zibble@1.2.3.1 PRIVMSG quentesting1 :Is this working now?
+!PAUSE
+<< :zibble!zibble@1.2.3.1 PRIVMSG quentesting1 :Is this working now?
+!PAUSE
+<< :zibble!zibble@1.2.3.1 PRIVMSG quentesting1 :Is this working now?
+!PAUSE
+<< :zibble!zibble@1.2.3.1 PRIVMSG quentesting1 :Is this working now?
+!PAUSE
+<< :zibble!zibble@1.2.3.1 PRIVMSG quentesting1 :Is this working now?
+!PAUSE
+<< :zibble!zibble@1.2.3.1 PRIVMSG quentesting1 :Is this working now?
+!PAUSE
+<< :zibble!zibble@1.2.3.1 PRIVMSG quentesting1 :Is this working now?
+!PAUSE
+<< :zibble!zibble@1.2.3.1 PRIVMSG quentesting1 :Is this working now?
+!PAUSE
+<< :zobble!zobble@1.2.3.2 QUIT :What
+
+
+!END
+
+Split detection part:
+
+<< :zebble!zebble@1.2.3.3 JOIN :#quentesting
+
+<< :broog!broog@1.2.3.4 JOIN :#quentesting
+
+<< :breeg!breeg@1.2.3.5 JOIN :#quentesting
+
+<< :braag!braag@1.2.3.6 JOIN :#quentesting
+
+<< :gromph!gromph@1.2.3.7 JOIN :#quentesting
+
+<< :grumph!grumph@1.2.3.8 JOIN :#quentesting
+
+<< :zibble!zibble@1.2.3.1 JOIN :#quentesting
+
+<< :grimph!grimph@1.2.3.9 JOIN :#quentesting
+
+<< :ploob!ploob@1.2.3.10 JOIN :#quentesting
+
+<< :pleeb!pleeb@1.2.3.11 JOIN :#quentesting
+
+<< :plaab!plaab@1.2.3.12 JOIN :#quentesting
+
+<< :schlup!schlup@1.2.3.13 JOIN :#quentesting
+
+<< :schlap!schlap@1.2.3.14 JOIN :#quentesting
+
+<< :schlip!schlip@1.2.3.15 JOIN :#quentesting
+
+!PAUSE
+
+<< :breeg!breeg@1.2.3.5 QUIT :excalibur.esper.net dream.esper.net
+
+<< :broog!broog@1.2.3.4 QUIT :excalibur.esper.net dream.esper.net
+
+<< :braag!braag@1.2.3.6 QUIT :excalibur.esper.net dream.esper.net
+
+<< :gromph!gromph@1.2.3.7 QUIT :excalibur.esper.net dream.esper.net
+
+<< :grumph!grumph@1.2.3.8 QUIT :excalibur.esper.net dream.esper.net
+
+<< :zibble!zibble@1.2.3.1 QUIT :excalibur.esper.net dream.esper.net
+
+<< :grimph!grimph@1.2.3.9 QUIT :excalibur.esper.net dream.esper.net
+
+<< :zebble!zebble@1.2.3.3 QUIT :excalibur.esper.net dream.esper.net
+
+<< :ploob!ploob@1.2.3.10 QUIT :excalibur.esper.net dream.esper.net
+
+<< :pleeb!pleeb@1.2.3.11 QUIT :excalibur.esper.net dream.esper.net
+
+<< :plaab!plaab@1.2.3.12 QUIT :excalibur.esper.net dream.esper.net
+
+<< :schlup!schlup@1.2.3.13 QUIT :excalibur.esper.net dream.esper.net
+
+<< :schlap!schlap@1.2.3.14 QUIT :excalibur.esper.net dream.esper.net
+
+<< :schlip!schlip@1.2.3.15 QUIT :excalibur.esper.net dream.esper.net
+
+!PAUSE
+!PAUSE
+
+<< :zebble!zebble@1.2.3.3|zebble!zebble@1.2.3.3 JOIN :#quentesting
+
+<< :broog!broog@1.2.3.4 JOIN :#quentesting
+
+<< :breeg!breeg@1.2.3.5 JOIN :#quentesting
+
+<< :braag!braag@1.2.3.6 JOIN :#quentesting
+
+<< :gromph!gromph@1.2.3.7 JOIN :#quentesting
+
+<< :grumph!grumph@1.2.3.8 JOIN :#quentesting
+
+<< :zibble!zibble@1.2.3.1 JOIN :#quentesting
+<< :zibble!zibble@1.2.3.1 PRIVMSG #quentesting :Is this working now?
+
+<< :grimph!grimph@1.2.3.9 JOIN :#quentesting
+
+!PAUSE
+
+<< :ploob!ploob@1.2.3.10 JOIN :#quentesting
+
+<< :pleeb!pleeb@1.2.3.11 JOIN :#quentesting
+
+<< :plaab!plaab@1.2.3.12 JOIN :#quentesting
+
+<< :schlup!schlup@1.2.3.13 JOIN :#quentesting
+
+<< :schlap!schlap@1.2.3.14 JOIN :#quentesting
+
+<< :schlip!schlip@1.2.3.15 JOIN :#quentesting
+
+<< :dream.esper.net MODE #quentesting +o Skywise
+
+

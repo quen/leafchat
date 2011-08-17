@@ -1,0 +1,54 @@
+<Page Title="Connection" OnSet="onSet">
+  <VerticalPanel Spacing="8">
+    <VerticalPanel>
+     	<Label MacIndent="y" Text="These settings control how leafChat connects to the network."/>
+     	<Label MacIndent="y" Small="y" Text="If you need help, ask your system administrator for the right settings."/>
+    </VerticalPanel>
+		<VerticalPanel Spacing="4">
+	  		<RadioButton id="upnp" Group="connection" Label="Automatic (requires UPnP router)" OnAction="actionUPnP"/>
+		  <HorizontalPanel Spacing="16">
+			  <RadioButton id="manual" Group="connection" Label="Manual" WidthGroup="width_radios" BaseGroup="e" OnAction="actionManual"/>
+		    <VerticalPanel Spacing="4">
+		      <VerticalPanel>
+			      <HorizontalPanel Spacing="8">
+			        <Label Text="IP address" WidthGroup="width_proxysettings" BaseGroup="e"/>
+			        <EditBox id="manualAddress" BaseGroup="e" Require="(([0-9]+\.){3}[0-9]+)?" OnChange="changeManualSettings"/> 
+			      </HorizontalPanel>
+	     			<Label Small="y" Text="This address is only used if the server hasn't reported one. It should be set to your public IP address if you are behind a router. If you are directly connected to the Internet, leave blank."/>
+	     		</VerticalPanel>
+		      <VerticalPanel>
+			      <HorizontalPanel Spacing="8">
+			        <Label Text="Port range" WidthGroup="width_proxysettings" BaseGroup="f"/>
+			        <EditBox id="manualPortMin" Width="60" BaseGroup="f" Value="" OnChange="changeManualSettings"/> 
+			        <Label Text="-" BaseGroup="f"/>
+			        <EditBox id="manualPortMax" Width="60" BaseGroup="f" Value="" OnChange="changeManualSettings"/> 
+			      </HorizontalPanel>
+       			<Label Small="y" Text="Your firewall must allow connections to these ports, and your router must be set to forward them to this computer."/>
+	  			  </VerticalPanel>
+		    </VerticalPanel>
+		  </HorizontalPanel>
+		  <HorizontalPanel Spacing="16">
+		    <RadioButton id="proxy" Group="connection" Label="SOCKS5 proxy" WidthGroup="width_radios" OnAction="actionProxy" BaseGroup="a"/>
+		    <VerticalPanel Spacing="4">
+		      <HorizontalPanel Spacing="8">
+		        <Label Text="Address" WidthGroup="width_proxysettings" BaseGroup="a"/>
+		        <EditBox id="proxyAddress" BaseGroup="a" Require="[a-z0-9-.]*" OnChange="changeProxySettings"/> 
+		      </HorizontalPanel>
+		      <HorizontalPanel Spacing="8">
+		        <Label Text="Port" WidthGroup="width_proxysettings" BaseGroup="b"/>
+		        <EditBox id="proxyPort" BaseGroup="b" Require="[0-9]+" Value="" OnChange="changeProxySettings"/> 
+		      </HorizontalPanel>
+  			    <Label Small="y" Text="If your proxy does not require login, leave the following blank."/>
+		      <HorizontalPanel Spacing="8">
+		        <Label Text="Username" WidthGroup="width_proxysettings" BaseGroup="c"/>
+		        <EditBox id="proxyUsername" BaseGroup="c" OnChange="changeProxySettings"/> 
+		      </HorizontalPanel>
+		      <HorizontalPanel Spacing="8">
+		        <Label Text="Password" WidthGroup="width_proxysettings" BaseGroup="d"/>
+		        <EditBox id="proxyPassword" BaseGroup="d" OnChange="changeProxySettings"/> 
+		      </HorizontalPanel>
+		    </VerticalPanel>
+		  </HorizontalPanel>
+		</VerticalPanel>
+  	</VerticalPanel>
+</Page>

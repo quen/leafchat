@@ -1,0 +1,17 @@
+<Window OnClosed="windowClosed" InitialSize="600,400">
+	<BorderPanel CornerHandling="CORNERS_HORIZONTALFILL" id="mainpanel">
+	  <south>
+	    <EditBox id="command" OnEnter="actionSend" TextView="tv"/>
+	  </south>
+	  <central>
+  			<TextView id="tv" OnScroll="actionScroll" ThemeType="message"/>
+	  </central>
+	  <southeast>
+	    <HorizontalPanel id="away" Visible="n">
+	      <Spacer Width="4"/>
+	      <Pic Property="away/normal" Hover="away/hover" Tooltip="You are marked away. Click to return."
+	        OnAction="actionAway"/>
+	    </HorizontalPanel>
+	  </southeast>
+	</BorderPanel>
+</Window>

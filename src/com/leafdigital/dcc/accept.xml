@@ -1,0 +1,11 @@
+<Window OnClosed="windowClosed" Resizable="n" MinSize="400,70">
+  <VerticalPanel Border="8" Spacing="4">
+	  	<Label id="nickText" Text="&lt;nick>%NICK%&lt;/nick> (&lt;key>%IP%&lt;/key>) wants to send you a file:"/>
+	  	<Label id="fileText" Text="&lt;key>%FILENAME%&lt;/key> (&lt;key>%SIZE%&lt;/key>)"/>
+	  	<Label Text="Be careful when accepting files, even from people you know! Files may contain viruses or other unwanted content."/>
+	  	<ButtonPanel>
+	  		<yes><Button Label="Accept file" Default="y" OnAction="actionOverwrite"/></yes>
+	  		<no><Button Label="Ignore offer" OnAction="actionIgnore"/></no>
+	  	</ButtonPanel>	  	
+  </VerticalPanel>
+</Window>

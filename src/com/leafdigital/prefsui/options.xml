@@ -1,0 +1,16 @@
+<Window Title="Options" OnClosed="windowClosed" InitialSize="600,400">
+	<BorderPanel Border="8" Spacing="12" id="main">
+	  <west>
+	    <ListBox id="categories" OnChange="selectionCategories" Width="150" Sort="y"/>
+	  </west>
+	  <central>
+      <Page id="categoryPage">
+      		<VerticalPanel Spacing="12">
+	      		<Label MacIndent="y" Text="This window lets you control how leafChat behaves. Select a category from the list at the left to get started."/>
+	      		<Label MacIndent="y" Text="Not all program options are included in this window. Some are near the functions they control, instead. For example, nicknames and other per-server options are set in the Servers tab of the Connect window." Small="y"/>
+	      		<BorderPanel><west><Button Label="Re-run settings wizard" OnAction="actionWizard"/></west></BorderPanel>
+	      	</VerticalPanel>
+      </Page>
+	  </central>
+	</BorderPanel>
+</Window>

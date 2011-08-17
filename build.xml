@@ -1,0 +1,545 @@
+<!--
+  leafChat Ant build script
+  
+  This is a standard Ant build; you can build the app's deliverables by running
+  the default 'all' target.
+
+  Properties that you need to override (in your IDE or on Ant commandline):
+  - sigtest
+  - makensis (if building Windows version)
+  - javart (if building on a Mac)
+
+  For the least effort, build the 'zip' target (which is the standard Linux
+  distributable, but also works on other platforms). That way you only need
+  sigtest and not the other two dependencies.
+  
+  See below for details of all properties (including ones you don't *need* to
+  override, but might want to).
+  
+  The Mac build will only work on a Mac because it uses the Mac-only 'hdiutil'
+  executable. On other platforms, build the targets 'zip' and 'windowsinstaller'
+  to create the other two deliverables.
+  
+  The full build typically takes a bit under 2 minutes on my system which has
+  a relatively slow hard disk. On a system with a faster HD it should be
+  quicker, and with an SSD much quicker.
+  -->
+<project name="leafchat" default="all" basedir=".">
+
+	<!--
+	  Temporary build location
+	  -->
+	<property name="build" location="${java.io.tmpdir}/build/leafchat"/>
+
+	<!--
+	  Version numbers used in various different places (these should be
+	  consistent).
+	  -->
+	<property name="numericversion" value="2.4"/>
+	<property name="stringversion" value="2.4b"/>
+	<property name="fileversion" value="24b"/>
+	<property name="fullrelease" value="n"/>
+
+	<!--
+	  Target locations for final build products.
+	  -->
+	<property name="osxdmg" location="${user.home}/Desktop/leafchat${fileversion}.dmg"/>
+	<property name="zip" location="${user.home}/Desktop/leafchat${fileversion}.zip"/>
+	<property name="installer" location="${user.home}/Desktop/leafchat${fileversion}.exe"/>
+
+	<!--
+	  Location of 'makensis' utility (required for Windows build target).
+	  http://nsis.sourceforge.net/
+	  Build-from-source instructions on a Unix-based platform:
+	  http://www.xdevsoftware.com/blog/post/How-to-Install-the-Nullsoft-Installer-NSIS-on-Linux-.aspx
+	  -->
+	<property name="makensis" location="${user.home}/bin/nsis-2.46/makensis"/>
+	
+	<!-- 
+	  Location of 'lib' folder within Oracle's open source SigTest utility
+	  (required for all build targets).
+	  http://sigtest.java.net/
+	  -->
+	<property name="sigtest" location="${user.home}/bin/sigtest-2.2/lib"/>
+
+	<!--
+	  Location of Java runtime library classes (required for all build targets).
+	  This should be set to the main jar file inside your JRE.
+	  The default might work on a standard Oracle JRE. On an Apple JRE, the
+	  following location is appropriate:
+		/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/classes.jar
+	  -->
+	<property name="javart" location="${java.home}/lib/rt.jar"/>
+
+	<!-- 
+	  Required only for 'makesignatures' target.
+	  Set to the main folder of a leafChat installation that you want to make
+	  signatures for. The main folder is the one that contains 'leafChat.jar'.
+	  -->
+	<property name="sigbase" value=""/>
+
+	<!--
+	  Required only for 'localthemes' target.
+	  Set to path of local installation themes folder (the 'themes' folder
+	  within the leafChat user profile settings folder, which is different
+	  depending on platform).
+	  E.g. ${user.home}/Library/leafChat/themes
+	  -->
+	<property name="themetarget" value=""/>
+
+	<description>
+		 Builds leafChat 2.
+	</description>
+
+	<!-- Requires custom and task -->
+	<taskdef resource="properties.txt" classpath="../JavaLauncher/output/javalaunchertask.jar"/>
+
+	<target name="init">
+		<tstamp/>
+		<delete dir="${build}"/>
+		<mkdir dir="${build}"/>
+	</target>
+
+	<target name="pluginsdir">
+		<mkdir dir="${build}/output/plugins"/>
+	</target>
+
+	<target name="copyhelp">
+		<copy todir="${build}/output/help">
+			<fileset dir="help">
+				<exclude name="**/CVS"/>
+				<exclude name="**/CVS/**"/>
+			</fileset>
+		</copy>
+	</target>
+
+	<macrodef name="compile">
+		<attribute name="srcdir"/>
+		<sequential>
+			<javac srcdir="@{srcdir}" destdir="${build}/classes" source="1.5"
+				target="1.5" encoding="UTF-8" debug="true" optimize="true"
+				includeantruntime="false">
+				<classpath>
+					<fileset dir="lib">
+						<include name="**/*.jar"/>
+					</fileset>
+					<fileset dir="${build}/uichecker">
+						<include name="uichecker.jar"/>
+					</fileset>
+					<fileset dir="mac/applejavaextensions">
+						<include name="AppleJavaExtensions.jar"/>
+					</fileset>
+				</classpath>
+			</javac>
+			<copy todir="${build}/classes">
+				<fileset dir="@{srcdir}">
+					<exclude name="**/*.java"/>
+					<exclude name="**/.DS_Store"/>
+				</fileset>
+			</copy>
+		</sequential>
+	</macrodef>
+
+	<target name="uichecker" depends="init">
+		<mkdir dir="${build}/uicheckerclasses"/>
+		<javac srcdir="src" destdir="${build}/uicheckerclasses" source="1.5"
+			target="1.5" encoding="UTF-8" debug="true" optimize="true"
+			includeantruntime="false">
+			<include name="com/leafdigital/ui/checker/*.java"/>
+			<include name="com/leafdigital/ui/api/UICallback.java"/>
+			<include name="com/leafdigital/ui/api/UIHandler.java"/>
+			<include name="com/leafdigital/ui/api/UIAction.java"/>
+		</javac>
+		<mkdir dir="${build}/uicheckerjar"/>
+		<jar jarfile="${build}/uichecker/uichecker.jar"
+			basedir="${build}/uicheckerclasses">
+			<include name="com/leafdigital/ui/checker/**"/>
+			<include name="com/leafdigital/ui/api/UICallback*"/>
+			<include name="com/leafdigital/ui/api/UIHandler*"/>
+			<include name="com/leafdigital/ui/api/UIAction*"/>
+			<service type="javax.annotation.processing.Processor"
+				provider="com.leafdigital.ui.checker.UIHandlerProcessor"/>
+		</jar>
+	</target>
+
+	<target name="compile" depends="uichecker">
+		<mkdir dir="${build}/classes"/>
+		<compile srcdir="src"/>
+		<mkdir dir="${build}/tempsrc/leafchat/core/api"/>
+		<condition property="titlebarversion" value="${stringversion}" else="${stringversion} ${DSTAMP}${TSTAMP}">
+			<equals arg1="${fullrelease}" arg2="y" />
+		</condition>
+		
+		<!-- Get rid of UI checker from release build -->
+		<delete dir="${build}/classes/com/leafdigital/ui/checker"/>
+
+		<copy todir="${build}/tempsrc/leafchat/core/api" file="src/leafchat/core/api/SystemVersion.java">
+			<filterset>
+				<filter token="TITLEBARVERSION" value="${titlebarversion}"/>
+				<filter token="BUILDVERSION" value="${DSTAMP}${TSTAMP}"/>
+				<filter token="CTCPVERSION" value="${stringversion}"/>
+			</filterset>
+		</copy>
+		<delete file="${build}/classes/leafchat/core/api/SystemVersion.class" failonerror="true"/>
+		<javac srcdir="${build}/tempsrc" destdir="${build}/classes" source="1.5"
+			target="1.5" encoding="UTF-8" debug="true" optimize="true"
+			includeantruntime="false">
+			<include name="**/*.java"/>
+			<classpath>
+				<fileset dir="lib">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</javac>
+		<delete file="${buld}/classes/com/leafdigital/ircui/fakeserver.txt" failonerror="true"/>
+	</target>
+
+	<macrodef name="jarplugin">
+		<attribute name="id"/>
+		<sequential>
+			<mkdir dir="${build}/output/core"/>
+			<delete file="${build}/output/core/@{id}.jar"/>
+			<jar jarfile="${build}/output/core/@{id}.jar" basedir="${build}/classes">
+				<include name="com/leafdigital/@{id}/**"/>
+			</jar>
+		</sequential>
+	</macrodef>
+
+	<target name="jar" depends="compile">
+		<mkdir dir="${build}/output"/>
+		<!-- Main jar -->
+		<delete file="${build}/output/leafChat.jar"/>
+		<jar jarfile="${build}/output/leafChat.jar" basedir="${build}/classes">
+			<include name="leafchat/**"/>
+			<manifest>
+				<attribute name="Main-Class" value="leafchat.startup.Main"/>
+			</manifest>
+		</jar>
+
+		<!-- Plugin jars -->
+		<jarplugin id="net"/>
+		<jarplugin id="irc"/>
+		<jarplugin id="ircui"/>
+		<jarplugin id="logs"/>
+		<jarplugin id="prefs"/>
+		<jarplugin id="prefsui"/>
+		<jarplugin id="ui"/>
+		<jarplugin id="dcc"/>
+		<jarplugin id="uiprefs"/>
+		<jarplugin id="scripting"/>
+		<jarplugin id="donations"/>
+		<jarplugin id="updatecheck"/>
+		<jarplugin id="encryption"/>
+		<jarplugin id="notification"/>
+		<jarplugin id="idle"/>
+		<jarplugin id="highlighter"/>
+		<jarplugin id="audio"/>
+
+		<jarplugin id="monitor"/>
+
+		<mkdir dir="${build}/extraplugins"/>
+		<move todir="${build}/extraplugins">
+			<fileset dir="${build}/output/core">
+				<include name="monitor.jar"/>
+			</fileset>
+		</move>
+	</target>
+
+	<target name="copylib">
+		<copy todir="${build}/output/lib">
+			<fileset dir="lib">
+				<exclude name="**/CVS"/>
+				<exclude name="**/CVS/**"/>
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="copysounds">
+		<copy todir="${build}/output/sounds">
+			<fileset dir="sounds">
+				<exclude name="**/CVS"/>
+				<exclude name="**/CVS/**"/>
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="output"
+		depends="jar,themes,pluginsdir,copyhelp,copylib,copysounds,checksignatures,apijavadoc"/>
+
+	<target name="osxapp" depends="output">
+
+			<property name="osxapp" location="${build}/osxdmg/leafChat.app"/> 
+
+			<!-- Create the distribution directory -->
+			<delete dir="${osxapp}"/>
+			<mkdir dir="${osxapp}"/>
+
+			<!-- Copy all the standard files into it -->
+			<copy todir="${osxapp}">
+				<fileset dir="mac/app">
+						<exclude name="**/Info.plist"/>
+					</fileset>
+			</copy>
+			<copy todir="${osxapp}/Contents" file="mac/app/Contents/Info.plist">
+				<filterset>
+					<filter token="NUMERICVERSION" value="${numericversion}"/>
+				<filter token="STRINGVERSION" value="${stringversion}"/>
+				</filterset>
+			</copy>
+
+			<!-- Copy library files and jar file -->
+				<copy todir="${osxapp}">
+					<fileset dir="${build}/output">
+						<exclude name="leafChat.jar"/>
+					</fileset>
+				</copy>
+			<copy todir="${osxapp}/Contents/Resources/Java" file="${build}/output/leafChat.jar"/>
+
+			<!-- Make the stub executable -->
+			<chmod file="${osxapp}/Contents/MacOS/JavaApplicationStub" perm="ugo+rx"/>
+	</target>
+
+	<target name="osxdmg" depends="osxapp" description="Create OS X .dmg">
+		<delete file="${osxdmg}"/>
+		<exec executable="hdiutil" failonerror="true">
+			<arg value="create"/>
+			<arg value="-fs"/>
+			<arg value="HFS+"/>
+			<arg value="-volname"/>
+			<arg value="leafChat"/>
+			<arg value="-srcfolder"/>
+			<arg file="${build}/osxdmg"/>
+			<arg file="${osxdmg}"/>
+		</exec>
+	</target>
+
+	<target name="themes" depends="">
+		<mkdir dir="${build}/output/themes"/>
+		<zip destfile="${build}/output/themes/leaves.leafChatTheme" basedir="themes/leaves"/>
+		<zip destfile="${build}/output/themes/shared.leafChatTheme" basedir="themes/shared"/>
+	 	<!--<zip destfile="${build}/output/themes/stars.leafChatTheme" basedir="themes/stars"/>-->
+	</target>
+
+	<target name="localthemes" description="Build themes into user folder">
+		<fail message="You must set property 'themetarget'. See build.xml comments.">
+			<condition>
+				<equals arg1="${themetarget}" arg2=""/>
+			</condition>
+		</fail>
+
+		<mkdir dir="${themetarget}"/>
+		<zip destfile="${themetarget}/leaves.leafChatTheme" basedir="themes/leaves"/>
+		<zip destfile="${themetarget}/shared.leafChatTheme" basedir="themes/shared"/>
+		<zip destfile="${themetarget}/stars.leafChatTheme" basedir="themes/stars"/>
+	</target>
+
+	<target name="zip" depends="output" description="Build zip file">
+		<zip destfile="${zip}" basedir="${build}/output"/>
+	</target>
+
+	<target name="windowsinstaller" depends="output" description="Build Windows installer (NSIS)">
+		<copy todir="${build}/output" file="windowsinstaller/leafChat.ico"/>
+		<copy todir="${build}/output" file="windowsinstaller/leafchat.nsi">
+			<filterset>
+				<filter token="BRIEFVERSION" value="${fileversion}"/>
+				<filter token="FULLVERSION" value="${stringversion}"/>
+			</filterset>
+		</copy>
+		<copy todir="${build}/output" file="windowsinstaller/Version.class"/>
+
+		<exec executable="${makensis}" resolveexecutable="yes" failonerror="yes"
+			dir="${build}/output">
+			<arg value="leafchat.nsi"/>
+		</exec>
+
+		<delete file="${build}/output/leafChat.ico"/>
+		<delete file="${build}/output/leafchat.nsi"/>
+		<delete file="${build}/output/Version.class"/>
+		<move file="${build}/output/leafchat${fileversion}.exe"
+			tofile="${installer}"/>
+	</target>
+
+	<target name="apijavadoc" depends="jar">
+		<javadoc destdir="${build}/output/help/pluginapi" source="5"
+			windowtitle="leafChat plugin API" breakiterator="yes" use="yes"
+			charset="UTF-8">
+			<classpath>
+				<fileset dir="${build}/output">
+						<include name="leafChat.jar"/>
+				</fileset>
+				<fileset dir="lib">
+						<include name="**/*.jar"/>
+			 	</fileset>
+			</classpath>
+			<packageset dir="src" defaultexcludes="yes">
+				<include name="**/api/**"/>
+			</packageset>
+			<doctitle><![CDATA[<h1>leafChat plugin API</h1>]]></doctitle>
+			<bottom><![CDATA[<small>Copyright &copy; 2011 Samuel Marshall. All rights reserved.</small>]]></bottom>
+		</javadoc>
+	</target>
+	
+	<macrodef name="makesignature">
+		<attribute name="package"/>
+		
+		<sequential>
+		  <fileset dir="${sigbase}" id="jar.files">
+		    <include name="leafChat.jar"/>
+		    <include name="core/*.jar"/>
+		    <include name="lib/leafdigital/*.jar"/>
+		  </fileset>
+					
+			<pathconvert property="jarfiles" refid="jar.files"/>
+
+			<java jar="${sigtest}/sigtestdev.jar" fork="true">
+				<arg value="Setup"/>
+				<arg value="-classpath"/>
+				<arg value="${javart}${path.separator}${jarfiles}"/>
+				<arg value="-filename"/>
+				<arg value="${build}/signatures/@{package}"/>
+				<arg value="-package"/>
+				<arg value="@{package}"/>
+			</java>
+
+			<!--
+			  Delete file if it was empty (happens if the version being generated
+			  doesn't actually contain that package)
+			  -->
+			<delete>
+				<fileset dir="${build}/signatures">
+					<filename name="@{package}"/>
+					<size value="32"/>
+				</fileset>
+			</delete>
+			
+		</sequential>
+	</macrodef>
+
+	<target name="requirejavart">
+		<fail message="You must set property 'javart'. See build.xml comments.">
+			<condition>
+				<not>
+					<available file="${javart}"/>
+				</not>
+			</condition>
+		</fail>
+	</target>
+	
+	<!-- 
+	  Using this task requires manual intervention! You need to run the task and
+	  then copy the created signatures into the relevant apisignatures/version
+	  folder. The property 'sigbase' is required.
+	  -->
+	<target name="makesignatures" description="Create API signatures" depends="init, requirejavart">
+		<fail message="You must set property 'sigbase'. See build.xml comments.">
+			<condition>
+				<equals arg1="${sigbase}" arg2=""/>
+			</condition>
+		</fail>
+		
+		<delete dir="${build}/signatures"/>
+		<mkdir dir="${build}/signatures"/>
+		
+		<makesignature package="leafchat.core.api"/>
+		<makesignature package="util"/>
+
+		<!-- This list should include all plugins that have public .api packages -->
+		<makesignature package="com.leafdigital.audio.api"/>
+		<makesignature package="com.leafdigital.highlighter.api"/>
+		<makesignature package="com.leafdigital.idle.api"/>
+		<makesignature package="com.leafdigital.irc.api"/>
+		<makesignature package="com.leafdigital.ircui.api"/>
+		<makesignature package="com.leafdigital.logs.api"/>
+		<makesignature package="com.leafdigital.net.api"/>
+		<makesignature package="com.leafdigital.notification.api"/>
+		<makesignature package="com.leafdigital.prefs.api"/>
+		<makesignature package="com.leafdigital.prefsui.api"/>
+		<makesignature package="com.leafdigital.ui.api"/>
+		
+		<echo message="Signature files can be found in:"/>
+		<echo message="${build}/signatures"/>
+	</target>
+	
+	<macrodef name="checkapi">
+		<attribute name="version"/>
+		
+		<sequential>
+		  <fileset dir="${build}/output" id="jar.files">
+		    <include name="leafChat.jar"/>
+		    <include name="core/*.jar"/>
+		    <include name="lib/leafdigital/*.jar"/>
+		  </fileset>
+			<pathconvert pathsep="${path.separator}" property="jarfiles" refid="jar.files"/>
+	
+		  <fileset dir="apisignatures/@{version}" id="sig.files">
+		    <include name="*"/>
+		  </fileset>
+			<pathconvert pathsep="${path.separator}" property="sigfiles" refid="sig.files"/>
+			<pathconvert pathsep=" -package " property="packages" refid="sig.files">
+				<mapper type="flatten"/>
+			</pathconvert>
+			
+			<property name="options" value="Test -static -mode bin"/>
+			<property name="cp" value="-classpath &quot;${javart}${path.separator}${jarfiles}&quot;"/>
+			<property name="line" value="${options} ${cp} -files ${sigfiles} -package ${packages}"/>
+	
+			<property name="report" value="${build}/sig.report"/>
+			<java jar="${sigtest}/sigtest.jar" fork="true" output="${report}">
+				<arg line="${line}"/>
+			</java>
+	
+			<!-- Get rid of everything from the report that is ok. This is necessary
+			     because we permit methods to be added, just not removed. -->
+			<replaceregexp file="${report}" flags="s"
+				match="^.*Constant checking: on" replace=""/>
+			<replaceregexp file="${report}" flags="s"
+				match="Added Classes\s-+\n\n.*?\n\n" replace=""/>
+			<replaceregexp file="${report}" flags="s"
+				match="Added Superclasses or Superinterfaces\s-+\n\n.*?\n\n" replace=""/>
+			<replaceregexp file="${report}" flags="s"
+				match="Added Fields\s-+\n\n.*?\n\n" replace=""/>
+			<replaceregexp file="${report}" flags="s"
+				match="Added Methods\s-+\n\n.*?\n\n" replace=""/>
+			<replaceregexp file="${report}" flags="s"
+				match="duplicate messages suppressed: [0-9]+" replace=""/>
+			<replaceregexp file="${report}" flags="s"
+				match="STATUS:Failed.[0-9]+ errors" replace=""/>
+			<replaceregexp file="${report}" flags="s"
+				match="^\s*(.*)\s*$" replace="\1"/>
+			<replaceregexp file="${report}" flags="s"
+				match="^$" replace="[OK]"/>
+	
+			<!-- Load report into property -->
+			<loadfile srcFile="${report}" property="filtered"/>
+				
+			<!-- Fail if there was anything missing -->
+			<fail message="API signature check failed (see ${report})">
+				<condition>
+					<not>
+						<equals arg1="${filtered}" arg2="[OK]"/>
+					</not>
+				</condition>
+			</fail>
+		</sequential>
+	</macrodef>
+
+	<!--
+	  leafChat is supposed to be backward-compatible with older plugins (usually).
+
+	  This works using the standard 'SigTest' utility to check the API has not
+	  changed. Additions are permitted, but not removals.
+
+	  It is possible to remove support for an old version in plugininfo.xml, in
+	  which case the signature files for old versions of that package should
+	  be removed.
+
+	  Compatibility is not checked with versions prior to 2.3.
+    -->
+	<target name="checksignatures" depends="jar, requirejavart">
+		<checkapi version="2.3"/>
+		<checkapi version="2.4b"/>
+	</target>
+
+	<target name="all" depends="zip,osxdmg,windowsinstaller"/>
+
+</project>

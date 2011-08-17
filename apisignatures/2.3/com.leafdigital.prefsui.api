@@ -1,0 +1,12 @@
+#Signature file v4.1
+#Version 
+
+CLSS public abstract interface com.leafdigital.prefsui.api.PreferencesUI
+intf leafchat.core.api.Singleton
+meth public abstract void registerPage(leafchat.core.api.Plugin,com.leafdigital.ui.api.Page)
+meth public abstract void registerWizardPage(leafchat.core.api.Plugin,int,com.leafdigital.ui.api.Page)
+meth public abstract void unregisterPage(leafchat.core.api.Plugin,com.leafdigital.ui.api.Page)
+meth public abstract void unregisterWizardPage(com.leafdigital.ui.api.Page)
+
+CLSS public abstract interface leafchat.core.api.Singleton
+

@@ -1,0 +1,10 @@
+<Dialog Title="Create new script" Resizable="n" MinSize="300,100">
+<VerticalPanel Border="8" Spacing="4">
+  <Label Text="Enter a name for the new script."/>
+  <EditBox id="name" OnChange="changeName"/>
+  <ButtonPanel>
+  	  <yes><Button id="create" Default="y" Enabled="n" Label="Create script" OnAction="actionCreate"/></yes>
+  	  <cancel><Button Label="Cancel" OnAction="actionCancel"/></cancel>
+  </ButtonPanel>
+</VerticalPanel>
+</Dialog>

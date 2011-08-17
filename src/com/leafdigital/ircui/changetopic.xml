@@ -1,0 +1,14 @@
+<Dialog Title="Change topic" Resizable="n">
+<VerticalPanel Border="8" Spacing="4">
+  <Label Text="Enter a new topic for the channel."/>
+  <EditBox id="topic" OnChange="changeValue" OnEnter="actionChange"/>
+  <BorderPanel>
+    <east>
+      <HorizontalPanel>
+		    <Button Label="Cancel" OnAction="actionCancel"/>
+		    <Button id="change" Label="Change" OnAction="actionChange" Default="y"/>
+		  </HorizontalPanel>
+    </east>
+  </BorderPanel>
+</VerticalPanel>  
+</Dialog>

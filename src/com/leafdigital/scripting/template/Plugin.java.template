@@ -1,0 +1,31 @@
+package %%PACKAGENAME%%;
+
+import leafchat.core.api.*;
+
+public class %%CLASSNAME%% implements Plugin
+{
+	private PluginContext context;
+
+	public void init(PluginContext context, PluginLoadReporter reporter) throws GeneralException
+	{
+	  // Store the context object so you can use it later to access other parts
+	  // of the system.	  
+		this.context=context;
+		
+		// Initialise your plugin here - for example, request messages or register 
+		// a tool using the context object.
+	}
+
+	public void close() throws GeneralException
+	{
+	  // Perform any cleanup necessary when your plugin is closed, such as closing
+	  // files. (Requests made on the context object are automatically cleaned
+	  // up, so you may be able to leave this blank.)
+	}
+	
+	public String toString()
+	{
+	  // Used to display in system log etc.
+		return "%%DISPLAYNAME%% plugin";
+	}
+}

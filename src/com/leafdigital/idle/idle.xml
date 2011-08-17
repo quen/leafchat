@@ -1,0 +1,48 @@
+<Page Title="Away status" OnSet="onSet">
+	<VerticalPanel Spacing="8">
+		<VerticalPanel>
+  	  <Label MacIndent="y" Text="'Away' status indicates that you're not available."/>
+	    <Label MacIndent="y" Small="y" Text="Set away by typing /away followed by a short message, e.g. '/away brb'. Users who try to message you, or get info about you, will be told that you're away."/>
+	  </VerticalPanel>
+	  
+	  <CheckBox id="multiserver" Label="Apply the /away command across all connected servers" OnChange="changeMultiserver"/>
+	  
+	  <CheckBox id="enable" Label="Enable automatic setting of away status" OnChange="changeSettings"/>
+	  
+	  <VerticalPanel Spacing="8">
+	  
+	    <BorderPanel Spacing="8">
+	      <west>
+	        <Label MacIndent="y" Text="Idle time" WidthGroup="w1" BaseGroup="b1"/>
+	      </west>
+	      <central>	      	      
+		      <VerticalPanel>
+			      <HorizontalPanel Spacing="2">
+			        <EditBox id="minutes" BaseGroup="b1" Width="40" Require="[0-9]+" OnChange="changeSettings"/>
+			        <Label Text="minutes" BaseGroup="b1"/>
+			      </HorizontalPanel>
+				    <Label MacIndent="y" Small="y" Text="When this time passes without a 'non-idle' action, you will be marked away."/>
+		      </VerticalPanel>
+		    </central>
+	    </BorderPanel>
+		  	     
+	    <BorderPanel Spacing="8">
+	      <west>
+        	<Label MacIndent="y" Text="Non-idle" BaseGroup="b2" WidthGroup="w1"/>
+        </west>
+        <central>
+	        <VerticalPanel Spacing="2">
+			      <RadioButton Group="actions" id="actionMessages" Label="Only when you type something in leafChat" BaseGroup="b2" OnAction="changeSettings"/>
+			      <VerticalPanel>
+			        <RadioButton Group="actions" id="actionMouse" Label="Also when you move the mouse at all" OnAction="changeSettings"/>
+			        <Label id="oldVersion" Small="y" Text="Mouse movement detection is only available using Java 1.5 or higher." Visible="n"/> 
+			      </VerticalPanel>
+			    </VerticalPanel>
+			  </central>
+		  </BorderPanel>
+		  
+     <CheckBox id="autoCancel" Label="Cancel auto-away status when you type something in leafChat" OnChange="changeSettings"/>
+	    
+	  </VerticalPanel>
+	</VerticalPanel>
+</Page>

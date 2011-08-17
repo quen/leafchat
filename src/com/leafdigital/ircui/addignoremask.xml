@@ -1,0 +1,23 @@
+<Dialog Title="Add ignore list entry" Resizable="n" OnClosed="closedAddMask">
+<VerticalPanel Border="8" Spacing="4">
+	<HorizontalPanel Spacing="4">
+		<VerticalPanel>
+			<Label Text="Nickname"/>
+			<EditBox id="nick" OnChange="changeText" Value="*" OnFocus="focusNick" Width="100"/>
+		</VerticalPanel>
+		<VerticalPanel>
+			<Label Text="Username"/>
+			<EditBox id="user" OnChange="changeText" Value="*" OnFocus="focusUser" Width="100"/>
+		</VerticalPanel>
+		<VerticalPanel>
+			<Label Text="Host name"/>
+			<EditBox id="host" OnChange="changeText" Value="*" OnFocus="focusHost" Width="200"/>
+		</VerticalPanel>
+	</HorizontalPanel>
+	<Label Small="y" Text="You can use * as a wildcard in any entry."/>
+  <ButtonPanel>
+    <cancel><Button Label="Cancel" OnAction="actionCancel"/></cancel>
+    <yes><Button id="addMask" Label="Add" OnAction="actionAddMask" Default="y" Enabled="n"/></yes>
+  </ButtonPanel>
+</VerticalPanel>  
+</Dialog>

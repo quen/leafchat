@@ -1,0 +1,316 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>Creating scripts</title>
+<link rel="stylesheet" href="../basic.css" type="text/css" />
+</head>
+<body>
+<h1>Creating scripts</h1>
+<h2>Getting started</h2>
+<p>
+A <strong>script</strong> is a collection of customisations known as 
+<strong>script items</strong>. You can have a single script for all your 
+customisations, or do each one in a different script, or something in between -
+it's up to you.
+</p>
+<p>
+Create a script using the <strong>New</strong>
+button in the <strong>Scripting</strong> window. Then edit it using the 
+<strong>Edit</strong> button to bring up the script editor.
+</p>
+<h2>Script editor</h2>
+<p>
+In the script editor you can add or delete items as well as edit each item. 
+You can also enable or disable individual items. When you've made any changes 
+(such as adding a script item, disabling one, or editing some code within one)
+you need to click <strong>Save</strong> before they will take effect. It's also
+possible to click <strong>Revert</strong>, which will undo your changes and
+return to the previous saved version.
+</p>
+<p>
+You can only enable or disable the whole script when there aren't any unsaved
+changes. (In other words, save it first, then enable it.)
+</p>
+<h2>Script items</h2>
+<p>
+Create script items by clicking <strong>Add item</strong>, choosing the type of 
+item from the dropdown, and then altering the settings as needed. 
+</p>
+<p>
+You can change the settings later by clicking the <strong>Settings</strong> button 
+next to the relevant item, or delete the item altogether using the 
+<strong>Delete</strong> button.
+</p>
+<h2>Code blocks</h2>
+<p>
+Along with the settings dialog, most script items require you to type in blocks 
+of code, which you can edit directly in the script editor window. For example,
+the 'Command' item uses the settings dialog to specify the name of the command
+and any parameters, but you use the code block to specify what actually happens
+when you type that command.
+</p>
+<h3>IRC commands</h3>
+<p>
+You can type IRC commands into the code block. If the script item includes
+parameters or other variables (these will be displayed just above the code block), 
+you can include these in the IRC command as <tt>${variable}</tt>.
+For example:
+</p>
+<pre>
+/msg ${nick} You smell of cheese.
+</pre>
+<p>
+Technically, the contents of <tt>${}</tt> can be any Java expression, but it is
+most straightforward to use simple variable names.
+</p>
+<p>
+If you want to do 'normal talking' in your script (i.e. exactly the same as if
+you just typed text in the window), you can't do this just with plain text as
+this will cause errors. Instead, put <tt>/say</tt> in front. leafChat automatically
+works out where to send the text.
+</p>
+<pre>
+/say So I was wondering...
+</pre>
+<h3>Java code</h3>
+<p>
+You can also include Java code in the code block. Any line that doesn't begin
+with a / is interpreted as Java code. You can mix IRC commands with the Java code,
+too. For instance:
+</p>
+<pre>
+// List of cheeses
+String[] cheeses={"Cheddar","Gorgonzola","Stilton"};
+// Pick a cheese at random
+String random=cheeses[(int)(Math.random()*cheeses.length)];
+// Now send the message using the random cheese
+/msg ${nick} You smell of ${random}.
+</pre>
+<p>As you can see, standard Java <tt>//</tt> comments can be used.</p>
+<p>One final Java extension for advanced users is that you can use double 
+square brackets to access
+one of the singleton classes leafChat provides. These are documented in the
+<a href="../pluginapi/index.html">plugin API</a>. (In scripts you have access
+to the full leafChat public API from all plugins, without needing to import
+anything or use full names.)</p>
+<pre>
+[[UI]].showUserError(null,"User error","The user has done something wrong");
+</pre>
+
+<h3>Code errors</h3>
+<p>
+When you save your script, it will be checked for syntax errors. (These are 
+only likely to happen if you use Java code.) If there are errors,
+you can choose to disable the script and save it, or to cancel (not save). You
+can't save a script and leave it enabled if there are errors. If you want to
+do so, try disabling the individual item which causes errors.
+</p>
+<p>
+leafChat tries to guess the approximate lines on which the error occurred. 
+These will be highlighted in yellow on the script item which caused the error.
+Sometimes it might guess the wrong line, so be careful. Similarly, the error
+message is displayed at the bottom of the item, but this might sometimes be
+wrong or unhelpful. 
+</p>
+
+<h2>Script items</h2>
+<p>
+There are four types of script item:
+</p>
+<ul>
+<li><strong>Command</strong> - create new IRC commands.</li>
+<li><strong>Menu item</strong> - add new options to right-click menus.</li>
+<li><strong>Event</strong> - create automatic reactions to data received from IRC.</li>
+<li><strong>Variable</strong> - set up a variable for use in other script items.</li>
+</ul>
+
+<h3>Command</h3>
+<p>
+The <strong>Command</strong> item lets you create a new IRC command, such as
+<tt>/cheese</tt>. You can control what happens when you type this command.
+</p>
+<p>
+Settings include the name of the command (be sure to choose a name that isn't
+already used) and a list of parameters. Parameters are what gets typed after
+the command. For example, if you expect people to type <tt>/cheese Victim</tt>,
+then the nickname is a parameter.
+</p>
+<ul>
+<li>You can have between zero and five parameters.</li>
+<li>Each parameter has to be given a name, with which you can refer to it in
+the code. Names should be single words that don't use special characters, such
+as <tt>nick</tt>.</li>
+<li>For each parameter you can choose whether it should be text (<strong>String</strong>) or
+a whole number (<strong>int</strong>). If the last parameter is a <strong>String</strong> then it includes all
+the rest of the text typed. For example, if you have three <strong>String</strong> parameters and
+the user types <tt>/command I am the tired man</tt>, then the parameters
+will become "I", "am", and "the tired man" respectively.</li>
+<li>leafChat will automatically give an error if somebody tries
+to run a command without giving the right number or kind of parameters.</li>
+</ul>
+
+<h3>Menu item</h3>
+<p>
+The <strong>Menu item</strong> item lets you add a new option which appears in
+right-click menus when you click on a user or channel.
+</p>
+<p>
+When you create the item you give it a name, which displays in the menu (can be
+anything), and set whether you want it to apply for users, for channels, or only
+when both a user and a channel is available.
+</p>
+<ul>
+<li>Depending on your 'Applies to' selection, one or both of the variables
+<tt>nick</tt> and <tt>chan</tt> will be set up for use in your script code.</li>
+<li>It is not currently possible within the scripting interface to create a menu 
+item which applies to multiple users at once (i.e. if you select three people 
+in the name list and right-click).</li>
+</li>
+</ul>
+
+<h3>Event</h3>
+<p>
+Using <strong>Event</strong> items, you can script reactions to things that 
+happen on IRC, such as other users saying things.
+</p>
+<p>
+A tree of available event types appears in the left of the settings window.
+You can expand folders in this tree to find the type of event you want to 
+respond to. For example, if you want to respond to users saying things in 
+channels, that is under <tt>IRC/From user/Channel/Message</tt>.
+</p>
+<p>
+Once you have chosen an event type, a brief description of that type appears
+on the right along with a list of the variables that will become available for
+your script. Some types also have filters which you can enable (for example,
+if you only want to receive the event for a specific named channel).
+</p>
+<p>
+Your script code then runs whenever the event happens.
+</p>
+<ul>
+<li>Advanced users may wish to know that in addition to the listed variables,
+the <tt>msg</tt> variable is always provided. This is a message of the selected
+event type. You'll need to use the <a href="../pluginapi/index.html">plugin API</a>
+documentation to find out what extra information is available by calling Java
+methods on that object. Note that the message names aren't exactly the same
+as the names in the event type tree (they were renamed to make more sense for
+display) but they do correspond exactly.</li>
+<li>If you want to mark an event as 'handled', which indicates that you've
+dealt with it and leafChat should not display it to the user, use the Java 
+code line <tt>msg.markHandled();</tt> at the end of your code block.</li>
+</ul>
+
+<h3>Variable</h3>
+<p>
+<strong>Variable</strong> items define named variables that you can use to
+store information, and can refer to from all other script items in the same
+script.
+</p>
+<p>
+Each variable needs a unique name which begins
+with a lower-case letter, then includes any letters and numbers but no spaces or
+symbols. For example,
+<tt>tadpoleSize</tt> is a valid variable name.</p>
+<p>You can choose the type of variable. <tt>String</tt> variables store text (words)
+while <tt>int</tt> variables contain whole numbers. These behave differently if 
+you try to do arithmetic: with <tt>int</tt>s, 2+2 is 4 but with <tt>String</tt>s,
+"2"+"2" is "22" (and "tad"+"pole" is "tadpole"). Advanced users can use other Java types.</p>
+<p>You can specify the initial value of a variable. If you don't specify it,
+<tt>int</tt>s start at zero and <tt>String</tt>s start with "".</p>
+<ul>
+<li>The initial value applies whenever the script starts up, so you can't use
+variables to store information between sessions. Variables will be reset
+when leafChat starts, when you save a change to the script, or when you disable 
+and enable the script.</li>
+<li>You cannot refer to variables from different scripts. Variables are only
+available within their own script.</li>
+<li>If you specify a different Java type then you must use the full type name, 
+except that <tt>java.lang</tt> is optional. Some examples: <tt>double</tt>, 
+<tt>byte[]</tt>, <tt>Object</tt>, <tt>java.util.HashMap</tt>.</li>
+<li>When using the 'Other' option the initial value is disabled; all variables
+of this type begin at <tt>null</tt>.</li>
+</ul>
+
+<h2>Tutorial</h2>
+<p>
+Here's an example of using events and variables. This is an advanced example
+so you will need a small amount of programming experience in order to understand
+it.
+</p>
+<p>
+We're going to create a script
+that watches out for people who yawn in channel by typing an action such as
+<tt>/me yawns</tt>. Once three people have yawned, it sends a message to the
+channel telling them to go to bed.
+</p>
+<ol>
+<li>First we're going to need a variable that keeps track of the number of yawns.
+<ol>
+<li>Click <strong>Add item</strong>, then choose <strong>Variable</strong> from
+the dropdown.</li>
+<li>Type in the name, <tt>yawns</tt>.</li>
+<li>Select the type, <strong>int</strong>. We want this variable to store a 
+number.</li>
+<li>Although it's the default anyway, let's type in the initial value of <tt>0</tt>
+just to be clear.</li>
+<li>Click <strong>Add</strong>.</li>
+</ol>
+<li>Now let's create an event that detects channel actions.
+<ol>
+<li>Click <strong>Add item</strong>, then choose <strong>Event</strong> from
+the dropdown.</li>
+<li>In the tree at the left, double-click on <strong>IRC</strong>, <strong>From user</strong>,
+<strong>Channel</strong>, <strong>CTCP request</strong>, and finally click on <strong>Action</strong>. (Whew!)</li>
+<li>Note the warning: events only operate on information received from the server,
+not on things you send to it, which means you'll have to get somebody else to help if you want
+to test this script.</li>
+<li>Note also the list of variables that will be provided. The important ones are
+<tt>sourceNick</tt> (that's the person who did the action) and <tt>text</tt> (that's
+the text of the action, everything after /me).</li>
+<li>Go ahead and click <strong>Add</strong>.</li>
+</ol>
+</li>
+<li>Finally we need to write the actual script code for the action in the code box. 
+This involves a mixture of IRC commands and Java code.
+<pre>
+if(text.indexOf("yawn")!=-1) yawns++;
+if(yawns>2)
+{
+  /say ${sourceNick} (and others) - GO TO BED!
+  yawns=0;
+}
+</pre>
+<ul>
+<li>The first line checks whether the <tt>text</tt> variable contains the word 'yawn'
+(this will also cover 'yawns', 'yawning', etc). <i>variable</i><tt>.indexOf("</tt><i>something</i><tt>")!=-1</tt> 
+looks horrible but is a pretty
+standard way of checking whether a variable contains some text in Java.</li>
+<li>If it does, then <tt>yawns++</tt> (equivalent
+to <tt>yawns=yawns+1</tt>) means 'take the value of the <tt>yawns</tt> variable, 
+add one to it, and set that back into the <tt>yawns</tt> variable again'.</li>
+<li>The semicolon marks the end of that single-line <tt>if</tt> statement. In Java
+you need semicolons at the end of each line of code except where it starts a multi-line 
+block. However, don't use semicolons after IRC commands!</li>
+<li>The next line begins a multi-line <tt>if</tt> statement. In this case we want 
+to do two things so we need the multi-line version specifically, but in addition
+to that you always need to use these if you want to incorporate IRC commands; 
+IRC commands have to be on their own line.</li>
+<li>This <tt>if</tt> checks whether <tt>yawns</tt> is now more than 2 (3 or greater).
+The { symbol on the next line then indicates the beginning of the block of code
+that will run if that test (<tt>yawns>2</tt>) passes.</li>
+<li>An IRC command line then does <tt>/say</tt>. (Because this is a channel event, <tt>/say</tt>
+will talk to the channel involved.) The <tt>${sourceNick}</tt> causes it to insert
+the value of the <tt>sourceNick</tt> variable, i.e. the last person who yawned.</li>
+<li>Because we don't want it to happen again right away, we then set the yawn count
+back to zero. This is still within the { } symbols so it only happens if that
+original test (<tt>yawns>2</tt>) was true.</li>
+</ul>
+</li>
+<li>That's it! If you want to test it out, don't forget to save the script 
+(and, if neccessary, enable it) first.</li>
+</ol>
+</body>
+</html>

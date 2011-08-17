@@ -1,0 +1,39 @@
+<Dialog Title="Multi-line paste" Resizable="y" InitialSize="550,300">
+<BorderPanel Border="12">
+  <north>
+    <VerticalPanel Spacing="8">
+		  <Label Text="You've tried to paste more than one line. Use this dialog to control your paste."/>
+		  <BorderPanel Spacing="8">
+		    <west><Label BaseGroup="a" WidthGroup="l" Text="Mode"/></west>
+		    <central>
+				  <HorizontalPanel>
+				  		<RadioButton BaseGroup="a" id="asIs" Label="Paste as-is" Group="mode" OnAction="actionAsIs"/>
+				  		<Spacer Width="8"/>
+				  		<RadioButton BaseGroup="a" id="join" Label="Join lines using" Group="mode" OnAction="actionJoin"/>
+				  		<Spacer Width="4"/>
+				  		<EditBox BaseGroup="a" Value="/" Width="20" id="separator" OnChange="changeSeparator"/>
+				  </HorizontalPanel>
+			  </central>
+			</BorderPanel>
+			<Spacer Height="4"/>
+		</VerticalPanel>
+	</north>
+	<central>
+	  <BorderPanel Spacing="8">
+	    <west><Label WidthGroup="l" Text="Preview"/></west>
+	    <central>
+	      <BorderPanel Spacing="4">
+				  <central><TextView id="preview"/></central>
+	  				<south><Label id="info" Small="y"/></south>
+	  			</BorderPanel>
+			</central>
+		</BorderPanel>
+	</central>
+	<south>
+	  <ButtonPanel>
+	  	  <yes><Button Label="Paste" OnAction="actionPaste" Default="y"/></yes>
+	  	  <cancel><Button Label="Cancel" OnAction="actionCancel"/></cancel>
+	  </ButtonPanel>
+  </south>
+</BorderPanel>
+</Dialog>

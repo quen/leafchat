@@ -1,0 +1,140 @@
+This is the leafChat IRC client for Windows, Linux, and Mac OS X.
+
+
+End users
+---------
+
+This site holds the leafChat source code. If you just want to use leafChat,
+please visit the main website instead:
+
+http://www.leafdigital.com/software/leafchat/
+
+
+Building
+--------
+
+To build this system you need the Java 6 SDK (or newer) and Apache Ant (as
+supplied in most IDEs). You will also need to install some additional
+dependencies. See build.xml for full information.
+
+You can also run the system in an IDE such as Eclipse. This is quicker than
+waiting two minutes for a complete rebuild and then installing or unpacking
+the files, and also makes debugging easier.
+
+To run in an IDE:
+
+1) Make sure you've run leafChat (the normal end-user install) at least once.
+2) Set up the project in your IDE. Add all the library jar files in lib/
+   (and, on non-Mac platforms, the stub in mac/applejavaextensions) to the
+   build path. This should make all the compiler errors go away.
+3) Right-click on the source file leafchat.startup.IDEStartupHandler and
+   choose 'Run as... Java application', or the equivalent in your IDE.
+
+Running in an IDE skips some compile-time correctness checks that the build
+script does and the launch process is not exactly compatible, so you should
+also do 'proper' builds at least some of the time.
+
+
+Bug reports
+-----------
+
+I guess we might as well use the GitHub issues system, for now at least.
+
+
+Contacts
+--------
+
+Forum:
+
+http://live.leafdigital.com/hazel/leafchat/
+(I check this forum occasionally, but not reliably at present. Hopefully may
+improve that in future.)
+
+IRC:
+
+irc.dal.net #leafChat
+(I'm there most evenings around 23:00 UK time.)
+
+Email:
+
+You can get my address via http://www.leafdigital.com/ but please bear in
+mind that (a) I'm often really bad at replying to email, and (b) my spam
+filter is quite likely to eat your email. If you can catch me on IRC, that
+might be preferable.
+
+Twitter:
+
+@leafdigital
+(This is just my personal account, so don't follow it unless you want to
+read the usual random crap. But if you send direct messages or replies I
+should probably see them right away. Might be useful if you sent an email
+and want to let me know so I can fish it out of my spam folder.)
+
+
+License
+-------
+
+Released under GNU General Public License version 3. See LICENSE.
+
+(This applies to all content that is created by me as part of this project,
+but obviously excludes third-party libraries which have their own licenses.)
+
+
+Credits
+-------
+
+All contents copyright 2011 Samuel Marshall, except:
+
+- Third-party libraries in 'lib' folder
+- Third-party content in 'mac' folder
+
+
+Contributions
+-------------
+
+Contributions including bugfixes and enhancements are welcomed. You
+must assign copyright in all contributions to me.
+
+All code changes should follow the code guidelines (even though most of the
+existing code does not).
+
+Please contact me e.g. on the IRC if you would like to make a change (rather
+than just a bugfix) or for anything complex. We'll need to agree how it
+should work both from the UI point of view and in terms of the implementation.
+
+
+Security issues
+---------------
+
+Here are some categories of serious security issue; I am not aware of any
+existing issues that are as serious as these.
+
+Assume the user VICTIM is running a standard leafChat install with default
+settings and no custom scripts.
+
+CRIT1: An attacker who is connected to the same IRC network as VICTIM can
+  cause arbitrary software to be executed on VICTIM's computer without
+  unlikely intervention from VICTIM; or, they can read arbitrary files from
+  VICTIM's computer, or something similarly serious.
+
+CRIT2: An attacker who convinces VICTIM to connect to a custom server (which
+  is under the attacker's control) can cause arbitrary software to be executed
+  on VICTIM's computer without unlikely intervention from VICTIM; or, they can
+  read arbitrary files from VICTIM's computer, or something similarly serious.
+
+CRIT3: An attacker who is connected to the same IRC network as VICTIM can
+  obtain VICTIM's nickname password.
+
+SERIOUS: An attacker with no special permissions on the IRC network can cause
+  VICTIM's leafChat to crash or close or otherwise deny service.
+
+Other security holes are generally less serious.  
+There might be some possibilities I didn't think of.
+
+If you are reporting any security issues that is as serious as these, please
+report it to me privately (ideally via email + IRC/Twitter to make sure I get
+it).
+
+If possible, please give me at LEAST a fortnight to fix it before releasing
+information publicly, and preferably a month or longer; it's just me
+working on this software in my spare time, so cut me some slack. :)
