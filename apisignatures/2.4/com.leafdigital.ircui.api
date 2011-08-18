@@ -1,0 +1,103 @@
+#Signature file v4.1
+#Version 
+
+CLSS public abstract com.leafdigital.ircui.api.AbstractIRCAction
+cons public <init>(java.lang.String,int,int)
+intf com.leafdigital.ircui.api.IRCAction
+meth public int getCategory()
+meth public int getOrder()
+meth public java.lang.String getName()
+supr java.lang.Object
+hfds category,name,order
+
+CLSS public abstract interface com.leafdigital.ircui.api.GeneralChatWindow
+innr public abstract interface static Handler
+meth public abstract com.leafdigital.irc.api.MessageDisplay getMessageDisplay()
+meth public abstract void addLine(java.lang.String)
+meth public abstract void addLine(java.lang.String,java.lang.String)
+meth public abstract void setEnabled(boolean)
+meth public abstract void setTarget(java.lang.String)
+meth public abstract void setTitle(java.lang.String)
+meth public abstract void showOwnText(int,java.lang.String,java.lang.String)
+meth public abstract void showRemoteText(int,java.lang.String,java.lang.String)
+
+CLSS public abstract interface static com.leafdigital.ircui.api.GeneralChatWindow$Handler
+ outer com.leafdigital.ircui.api.GeneralChatWindow
+meth public abstract void doCommand(com.leafdigital.irc.api.Commands,java.lang.String) throws leafchat.core.api.GeneralException
+meth public abstract void internalAction(org.w3c.dom.Element) throws leafchat.core.api.GeneralException
+meth public abstract void windowClosed() throws leafchat.core.api.GeneralException
+
+CLSS public abstract interface com.leafdigital.ircui.api.IRCAction
+fld public final static int CATEGORY_CHAN = 300
+fld public final static int CATEGORY_USER = 100
+fld public final static int CATEGORY_USERCHAN = 200
+meth public abstract int getCategory()
+meth public abstract int getOrder()
+meth public abstract java.lang.String getName()
+meth public abstract void run(com.leafdigital.irc.api.Server,java.lang.String,java.lang.String,java.lang.String,java.lang.String[],com.leafdigital.irc.api.MessageDisplay)
+
+CLSS public com.leafdigital.ircui.api.IRCActionListMsg
+cons public <init>(com.leafdigital.irc.api.Server,java.lang.String,java.lang.String,java.lang.String,java.lang.String[])
+meth public boolean hasChannel()
+meth public boolean hasSelectedNicks()
+meth public boolean hasSingleNick()
+meth public boolean notUs()
+meth public com.leafdigital.irc.api.Server getServer()
+meth public java.lang.String getChannel()
+meth public java.lang.String getContextChannel()
+meth public java.lang.String getContextNick()
+meth public java.lang.String getSelectedChannel()
+meth public java.lang.String getSingleNick()
+meth public java.lang.String[] getSelectedNicks()
+meth public java.util.Collection<com.leafdigital.ircui.api.IRCAction> getIRCActions()
+meth public void addIRCAction(com.leafdigital.ircui.api.IRCAction)
+supr leafchat.core.api.Msg
+hfds contextChannel,contextNick,list,selectedChannel,selectedNicks,server
+
+CLSS public abstract interface com.leafdigital.ircui.api.IRCUI
+intf leafchat.core.api.Singleton
+meth public abstract com.leafdigital.irc.api.MessageDisplay getMessageDisplay(com.leafdigital.irc.api.Server)
+meth public abstract com.leafdigital.ircui.api.GeneralChatWindow createGeneralChatWindow(leafchat.core.api.PluginContext,com.leafdigital.ircui.api.GeneralChatWindow$Handler,java.lang.String,java.lang.String,java.lang.String,int,java.lang.String,java.lang.String,boolean)
+
+CLSS public com.leafdigital.ircui.api.NickAction
+cons public <init>(leafchat.core.api.PluginContext,java.lang.String,int,int,java.lang.String)
+intf com.leafdigital.ircui.api.IRCAction
+meth public void run(com.leafdigital.irc.api.Server,java.lang.String,java.lang.String,java.lang.String,java.lang.String[],com.leafdigital.irc.api.MessageDisplay)
+supr com.leafdigital.ircui.api.AbstractIRCAction
+hfds command,pc
+
+CLSS public java.lang.Object
+cons public <init>()
+meth protected java.lang.Object clone() throws java.lang.CloneNotSupportedException
+meth protected void finalize() throws java.lang.Throwable
+meth public boolean equals(java.lang.Object)
+meth public final java.lang.Class<?> getClass()
+meth public final void notify()
+meth public final void notifyAll()
+meth public final void wait() throws java.lang.InterruptedException
+meth public final void wait(long) throws java.lang.InterruptedException
+meth public final void wait(long,int) throws java.lang.InterruptedException
+meth public int hashCode()
+meth public java.lang.String toString()
+
+CLSS public abstract leafchat.core.api.Msg
+cons public <init>()
+fld public final static int PRIORITY_AFTERNORMAL = 9000
+fld public final static int PRIORITY_BEFORENORMAL = 11000
+fld public final static int PRIORITY_EARLY = 12000
+fld public final static int PRIORITY_FIRST = 14000
+fld public final static int PRIORITY_LAST = 6000
+fld public final static int PRIORITY_LATE = 8000
+fld public final static int PRIORITY_NORMAL = 10000
+meth public boolean isHandled()
+meth public boolean isStopped()
+meth public boolean sequenceBefore(leafchat.core.api.Msg)
+meth public void markHandled()
+meth public void markStopped()
+meth public void setSequence(java.lang.String,int)
+meth public void setSequence(leafchat.core.api.Msg)
+supr java.lang.Object
+hfds handled,sequenceName,sequenceNumber,stopped
+
+CLSS public abstract interface leafchat.core.api.Singleton
+

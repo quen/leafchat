@@ -1,0 +1,27 @@
+#Signature file v4.1
+#Version 
+
+CLSS public abstract interface com.leafdigital.net.api.Network
+fld public final static int SECURE_NONE = 0
+fld public final static int SECURE_OPTIONAL = 1
+fld public final static int SECURE_REQUIRED = 2
+innr public abstract interface static Port
+intf leafchat.core.api.Singleton
+meth public abstract boolean needsListenTarget()
+meth public abstract com.leafdigital.net.api.Network$Port listen() throws java.io.IOException
+meth public abstract com.leafdigital.net.api.Network$Port listen(java.lang.String) throws java.io.IOException
+meth public abstract java.net.InetAddress getPublicAddress()
+meth public abstract java.net.Socket connect(java.lang.String,int,int) throws java.io.IOException
+meth public abstract java.net.Socket connect(java.lang.String,int,int,int) throws java.io.IOException
+meth public abstract void reportPublicAddress(java.net.InetAddress)
+
+CLSS public abstract interface static com.leafdigital.net.api.Network$Port
+ outer com.leafdigital.net.api.Network
+meth public abstract int getPublicPort()
+meth public abstract java.net.InetAddress getPublicAddress()
+meth public abstract java.net.Socket accept() throws java.io.IOException
+meth public abstract java.net.Socket accept(int) throws java.io.IOException
+meth public abstract void close() throws java.io.IOException
+
+CLSS public abstract interface leafchat.core.api.Singleton
+

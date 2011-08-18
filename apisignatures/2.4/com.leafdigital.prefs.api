@@ -1,0 +1,83 @@
+#Signature file v4.1
+#Version 
+
+CLSS public abstract interface com.leafdigital.prefs.api.Preferences
+intf leafchat.core.api.Singleton
+meth public abstract boolean toBoolean(java.lang.String)
+meth public abstract com.leafdigital.prefs.api.PreferencesGroup getGroup(java.lang.String)
+meth public abstract com.leafdigital.prefs.api.PreferencesGroup getGroup(leafchat.core.api.Plugin)
+meth public abstract int toInt(java.lang.String)
+meth public abstract java.awt.Font toFont(java.lang.String)
+meth public abstract java.lang.String fromBoolean(boolean)
+meth public abstract java.lang.String fromFont(java.awt.Font)
+meth public abstract java.lang.String fromInt(int)
+meth public abstract java.lang.String getPluginOwner(java.lang.String)
+meth public abstract java.lang.String getPluginOwner(leafchat.core.api.Plugin)
+meth public abstract java.lang.String getSafeToken(java.lang.String)
+
+CLSS public com.leafdigital.prefs.api.PreferencesChangeMsg
+cons public <init>(com.leafdigital.prefs.api.PreferencesGroup,java.lang.String,java.lang.String,java.lang.String)
+meth public com.leafdigital.prefs.api.PreferencesGroup getGroup()
+meth public java.lang.String getName()
+meth public java.lang.String getNewValue()
+meth public java.lang.String getOldValue()
+supr leafchat.core.api.Msg
+hfds name,newValue,oldValue,pg
+
+CLSS public abstract interface com.leafdigital.prefs.api.PreferencesGroup
+fld public final static int ANON_LAST = -1
+meth public abstract boolean exists(java.lang.String)
+meth public abstract boolean unset(java.lang.String)
+meth public abstract com.leafdigital.prefs.api.Preferences getPreferences()
+meth public abstract com.leafdigital.prefs.api.PreferencesGroup addAnon()
+meth public abstract com.leafdigital.prefs.api.PreferencesGroup findAnonGroup(java.lang.String,java.lang.String,boolean)
+meth public abstract com.leafdigital.prefs.api.PreferencesGroup findAnonGroup(java.lang.String,java.lang.String,boolean,boolean)
+meth public abstract com.leafdigital.prefs.api.PreferencesGroup getAnonParent()
+meth public abstract com.leafdigital.prefs.api.PreferencesGroup getChild(java.lang.String)
+meth public abstract com.leafdigital.prefs.api.PreferencesGroup[] getAnon()
+meth public abstract int addAnon(com.leafdigital.prefs.api.PreferencesGroup,int)
+meth public abstract java.lang.String get(java.lang.String)
+meth public abstract java.lang.String get(java.lang.String,java.lang.String)
+meth public abstract java.lang.String getAnonHierarchical(java.lang.String)
+meth public abstract java.lang.String getAnonHierarchical(java.lang.String,java.lang.String)
+meth public abstract java.lang.String getAnonHierarchical(java.lang.String,java.lang.String,boolean)
+meth public abstract java.lang.String set(java.lang.String,java.lang.String)
+meth public abstract void clearAnon()
+meth public abstract void remove()
+meth public abstract void set(java.lang.String,java.lang.String,java.lang.String)
+
+CLSS public java.lang.Object
+cons public <init>()
+meth protected java.lang.Object clone() throws java.lang.CloneNotSupportedException
+meth protected void finalize() throws java.lang.Throwable
+meth public boolean equals(java.lang.Object)
+meth public final java.lang.Class<?> getClass()
+meth public final void notify()
+meth public final void notifyAll()
+meth public final void wait() throws java.lang.InterruptedException
+meth public final void wait(long) throws java.lang.InterruptedException
+meth public final void wait(long,int) throws java.lang.InterruptedException
+meth public int hashCode()
+meth public java.lang.String toString()
+
+CLSS public abstract leafchat.core.api.Msg
+cons public <init>()
+fld public final static int PRIORITY_AFTERNORMAL = 9000
+fld public final static int PRIORITY_BEFORENORMAL = 11000
+fld public final static int PRIORITY_EARLY = 12000
+fld public final static int PRIORITY_FIRST = 14000
+fld public final static int PRIORITY_LAST = 6000
+fld public final static int PRIORITY_LATE = 8000
+fld public final static int PRIORITY_NORMAL = 10000
+meth public boolean isHandled()
+meth public boolean isStopped()
+meth public boolean sequenceBefore(leafchat.core.api.Msg)
+meth public void markHandled()
+meth public void markStopped()
+meth public void setSequence(java.lang.String,int)
+meth public void setSequence(leafchat.core.api.Msg)
+supr java.lang.Object
+hfds handled,sequenceName,sequenceNumber,stopped
+
+CLSS public abstract interface leafchat.core.api.Singleton
+

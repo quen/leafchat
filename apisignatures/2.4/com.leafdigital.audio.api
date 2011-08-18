@@ -1,0 +1,13 @@
+#Signature file v4.1
+#Version 
+
+CLSS public abstract interface com.leafdigital.audio.api.Audio
+intf leafchat.core.api.Singleton
+meth public abstract boolean soundExists(java.lang.String)
+meth public abstract java.lang.String[] getSounds() throws leafchat.core.api.GeneralException
+meth public abstract void play(java.io.File) throws leafchat.core.api.GeneralException
+meth public abstract void play(java.io.InputStream) throws leafchat.core.api.GeneralException
+meth public abstract void play(java.lang.String) throws leafchat.core.api.GeneralException
+
+CLSS public abstract interface leafchat.core.api.Singleton
+
