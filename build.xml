@@ -538,6 +538,7 @@
 	<target name="checksignatures" depends="jar, requirejavart">
 		<checkapi version="2.3"/>
 		<checkapi version="2.4b"/>
+		<checkapi version="2.4"/>
 	</target>
 
 	<target name="all" depends="zip,osxdmg,windowsinstaller"/>

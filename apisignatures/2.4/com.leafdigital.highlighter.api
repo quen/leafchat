@@ -1,0 +1,9 @@
+#Signature file v4.1
+#Version 
+
+CLSS public abstract interface com.leafdigital.highlighter.api.Highlighter
+intf leafchat.core.api.Singleton
+meth public abstract java.lang.String highlight(java.lang.String,java.lang.String) throws util.xml.XMLException
+
+CLSS public abstract interface leafchat.core.api.Singleton
+
