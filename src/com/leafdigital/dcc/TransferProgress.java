@@ -206,7 +206,7 @@ public class TransferProgress implements Runnable
 		this.size=size;
 		this.file=file;
 
-		UI u=pc.getSingleton2(UI.class);
+		UI u=pc.getSingle(UI.class);
 
 		page=u.newPage(this);
 		VerticalPanel vp=u.newVerticalPanel();

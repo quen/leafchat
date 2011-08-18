@@ -68,7 +68,7 @@ public class IdlePage
 	IdlePage(PluginContext pc)
 	{
 		this.pc=pc;
-		UI ui = pc.getSingleton2(UI.class);
+		UI ui = pc.getSingle(UI.class);
 		p = ui.createPage("idle", this);
 	}
 
@@ -78,7 +78,7 @@ public class IdlePage
 	@UIAction
 	public void changeMultiserver()
 	{
-		Preferences p=pc.getSingleton2(Preferences.class);
+		Preferences p=pc.getSingle(Preferences.class);
 		PreferencesGroup ircPrefs=p.getGroup(p.getPluginOwner("com.leafdigital.irc.IRCPlugin"));
 		ircPrefs.set(IRCPrefs.PREF_AWAYMULTISERVER,
 			p.fromBoolean(multiserverUI.isChecked()),
@@ -91,7 +91,7 @@ public class IdlePage
 	@UIAction
 	public void changeSettings()
 	{
-		Preferences p=pc.getSingleton2(Preferences.class);
+		Preferences p=pc.getSingle(Preferences.class);
 		PreferencesGroup pg=p.getGroup(pc.getPlugin());
 		boolean isJava15=PlatformUtils.isJavaVersionAtLeast(1,5);
 
@@ -122,7 +122,7 @@ public class IdlePage
 	@UIAction
 	public void onSet()
 	{
-		Preferences p=pc.getSingleton2(Preferences.class);
+		Preferences p=pc.getSingle(Preferences.class);
 		PreferencesGroup pg=p.getGroup(pc.getPlugin());
 		enableUI.setChecked(p.toBoolean(
 			pg.get(IdlePlugin.PREF_AUTOAWAY,IdlePlugin.PREFDEFAULT_AUTOAWAY)));

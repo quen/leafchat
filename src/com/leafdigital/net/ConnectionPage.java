@@ -77,7 +77,7 @@ public class ConnectionPage
 
 	ConnectionPage(PluginContext context)
 	{
-		UI ui = context.getSingleton2(UI.class);
+		UI ui = context.getSingle(UI.class);
 		p = ui.createPage("connectionpage", this);
 
 		np=(NetPlugin)context.getPlugin();

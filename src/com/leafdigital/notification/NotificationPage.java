@@ -64,7 +64,7 @@ public class NotificationPage
 	NotificationPage(PluginContext pc)
 	{
 		this.context=pc;
-		UI ui=pc.getSingleton2(UI.class);
+		UI ui=pc.getSingle(UI.class);
 		p=ui.createPage("notification", this);
 	}
 
@@ -92,7 +92,7 @@ public class NotificationPage
 					new TreeSet<String>(Arrays.asList(list.getTypes()));
 				HashSet<String> defaultTypes =
 					new HashSet<String>(Arrays.asList(list.getDefaultTypes()));
-				Preferences p=context.getSingleton2(Preferences.class);
+				Preferences p=context.getSingle(Preferences.class);
 				PreferencesGroup group=p.getGroup(context.getPlugin());
 				for(String name : allTypes)
 				{
@@ -132,7 +132,7 @@ public class NotificationPage
 		HashSet<String> defaultTypes =
 			new HashSet<String>(Arrays.asList(list.getDefaultTypes()));
 
-		Preferences p=context.getSingleton2(Preferences.class);
+		Preferences p=context.getSingle(Preferences.class);
 		PreferencesGroup group=p.getGroup(context.getPlugin());
 
 		group.set("enabled-"+NotificationPlugin.getPrefName(name),

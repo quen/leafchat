@@ -611,7 +611,7 @@ public class EditBoxImp extends JComponent implements ActionListener,FocusListen
 		{
 			// Get preferences group for this edit box
 			PluginContext context = getUI().getPluginContext();
-			Preferences p = context.getSingleton2(Preferences.class);
+			Preferences p = context.getSingle(Preferences.class);
 			prefsGroup = p.getGroup(context.getPlugin()).getChild(
 				"command-history").getChild(category).getChild(p.getSafeToken(memoryId));
 

@@ -66,7 +66,7 @@ public class SoundsPage
 	SoundsPage(PluginContext context)
 	{
 		this.context = context;
-		UI ui = context.getSingleton2(UI.class);
+		UI ui = context.getSingle(UI.class);
 		p = ui.createPage("sounds", this);
 	}
 

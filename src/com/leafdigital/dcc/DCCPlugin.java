@@ -55,12 +55,12 @@ public class DCCPlugin implements Plugin
 		pc.requestMessages(UserCTCPRequestIRCMsg.class,this);
 		pc.requestMessages(NotificationListMsg.class,this);
 
-		UI ui=pc.getSingleton2(UI.class);
+		UI ui=pc.getSingle(UI.class);
 		Page p = ui.createPage("dccprefs", this);
 
 		downloadLocationUI.setText(getDownloadFolder().toString());
 
-		PreferencesUI preferencesUI=pc.getSingleton2(PreferencesUI.class);
+		PreferencesUI preferencesUI=pc.getSingle(PreferencesUI.class);
 		preferencesUI.registerPage(pc.getPlugin(),p);
 
 		pc.requestMessages(IRCActionListMsg.class,this);
@@ -155,7 +155,7 @@ public class DCCPlugin implements Plugin
 
 	File getDownloadFolder()
 	{
-		Preferences p=context.getSingleton2(Preferences.class);
+		Preferences p=context.getSingle(Preferences.class);
 		return new File(
 			p.getGroup(context.getPlugin()).get(PREF_DOWNLOADFOLDER,
 			PlatformUtils.getDownloadFolder()));
@@ -214,10 +214,10 @@ public class DCCPlugin implements Plugin
 	@UIAction
 	public void actionDownloadLocation()
 	{
-		UI ui=context.getSingleton2(UI.class);
+		UI ui=context.getSingle(UI.class);
 		File f=ui.showFolderSelect(null,"Choose download folder", getDownloadFolder());
 		if(f==null) return;
-		Preferences p=context.getSingleton2(Preferences.class);
+		Preferences p=context.getSingle(Preferences.class);
 		p.getGroup(context.getPlugin()).set(PREF_DOWNLOADFOLDER,f.getAbsolutePath(),
 			PlatformUtils.getDesktopFolder());
 		downloadLocationUI.setText(XML.esc(getDownloadFolder().toString()));
@@ -284,7 +284,7 @@ public class DCCPlugin implements Plugin
 	 */
 	Network.Port getDCCListenPort(String nick) throws GeneralException
 	{
-		Network n=context.getSingleton2(Network.class);
+		Network n=context.getSingle(Network.class);
 
 		// Listen
 		Network.Port p;

@@ -48,7 +48,7 @@ public class PrefsPlugin implements Plugin
 	public void close() throws GeneralException
 	{
 		// Make sure any preferences changes are saved
-		((PreferencesImp)pc.getSingleton2(Preferences.class)).close();
+		((PreferencesImp)pc.getSingle(Preferences.class)).close();
 	}
 
 	@Override

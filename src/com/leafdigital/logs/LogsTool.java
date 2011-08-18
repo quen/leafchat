@@ -145,7 +145,7 @@ public class LogsTool implements SimpleTool
 	{
 		if(logWindow==null)
 		{
-			UI u=context.getSingleton2(UI.class);
+			UI u=context.getSingle(UI.class);
 			logWindow=u.createWindow("logs", this);
 			initWindow();
 			logWindow.show(false);
@@ -162,7 +162,7 @@ public class LogsTool implements SimpleTool
 	{
 		logWindow.setRemember("tool","logs");
 
-		LoggerImp li=(LoggerImp)context.getSingleton2(Logger.class);
+		LoggerImp li=(LoggerImp)context.getSingle(Logger.class);
 
 		// Fill date and item boxes
 		logFileInfo=li.getAllLogs();
@@ -205,7 +205,7 @@ public class LogsTool implements SimpleTool
 		rolloverHourUI.setValue(value);
 
 		// Selected items
-		Preferences p=context.getSingleton2(Preferences.class);
+		Preferences p=context.getSingle(Preferences.class);
 		PreferencesGroup pg=p.getGroup(context.getPlugin());
 		if(p.toBoolean(pg.get(LogsPlugin.PREF_ONLYSELECTED,LogsPlugin.PREF_ONLYSELECTED_DEFAULT)))
 			logSelectedUI.setSelected();
@@ -263,7 +263,7 @@ public class LogsTool implements SimpleTool
 	 */
 	private void fillListBox(String prefGroup,ListBox listBox)
 	{
-		Preferences p=context.getSingleton2(Preferences.class);
+		Preferences p=context.getSingle(Preferences.class);
 		PreferencesGroup pg=p.getGroup(context.getPlugin());
 		PreferencesGroup[] selected=pg.getChild(	prefGroup).getAnon();
 		listBox.clear();
@@ -306,7 +306,7 @@ public class LogsTool implements SimpleTool
 	{
 		actionCancelSearch();
 
-		LoggerImp li=(LoggerImp)context.getSingleton2(Logger.class);
+		LoggerImp li=(LoggerImp)context.getSingle(Logger.class);
 
 		// Get required content of items list filtered by selected dates
 		Set<Object> selectedDates =
@@ -529,7 +529,7 @@ public class LogsTool implements SimpleTool
 	 */
 	private void addFileToView(File f,boolean showServer) throws GeneralException
 	{
-		LoggerImp li=(LoggerImp)context.getSingleton2(Logger.class);
+		LoggerImp li=(LoggerImp)context.getSingle(Logger.class);
 		LinkedList<String> lines = li.readFileLines(f);
 
 		if(showServer)
@@ -566,7 +566,7 @@ public class LogsTool implements SimpleTool
 	private void addFileToWriter(Writer w, File f, boolean showServer)
 		throws IOException, GeneralException
 	{
-		LoggerImp li = (LoggerImp)context.getSingleton2(Logger.class);
+		LoggerImp li = (LoggerImp)context.getSingle(Logger.class);
 		LinkedList<String> lines = li.readFileLines(f);
 
 		String lf = "\n";
@@ -724,7 +724,7 @@ public class LogsTool implements SimpleTool
 					searchChoiceUI.display("searchActive");
 					try
 					{
-						LoggerImp l=(LoggerImp)context.getSingleton2(Logger.class);
+						LoggerImp l=(LoggerImp)context.getSingle(Logger.class);
 
 						SortedSet<SearchResult> results = new TreeSet<SearchResult>();
 						doSearch(positiveWords,negativeWords,positivePhrases,negativePhrases,l,results);
@@ -1029,7 +1029,7 @@ public class LogsTool implements SimpleTool
 	@UIAction
 	public void actionExport() throws GeneralException
 	{
-		UI ui = context.getSingleton2(UI.class);
+		UI ui = context.getSingle(UI.class);
 		if(startFolder == null)
 		{
 			startFolder = new File(PlatformUtils.getDocumentsFolder());
@@ -1082,7 +1082,7 @@ public class LogsTool implements SimpleTool
 	@UIAction
 	public void actionLogChanged() throws GeneralException
 	{
-		Preferences p=context.getSingleton2(Preferences.class);
+		Preferences p=context.getSingle(Preferences.class);
 		boolean onlySelected=logSelectedUI.isSelected();
 		p.getGroup(context.getPlugin()).set(LogsPlugin.PREF_ONLYSELECTED,
 			p.fromBoolean(onlySelected));
@@ -1113,7 +1113,7 @@ public class LogsTool implements SimpleTool
 			@Override
 			public void add(String item) throws GeneralException
 			{
-				Preferences p=context.getSingleton2(Preferences.class);
+				Preferences p=context.getSingle(Preferences.class);
 				PreferencesGroup pg=p.getGroup(context.getPlugin());
 				PreferencesGroup newItem=pg.getChild(LogsPlugin.PREFGROUP_SELECTED).addAnon();
 				newItem.set(LogsPlugin.PREF_ITEM,item);
@@ -1154,7 +1154,7 @@ public class LogsTool implements SimpleTool
 			@Override
 			public void add(String item) throws GeneralException
 			{
-				Preferences p=context.getSingleton2(Preferences.class);
+				Preferences p=context.getSingle(Preferences.class);
 				PreferencesGroup pg=p.getGroup(context.getPlugin());
 				PreferencesGroup newItem=pg.getChild(LogsPlugin.PREFGROUP_DONOTLOG).addAnon();
 				newItem.set(LogsPlugin.PREF_ITEM,item);
@@ -1185,7 +1185,7 @@ public class LogsTool implements SimpleTool
 		rolloverHourUI.setFlag(ok ? EditBox.FLAG_NORMAL : EditBox.FLAG_ERROR);
 		if(ok)
 		{
-			Preferences p=context.getSingleton2(Preferences.class);
+			Preferences p=context.getSingle(Preferences.class);
 			p.getGroup(context.getPlugin()).set(LogsPlugin.PREF_ROLLTIME,
 				p.fromInt(Integer.parseInt(rolloverHourUI.getValue())));
 		}
@@ -1204,7 +1204,7 @@ public class LogsTool implements SimpleTool
 		RadioButton selected=logWindow.getGroupSelected("keep");
 		if(selected==null) return; // what?
 
-		Preferences p=context.getSingleton2(Preferences.class);
+		Preferences p=context.getSingle(Preferences.class);
 		p.getGroup(context.getPlugin()).set(LogsPlugin.PREF_RETENTION,
 			p.fromInt(Integer.parseInt(selected.getID().substring(4))));
 	}
@@ -1230,7 +1230,7 @@ public class LogsTool implements SimpleTool
 			@Override
 			public void add(String item) throws GeneralException
 			{
-				Preferences p=context.getSingleton2(Preferences.class);
+				Preferences p=context.getSingle(Preferences.class);
 				PreferencesGroup pg=p.getGroup(context.getPlugin());
 				PreferencesGroup newItem=pg.getChild(LogsPlugin.PREFGROUP_NEVERDELETE).addAnon();
 				newItem.set(LogsPlugin.PREF_ITEM,item);
@@ -1272,7 +1272,7 @@ public class LogsTool implements SimpleTool
 
 	private void setArchive(boolean archive)
 	{
-		Preferences p=context.getSingleton2(Preferences.class);
+		Preferences p=context.getSingle(Preferences.class);
 		PreferencesGroup pg=p.getGroup(context.getPlugin());
 		pg.set(LogsPlugin.PREF_ARCHIVE,p.fromBoolean(archive));
 	}
@@ -1294,7 +1294,7 @@ public class LogsTool implements SimpleTool
 	private void showAddItem(AddItemHandler aih) throws GeneralException
 	{
 		this.aih = aih;
-		UI ui = context.getSingleton2(UI.class);
+		UI ui = context.getSingle(UI.class);
 		addItem = ui.createDialog("additem", this);
 		addItem.show(logWindow);
 	}

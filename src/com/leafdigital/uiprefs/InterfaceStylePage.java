@@ -51,7 +51,7 @@ public class InterfaceStylePage
 	@UIAction
   public void onSet()
   {
-		UI ui = context.getSingleton2(UI.class);
+		UI ui = context.getSingle(UI.class);
 		switch(ui.getUIStyle())
 		{
 		case UI.UISTYLE_SINGLEWINDOW :
@@ -75,7 +75,7 @@ public class InterfaceStylePage
 		}
 		else
 		{
-			Preferences p = context.getSingleton2(Preferences.class);
+			Preferences p = context.getSingle(Preferences.class);
 			PreferencesGroup pg = p.getGroup(p.getPluginOwner("com.leafdigital.ui.UIPlugin"));
 			trayMinimiseUI.setChecked("t".equals(
 				pg.get(UIPrefs.PREF_MINIMISE_TO_TRAY, UIPrefs.PREFDEFAULT_MINIMISE_TO_TRAY)));
@@ -85,7 +85,7 @@ public class InterfaceStylePage
 	InterfaceStylePage(PluginContext context, boolean wizard)
 	{
 		this.context=context;
-		UI ui = context.getSingleton2(UI.class);
+		UI ui = context.getSingle(UI.class);
 		p = ui.createPage(
 			wizard ? "wizard-interfacestyle"  : "interfacestyle", this);
 	}
@@ -94,7 +94,7 @@ public class InterfaceStylePage
 	@UIAction
 	public void actionInterface()
 	{
-		UI ui = context.getSingleton2(UI.class);
+		UI ui = context.getSingle(UI.class);
 		if(classicUI.isSelected())
 		{
 			ui.setUIStyle(UI.UISTYLE_SINGLEWINDOW);
@@ -104,7 +104,7 @@ public class InterfaceStylePage
 		{
 			ui.setUIStyle(UI.UISTYLE_MULTIWINDOW);
 			trayMinimiseUI.setEnabled(false);
-			Preferences p = context.getSingleton2(Preferences.class);
+			Preferences p = context.getSingle(Preferences.class);
 			PreferencesGroup pg = p.getGroup(p.getPluginOwner("com.leafdigital.ui.UIPlugin"));
 			pg.set(UIPrefs.PREF_MINIMISE_TO_TRAY, "f", UIPrefs.PREFDEFAULT_MINIMISE_TO_TRAY);
 		}
@@ -119,7 +119,7 @@ public class InterfaceStylePage
 	@UIAction
 	public void changeTrayMinimise()
 	{
-		Preferences p = context.getSingleton2(Preferences.class);
+		Preferences p = context.getSingle(Preferences.class);
 		PreferencesGroup pg = p.getGroup(p.getPluginOwner("com.leafdigital.ui.UIPlugin"));
 		pg.set(UIPrefs.PREF_MINIMISE_TO_TRAY, trayMinimiseUI.isChecked() ? "t" : "f",
 			UIPrefs.PREFDEFAULT_MINIMISE_TO_TRAY);

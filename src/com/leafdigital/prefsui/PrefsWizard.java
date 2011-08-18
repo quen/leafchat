@@ -53,7 +53,7 @@ public class PrefsWizard
 		this.context=context;
 		this.pages=p;
 
-		UI u=context.getSingleton2(UI.class);
+		UI u=context.getSingle(UI.class);
 		d = u.createDialog("wizard", this);
 		updatePage();
 		d.show(null);

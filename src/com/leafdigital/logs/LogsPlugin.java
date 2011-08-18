@@ -47,25 +47,25 @@ public class LogsPlugin implements Plugin
 
 	int getRollTime()
 	{
-		Preferences p=pc.getSingleton2(Preferences.class);
+		Preferences p=pc.getSingle(Preferences.class);
 		return p.toInt(p.getGroup(this).get(PREF_ROLLTIME,PREF_ROLLTIME_DEFAULT));
 	}
 
 	int getRetentionDays()
 	{
-		Preferences p=pc.getSingleton2(Preferences.class);
+		Preferences p=pc.getSingle(Preferences.class);
 		return p.toInt(p.getGroup(this).get(PREF_RETENTION,PREF_RETENTION_DEFAULT));
 	}
 
 	boolean shouldArchive()
 	{
-		Preferences p=pc.getSingleton2(Preferences.class);
+		Preferences p=pc.getSingle(Preferences.class);
 		return p.toBoolean(p.getGroup(this).get(PREF_ARCHIVE,PREF_ARCHIVE_DEFAULT));
 	}
 
 	private void initDoNotLog()
 	{
-		Preferences p=pc.getSingleton2(Preferences.class);
+		Preferences p=pc.getSingle(Preferences.class);
 		PreferencesGroup pg=p.getGroup(this);
 		if(pg.get(PREF_DONOTLOG_INITED,"0").equals("0"))
 		{
@@ -80,7 +80,7 @@ public class LogsPlugin implements Plugin
 
 	boolean shouldExpire(String date,String category,String item)
 	{
-		Preferences p=pc.getSingleton2(Preferences.class);
+		Preferences p=pc.getSingle(Preferences.class);
 		PreferencesGroup pg=p.getGroup(this);
 		int retention=p.toInt(pg.get(PREF_RETENTION,PREF_RETENTION_DEFAULT));
 
@@ -115,7 +115,7 @@ public class LogsPlugin implements Plugin
 
 	boolean shouldLog(String category,String item)
 	{
-		Preferences p=pc.getSingleton2(Preferences.class);
+		Preferences p=pc.getSingle(Preferences.class);
 		PreferencesGroup pg=p.getGroup(pc.getPlugin());
 
 		// Check if logging only selected items
@@ -157,7 +157,7 @@ public class LogsPlugin implements Plugin
 		l=new LoggerImp(pc,plr,new File(PlatformUtils.getUserFolder(),"logs"));
 		pc.registerSingleton(Logger.class,l);
 
-		pc.getSingleton2(UI.class).registerTool(new LogsTool(pc));
+		pc.getSingle(UI.class).registerTool(new LogsTool(pc));
 
 		initDoNotLog();
 	}

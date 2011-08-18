@@ -62,10 +62,10 @@ public class IRCUIPlugin implements Plugin,IRCUI,DefaultMessageDisplay
 		if(USEFAKESERVER)
 			new FakeServer();
 
-		context.getSingleton2(Connections.class).setDefaultMessageDisplay(this);
+		context.getSingle(Connections.class).setDefaultMessageDisplay(this);
 
 		ct=new ConnectTool(context,this);
-		UI ui=context.getSingleton2(UI.class);
+		UI ui=context.getSingle(UI.class);
 		ui.registerTool(ct);
 		jt=new JoinTool(context);
 		ui.registerTool(jt);
@@ -82,7 +82,7 @@ public class IRCUIPlugin implements Plugin,IRCUI,DefaultMessageDisplay
 
 		alo=new ActionListOwner(context);
 
-		PreferencesUI preferencesUI=context.getSingleton2(PreferencesUI.class);
+		PreferencesUI preferencesUI=context.getSingle(PreferencesUI.class);
 		preferencesUI.registerPage(this,(new IgnoreListPage(context)).getPage());
 		preferencesUI.registerPage(this,(new WatchListPage(context)).getPage());
 		preferencesUI.registerPage(this,(new EncodingPage(context)).getPage());
@@ -121,7 +121,7 @@ public class IRCUIPlugin implements Plugin,IRCUI,DefaultMessageDisplay
 	{
 		// Notify unless it was caused by user/system quit request
 		if(!msg.getServer().wasQuitRequested())
-			context.getSingleton2(Notification.class).notify(
+			context.getSingle(Notification.class).notify(
 				NOTIFICATION_DISCONNECTED,"Disconnected: "+msg.getServer().getReportedOrConnectedHost(),"");
 	}
 
@@ -199,7 +199,7 @@ public class IRCUIPlugin implements Plugin,IRCUI,DefaultMessageDisplay
 	@Override
 	public void close() throws GeneralException
 	{
-		context.getSingleton2(Connections.class).setDefaultMessageDisplay(null);
+		context.getSingle(Connections.class).setDefaultMessageDisplay(null);
 	}
 
 	@Override
@@ -341,7 +341,7 @@ public class IRCUIPlugin implements Plugin,IRCUI,DefaultMessageDisplay
 	 */
 	public void msg(ServerRearrangeMsg msg) throws GeneralException
 	{
-		UI u=context.getSingleton2(UI.class);
+		UI u=context.getSingle(UI.class);
 		int result=u.showQuestion(null,
 			"Server organisation",msg.getText(),UI.BUTTON_YES|UI.BUTTON_NO,
 			msg.getButtonConfirm(),msg.getButtonOther(),null,UI.BUTTON_YES);
@@ -587,7 +587,7 @@ public class IRCUIPlugin implements Plugin,IRCUI,DefaultMessageDisplay
 		QuitConfirm(SystemStateMsg m,Server[] connected) throws GeneralException
 		{
 			objectToQuit=false;
-			UI ui=context.getSingleton2(UI.class);
+			UI ui=context.getSingle(UI.class);
 			quitConfirm = ui.createDialog("quitconfirm", this);
 
 			StringBuffer list=new StringBuffer();
@@ -631,7 +631,7 @@ public class IRCUIPlugin implements Plugin,IRCUI,DefaultMessageDisplay
 	{
 		if(msg.getType()==SystemStateMsg.REQUESTSHUTDOWN)
 		{
-			Connections c=context.getSingleton2(Connections.class);
+			Connections c=context.getSingle(Connections.class);
 			Server[] connected=c.getConnected();
 			if(connected.length==0)	return; // Not connected, so quit is ok
 

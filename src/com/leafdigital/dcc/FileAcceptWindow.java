@@ -119,7 +119,7 @@ public class FileAcceptWindow
 		if(target.exists() && target.length()==0)
 			target.delete();
 
-		UI u=context.getSingleton2(UI.class);
+		UI u=context.getSingle(UI.class);
 
 		// Does the file exist already?
 		if(target.exists() || targetPartial.exists())

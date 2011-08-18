@@ -81,7 +81,7 @@ public class JoinTool implements SimpleTool
 	{
 		if(joinWindow == null)
 		{
-			UI u=context.getSingleton2(UI.class);
+			UI u=context.getSingle(UI.class);
 			joinWindow = u.createWindow("join", this);
 			initWindow();
 			joinWindow.show(false);
@@ -152,7 +152,7 @@ public class JoinTool implements SimpleTool
 	static ChannelInfo[] getFavouriteChannels(PluginContext context) throws GeneralException
 	{
 		// Fill favourites table
-		Preferences p=context.getSingleton2(Preferences.class);
+		Preferences p=context.getSingle(Preferences.class);
 		PreferencesGroup[] level1Prefs=p.getGroup(
 			p.getPluginOwner("com.leafdigital.irc.IRCPlugin")).getChild(
 				IRCPrefs.PREFGROUP_SERVERS).getAnon();
@@ -248,7 +248,7 @@ public class JoinTool implements SimpleTool
 		// Don't save entry (at all) if they chose not to remember the keyword
 		if(rememberKeyword || key.length()==0)
 		{
-			Preferences p=context.getSingleton2(Preferences.class);
+			Preferences p=context.getSingle(Preferences.class);
 
 			// Obtain prefs for server, or network if it belongs to one
 			PreferencesGroup pg=s.getPreferences().getAnonParent();
@@ -318,7 +318,7 @@ public class JoinTool implements SimpleTool
 	void updateServers() throws GeneralException
 	{
 		// Get connected servers
-		Connections c=context.getSingleton2(Connections.class);
+		Connections c=context.getSingle(Connections.class);
 		Server[] servers=c.getConnected();
 
 		// Get current value
@@ -380,7 +380,7 @@ public class JoinTool implements SimpleTool
 	@UIAction
 	public void favouritesChange(int index,int col,Object oBefore) throws GeneralException
 	{
-		Preferences p=context.getSingleton2(Preferences.class);
+		Preferences p=context.getSingle(Preferences.class);
 		ChannelInfo ci=channels[index];
 		switch(col)
 		{
@@ -466,7 +466,7 @@ public class JoinTool implements SimpleTool
 	private boolean join(ChannelInfo ci) throws GeneralException
 	{
 		// Get connected servers
-		Connections c=context.getSingleton2(Connections.class);
+		Connections c=context.getSingle(Connections.class);
 		Server[] servers=c.getConnected();
 
 		// Find server for this channel
@@ -480,7 +480,7 @@ public class JoinTool implements SimpleTool
 			}
 		}
 
-		int confirm=context.getSingleton2(UI.class).showQuestion(joinWindow,
+		int confirm=context.getSingle(UI.class).showQuestion(joinWindow,
 			"Confirm connect",
 			"You are not connected to an appropriate server for channel <key>"+
 			  XML.esc(ci.name)+"</key>. Connect to <key>"+(ci.network+ci.host)+

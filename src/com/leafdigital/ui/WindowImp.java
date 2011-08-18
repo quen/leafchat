@@ -224,7 +224,7 @@ public class WindowImp
 		@Override
 		public void setRemember(String category, String id)
 		{
-			Preferences p=owner.getPluginContext().getSingleton2(Preferences.class);
+			Preferences p=owner.getPluginContext().getSingle(Preferences.class);
 			prefsGroup=p.getGroup(owner.getPluginContext().getPlugin()).
 				getChild("window-positions").getChild(category);
 			if(id==null)

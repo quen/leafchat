@@ -54,7 +54,7 @@ public class WizardProfilePage
 	WizardProfilePage(PluginContext context) throws GeneralException
 	{
 		this.context=context;
-		UI ui = context.getSingleton2(UI.class);
+		UI ui = context.getSingle(UI.class);
 		p = ui.createPage("wizard-profile", this);
 	}
 
@@ -65,7 +65,7 @@ public class WizardProfilePage
 	@UIAction
 	public void onSet() throws GeneralException
 	{
-		Preferences p=context.getSingleton2(Preferences.class);
+		Preferences p=context.getSingle(Preferences.class);
 		serverPrefs=p.getGroup(p.getPluginOwner("com.leafdigital.irc.IRCPlugin")).getChild("servers");
 
 		hostName=getHostname(context);
@@ -91,7 +91,7 @@ public class WizardProfilePage
 	{
 		if(cacheHostname==null)
 		{
-			Network n=context.getSingleton2(Network.class);
+			Network n=context.getSingle(Network.class);
 			InetAddress ia=n.getPublicAddress();
 			if(ia!=null) cacheHostname=ia.getCanonicalHostName();
 			if(cacheHostname==null)

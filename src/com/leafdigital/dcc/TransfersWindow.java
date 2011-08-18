@@ -40,7 +40,7 @@ public class TransfersWindow
 	TransfersWindow(PluginContext owner)
 	{
 		this.pc=owner;
-		UI u=pc.getSingleton2(UI.class);
+		UI u=pc.getSingle(UI.class);
 
 		w = u.createWindow("transfers", this);
 		w.show(false);
@@ -65,7 +65,7 @@ public class TransfersWindow
 		// Notify, except when cancelled (they know they cancelled)
 		if(!tp.isCancelled())
 		{
-			pc.getSingleton2(Notification.class).notify(
+			pc.getSingle(Notification.class).notify(
 				DCCPlugin.NOTIFICATION_TRANSFERCOMPLETE,tp.getFilename(),
 				tp.isError()?"Error: "+tp.getError():"Transfer complete");
 		}

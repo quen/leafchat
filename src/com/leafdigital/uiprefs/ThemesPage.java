@@ -56,7 +56,7 @@ public class ThemesPage
 	{
 		this.context = context;
 
-		UI ui = context.getSingleton2(UI.class);
+		UI ui = context.getSingle(UI.class);
 		p = ui.createPage("themes", this);
 	}
 
@@ -74,7 +74,7 @@ public class ThemesPage
 	private boolean checkThemesChange()
 	{
 		Theme[] oldThemes = themes;
-		UI ui=context.getSingleton2(UI.class);
+		UI ui=context.getSingle(UI.class);
 		themes = ui.getAvailableThemes();
 
 		boolean changed = false;
@@ -109,7 +109,7 @@ public class ThemesPage
 	@UIAction
 	public void onSet()
 	{
-		UI ui = context.getSingleton2(UI.class);
+		UI ui = context.getSingle(UI.class);
 		themes = ui.getAvailableThemes();
 		Theme current = ui.getTheme();
 		themesUI.clear();
@@ -181,7 +181,7 @@ public class ThemesPage
 			return;
 		}
 
-		UI ui = context.getSingleton2(UI.class);
+		UI ui = context.getSingle(UI.class);
 		Theme current = ui.getTheme();
 		for(int i=0; i<themes.length; i++)
 		{
@@ -207,7 +207,7 @@ public class ThemesPage
 	@UIAction
 	public void actionInstall() throws GeneralException
 	{
-		UI ui = context.getSingleton2(UI.class);
+		UI ui = context.getSingle(UI.class);
 		File selected = ui.showFileSelect(p.getOwner(), "Install theme", false,
 			new File(PlatformUtils.getDownloadFolder()), null,
 			new String[] {".leafChatTheme"},

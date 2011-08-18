@@ -85,7 +85,7 @@ public class UpdateCheckPlugin implements Plugin
 					return;
 				}
 				context.log("Check successful: Offering new version.");
-				UI ui=context.getSingleton2(UI.class);
+				UI ui=context.getSingle(UI.class);
 				ui.runInThread(new Runnable()
 				{
 					@Override
@@ -104,7 +104,7 @@ public class UpdateCheckPlugin implements Plugin
 
 	private void offerUpdate(String availableVersion)
 	{
-		UI ui=context.getSingleton2(UI.class);
+		UI ui=context.getSingle(UI.class);
 		d=ui.createDialog("update", this);
 		versionUI.setText("<key>"+XML.esc(availableVersion)+"</key>");
 		d.show(null);
@@ -119,7 +119,7 @@ public class UpdateCheckPlugin implements Plugin
 	{
 		if(msg.getType()!=SystemStateMsg.UIREADY) return;
 
-		Preferences prefs=context.getSingleton2(Preferences.class);
+		Preferences prefs=context.getSingle(Preferences.class);
 		PreferencesGroup group=prefs.getGroup(this);
 
 		// Is this a debug version without a proper number in buildVersion?
@@ -182,7 +182,7 @@ public class UpdateCheckPlugin implements Plugin
 		}
 		catch(IOException e)
 		{
-			UI ui=context.getSingleton2(UI.class);
+			UI ui=context.getSingle(UI.class);
 			ui.showUserError(null,"Unable to open browser",
 				"leafChat was unable to open your Web browser. Please visit the " +
 				"download page manually; it is "+DOWNLOADURL);

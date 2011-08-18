@@ -53,7 +53,7 @@ public class IgnoreListPage
 	IgnoreListPage(PluginContext pc)
 	{
 		this.pc=pc;
-		UI ui=pc.getSingleton2(UI.class);
+		UI ui=pc.getSingle(UI.class);
 		p = ui.createPage("ignorelist", this);
 		pc.requestMessages(IgnoreListChangeMsg.class,this,Msg.PRIORITY_FIRST);
 		msg(null);
@@ -78,7 +78,7 @@ public class IgnoreListPage
 		}
 		ignoreListUI.clear();
 
-		IgnoreList il=pc.getSingleton2(IgnoreList.class);
+		IgnoreList il=pc.getSingle(IgnoreList.class);
 		IRCUserAddress[] masks=il.getMasks();
 		Arrays.sort(masks);
 		for(int i=0;i<masks.length;i++)
@@ -107,7 +107,7 @@ public class IgnoreListPage
 	@UIAction
 	public void actionAdd() throws GeneralException
 	{
-		UI ui=pc.getSingleton2(UI.class);
+		UI ui=pc.getSingle(UI.class);
 		addMask = ui.createDialog("addignoremask", this);
 		addMask.show(p);
 	}
@@ -125,7 +125,7 @@ public class IgnoreListPage
 			ignoreListUI.getString(row,COL_USER),
 			ignoreListUI.getString(row,COL_HOST));
 
-		IgnoreList il=pc.getSingleton2(IgnoreList.class);
+		IgnoreList il=pc.getSingle(IgnoreList.class);
 		il.removeMask(selectedMask);
 	}
 
@@ -210,7 +210,7 @@ public class IgnoreListPage
 		IRCUserAddress newMask=new IRCUserAddress(
 			nickUI.getValue(),userUI.getValue(),hostUI.getValue());
 
-		IgnoreList il=pc.getSingleton2(IgnoreList.class);
+		IgnoreList il=pc.getSingle(IgnoreList.class);
 		il.addMask(newMask);
 
 		addMask.close();

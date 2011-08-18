@@ -325,7 +325,7 @@ public class PluginContextProvider implements PluginContext
 	}
 
 	@Override
-	public<C extends Singleton> C getSingleton2(Class<C> cInterface)
+	public<C extends Singleton> C getSingle(Class<C> cInterface)
 	{
 		return SingletonManager.get().get(cInterface);
 	}

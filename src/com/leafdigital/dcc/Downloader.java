@@ -125,7 +125,7 @@ public class Downloader extends Thread
 		InputStream is;
 		OutputStream os;
 		Socket s;
-		Network n=context.getSingleton2(Network.class);
+		Network n=context.getSingle(Network.class);
 		try
 		{
 			context.log("Beginning DCC transfer "+target.getName()+" from "+address+":"+port);

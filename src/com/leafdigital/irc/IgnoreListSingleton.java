@@ -45,7 +45,7 @@ public class IgnoreListSingleton implements IgnoreList,MsgOwner
 		this.context=pc;
 
 		// Read list from preferences
-		Preferences p=pc.getSingleton2(Preferences.class);
+		Preferences p=pc.getSingle(Preferences.class);
 		PreferencesGroup pg=p.getGroup(pc.getPlugin());
 		PreferencesGroup[] ignoreGroups=pg.getChild(IRCPrefs.PREFGROUP_IGNORE).getAnon();
 		for(int i=0;i<ignoreGroups.length;i++)
@@ -126,7 +126,7 @@ public class IgnoreListSingleton implements IgnoreList,MsgOwner
 		if(ignore.containsKey(mask))
 			return false;
 
-		Preferences p=context.getSingleton2(Preferences.class);
+		Preferences p=context.getSingle(Preferences.class);
 		PreferencesGroup newGroup=p.getGroup(context.getPlugin()).getChild(IRCPrefs.PREFGROUP_IGNORE).addAnon();
 		newGroup.set(IRCPrefs.PREF_IGNORE_NICK,mask.getNick());
 		newGroup.set(IRCPrefs.PREF_IGNORE_USER,mask.getUser());
@@ -148,7 +148,7 @@ public class IgnoreListSingleton implements IgnoreList,MsgOwner
 
 		ignore.remove(mask);
 
-		Server[] connected=context.getSingleton2(Connections.class).getConnected();
+		Server[] connected=context.getSingle(Connections.class).getConnected();
 		for(int i=0;i<connected.length;i++)
 		{
 			connected[i].unsilence(mask.toString());

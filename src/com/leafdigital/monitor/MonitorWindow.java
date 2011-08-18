@@ -39,7 +39,7 @@ public class MonitorWindow
 	MonitorWindow(PluginContext context)
 	{
 		plugin=(MonitorPlugin)context.getPlugin();
-		w=context.getSingleton2(UI.class).createWindow("monitorwindow", this);
+		w=context.getSingle(UI.class).createWindow("monitorwindow", this);
 		w.show(false);
 	}
 

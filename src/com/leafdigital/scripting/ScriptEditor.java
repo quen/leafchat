@@ -69,7 +69,7 @@ public class ScriptEditor implements Script.StateListener
 		this.owner=owner;
 		this.script=script;
 
-		UI ui = (context.getSingleton2(UI.class));
+		UI ui = (context.getSingle(UI.class));
 		w = ui.createWindow("scripteditor", this);
 		w.setRemember("scripting", script.getName());
 		initWindow();
@@ -204,7 +204,7 @@ public class ScriptEditor implements Script.StateListener
 		@UIAction
 		public void actionDelete()
 		{
-			int value=context.getSingleton2(UI.class).showQuestion(w,"Confirm delete",
+			int value=context.getSingle(UI.class).showQuestion(w,"Confirm delete",
 				"Are you sure you want to delete this script item? Deleted items cannot be restored.",
 				UI.BUTTON_YES|UI.BUTTON_CANCEL,"Delete item",null,null,UI.BUTTON_CANCEL);
 			if(value==UI.BUTTON_YES)
@@ -270,7 +270,7 @@ public class ScriptEditor implements Script.StateListener
 	void addItem(ScriptItem item)
 	{
 		ItemCallbacks callbacks=new ItemCallbacks(item);
-		Page p = context.getSingleton2(UI.class).createPage(
+		Page p = context.getSingle(UI.class).createPage(
 			"scriptitem", callbacks);
 		callbacks.init();
 		detailsMap.put(item,new ItemDetails(p,callbacks));
@@ -311,7 +311,7 @@ public class ScriptEditor implements Script.StateListener
 	{
 		if(script.isChanged())
 		{
-			int action=context.getSingleton2(UI.class).showQuestion(
+			int action=context.getSingle(UI.class).showQuestion(
 				w,"Confirm close",	"This script has unsaved changes.",
 				UI.BUTTON_YES|UI.BUTTON_NO|UI.BUTTON_CANCEL,
 				"Save changes","Discard changes",null,UI.BUTTON_YES);
@@ -356,7 +356,7 @@ public class ScriptEditor implements Script.StateListener
 						int action=UI.BUTTON_YES; // Only ask if it's not already disabled
 						if(script.isEnabled())
 						{
-							action=context.getSingleton2(UI.class).showQuestion(
+							action=context.getSingle(UI.class).showQuestion(
 								w,"Error in script",	"This script contains errors and can only be saved if you disable it.",
 								UI.BUTTON_YES|UI.BUTTON_CANCEL,
 								"Save and disable",null,null,UI.BUTTON_YES);
@@ -443,7 +443,7 @@ public class ScriptEditor implements Script.StateListener
 		SettingsDialog(ScriptItem item)
 		{
 			this.startItem=item;
-			d = context.getSingleton2(UI.class).createDialog("itemsettings",this);
+			d = context.getSingle(UI.class).createDialog("itemsettings",this);
 
 			if(startItem!=null)
 			{

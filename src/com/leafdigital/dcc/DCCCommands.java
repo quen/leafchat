@@ -61,7 +61,7 @@ public class DCCCommands
 		// ok we got it covered here
 		msg.markHandled();
 
-		Network n=context.getSingleton2(Network.class);
+		Network n=context.getSingle(Network.class);
 		if(!n.needsListenTarget())
 		{
 			msg.getMessageDisplay().showError("You do not need to use /dccaddress except when connecting through a proxy");
@@ -102,7 +102,7 @@ public class DCCCommands
 		String targetNick=params[0];
 
 		// Select file
-		UI ui=context.getSingleton2(UI.class);
+		UI ui=context.getSingle(UI.class);
 		File f=ui.showFileSelect(null,"Send file to "+targetNick,
 			false,new File(PlatformUtils.getDocumentsFolder()),null, null, null);
 		if(f==null) return;

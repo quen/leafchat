@@ -74,7 +74,7 @@ public class HighlighterPage
 	HighlighterPage(PluginContext context)
 	{
 		this.context = context;
-		UI ui = context.getSingleton2(UI.class);
+		UI ui = context.getSingle(UI.class);
 		p = ui.createPage("highlighter", this);
 	}
 
@@ -85,7 +85,7 @@ public class HighlighterPage
 	@UIAction
 	public void onSet() throws GeneralException
 	{
-		Preferences prefs = context.getSingleton2(Preferences.class);
+		Preferences prefs = context.getSingle(Preferences.class);
 		PreferencesGroup group = prefs.getGroup(context.getPlugin());
 
 		nickUI.setChecked(prefs.toBoolean(group.get(
@@ -106,7 +106,7 @@ public class HighlighterPage
 		soundUI.clear();
 		soundUI.addValue("", "(No sound)");
 		soundUI.setSelected("");
-		Audio audio = context.getSingleton2(Audio.class);
+		Audio audio = context.getSingle(Audio.class);
 		String[] sounds = audio.getSounds();
 		for(int i=0; i<sounds.length; i++)
 		{
@@ -126,7 +126,7 @@ public class HighlighterPage
 
 	private void fillList()
 	{
-		Preferences prefs = context.getSingleton2(Preferences.class);
+		Preferences prefs = context.getSingle(Preferences.class);
 		PreferencesGroup group = prefs.getGroup(context.getPlugin());
 
 		wordsUI.clear();
@@ -155,7 +155,7 @@ public class HighlighterPage
 	@UIAction
 	public void changeNick()
 	{
-		Preferences prefs = context.getSingleton2(Preferences.class);
+		Preferences prefs = context.getSingle(Preferences.class);
 		PreferencesGroup group = prefs.getGroup(context.getPlugin());
 
 		group.set(HighlighterPlugin.PREF_HIGHLIGHT_NICKNAME,
@@ -169,7 +169,7 @@ public class HighlighterPage
 	@UIAction
 	public void changeRestrict()
 	{
-		Preferences prefs = context.getSingleton2(Preferences.class);
+		Preferences prefs = context.getSingle(Preferences.class);
 		PreferencesGroup group = prefs.getGroup(context.getPlugin());
 
 		group.set(HighlighterPlugin.PREF_HIGHLIGHT_RESTRICTSOUND,
@@ -184,7 +184,7 @@ public class HighlighterPage
 	@UIAction
 	public void actionAdd() throws GeneralException
 	{
-		UI ui = context.getSingleton2(UI.class);
+		UI ui = context.getSingle(UI.class);
 		dialog = ui.createDialog("addword", this);
 		dialog.show(p);
 	}
@@ -196,7 +196,7 @@ public class HighlighterPage
 	@UIAction
 	public void actionEdit() throws GeneralException
 	{
-		UI ui = context.getSingleton2(UI.class);
+		UI ui = context.getSingle(UI.class);
 		dialog = ui.createDialog("addword", this);
 		dialog.setTitle("Edit word");
 		setUI.setLabel("Edit word");
@@ -215,7 +215,7 @@ public class HighlighterPage
 		Integer selected = (Integer)wordsUI.getSelectedData();
 		wordsUI.removeData(selected);
 
-		Preferences prefs = context.getSingleton2(Preferences.class);
+		Preferences prefs = context.getSingle(Preferences.class);
 		PreferencesGroup group = prefs.getGroup(context.getPlugin());
 		group.getAnon()[selected.intValue()].remove();
 
@@ -229,7 +229,7 @@ public class HighlighterPage
 	@UIAction
 	public void selectSound()
 	{
-		Preferences prefs = context.getSingleton2(Preferences.class);
+		Preferences prefs = context.getSingle(Preferences.class);
 		PreferencesGroup group = prefs.getGroup(context.getPlugin());
 
 		group.set(HighlighterPlugin.PREF_HIGHLIGHT_SOUND,
@@ -272,7 +272,7 @@ public class HighlighterPage
 	@UIAction
 	public void actionAddWord()
 	{
-		Preferences prefs = context.getSingleton2(Preferences.class);
+		Preferences prefs = context.getSingle(Preferences.class);
 		PreferencesGroup group = prefs.getGroup(context.getPlugin());
 		PreferencesGroup anon = group.addAnon();
 		String word = wordUI.getValue();
@@ -289,7 +289,7 @@ public class HighlighterPage
 	 */
 	public void actionEditWord()
 	{
-		Preferences prefs = context.getSingleton2(Preferences.class);
+		Preferences prefs = context.getSingle(Preferences.class);
 		PreferencesGroup group = prefs.getGroup(context.getPlugin());
 		Integer integer = (Integer)wordsUI.getSelectedData();
 		PreferencesGroup anon =

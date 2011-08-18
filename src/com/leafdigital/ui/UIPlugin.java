@@ -78,7 +78,7 @@ public class UIPlugin implements Plugin
 	@Override
 	public void close() throws GeneralException
 	{
-		UISingleton uis=(UISingleton)context.getSingleton2(UI.class);
+		UISingleton uis=(UISingleton)context.getSingle(UI.class);
 		uis.close();
 	}
 
@@ -89,7 +89,7 @@ public class UIPlugin implements Plugin
 	@UIAction
 	public void actionLicenseAgree() throws GeneralException
 	{
-		Preferences prefs=context.getSingleton2(Preferences.class);
+		Preferences prefs=context.getSingle(Preferences.class);
 		PreferencesGroup group=prefs.getGroup(this);
 		group.set(PREF_AGREEDLICENSE,"y");
 		license.close();
@@ -118,11 +118,11 @@ public class UIPlugin implements Plugin
 			UISingleton.checkSwing();
 
 			// Create window
-			UISingleton uis = (UISingleton)context.getSingleton2(UI.class);
+			UISingleton uis = (UISingleton)context.getSingle(UI.class);
 			uis.init("leafChat " + SystemVersion.getTitleBarVersion());
 
 			// Check license if needed
-			Preferences prefs = context.getSingleton2(Preferences.class);
+			Preferences prefs = context.getSingle(Preferences.class);
 			PreferencesGroup group = prefs.getGroup(this);
 			if(group.get(PREF_AGREEDLICENSE, null) == null)
 			{
@@ -182,7 +182,7 @@ public class UIPlugin implements Plugin
 		if(errorDialog==null)
 		{
 			// Only show the first error in dialog...
-			UI ui = context.getSingleton2(UI.class);
+			UI ui = context.getSingle(UI.class);
 			errorDialog = ui.createDialog("errordialog", this);
 
 			reportUI.setChecked(!SystemVersion.getBuildVersion().startsWith("@"));
@@ -270,7 +270,7 @@ public class UIPlugin implements Plugin
 		}
 		msg.markHandled();
 
-		(context.getSingleton2(SystemLog.class)).log(
+		(context.getSingle(SystemLog.class)).log(
 			this, "Error handler: " + msg.getMessage(), msg.getException());
 	}
 

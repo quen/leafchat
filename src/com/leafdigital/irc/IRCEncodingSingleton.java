@@ -108,7 +108,7 @@ public class IRCEncodingSingleton implements IRCEncoding
 	@Override
 	public EncodingInfo getEncoding(Server s,String chan,IRCUserAddress user)
 	{
-		Preferences p=pc.getSingleton2(Preferences.class);
+		Preferences p=pc.getSingle(Preferences.class);
 		PreferencesGroup encoding=p.getGroup(pc.getPlugin()).getChild(IRCPrefs.PREFGROUP_ENCODING);
 
 		// User address takes priority

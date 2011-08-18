@@ -44,7 +44,7 @@ public class ScriptingPlugin implements Plugin,Script.StateListener
 
 		// Register tool
 		st=new ScriptingTool(context);
-		context.getSingleton2(UI.class).registerTool(st);
+		context.getSingle(UI.class).registerTool(st);
 
 		// Request message just for when people try to quit with unsaved changes
 		context.requestMessages(SystemStateMsg.class,this);
@@ -94,7 +94,7 @@ public class ScriptingPlugin implements Plugin,Script.StateListener
 		QuitConfirm(SystemStateMsg m) throws GeneralException
 		{
 			objectToQuit=false;
-			UI ui=context.getSingleton2(UI.class);
+			UI ui=context.getSingle(UI.class);
 			quitConfirm = ui.createDialog("quitconfirm",this);
 			quitConfirm.show(null);
 
