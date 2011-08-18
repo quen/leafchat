@@ -525,7 +525,7 @@ public class WatchListSingleton implements WatchList
 		this.context = context;
 
 		// Read list from preferences
-		Preferences p=context.getSingleton2(Preferences.class);
+		Preferences p=context.getSingle(Preferences.class);
 		PreferencesGroup pg=p.getGroup(context.getPlugin());
 		PreferencesGroup[] ignoreGroups=pg.getChild(IRCPrefs.PREFGROUP_WATCH).getAnon();
 		for(int i=0;i<ignoreGroups.length;i++)
@@ -736,7 +736,7 @@ public class WatchListSingleton implements WatchList
 		if(watchList.containsKey(mask))
 			return false;
 
-		Preferences p=context.getSingleton2(Preferences.class);
+		Preferences p=context.getSingle(Preferences.class);
 		PreferencesGroup newGroup=p.getGroup(context.getPlugin()).getChild(IRCPrefs.PREFGROUP_WATCH).addAnon();
 		newGroup.set(IRCPrefs.PREF_WATCH_NICK,mask.getNick());
 		newGroup.set(IRCPrefs.PREF_WATCH_USER,mask.getUser());

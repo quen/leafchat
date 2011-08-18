@@ -73,8 +73,8 @@ public class DonationsPlugin implements Plugin
 	{
 		if(msg.getType()!=SystemStateMsg.UIREADY) return;
 
-		UI ui=context.getSingleton2(UI.class);
-		Preferences prefs=context.getSingleton2(Preferences.class);
+		UI ui=context.getSingle(UI.class);
+		Preferences prefs=context.getSingle(Preferences.class);
 		PreferencesGroup group=prefs.getGroup(this);
 
 		// Do we need to check a donation?
@@ -184,7 +184,7 @@ public class DonationsPlugin implements Plugin
 	public void actionDonate()
 	{
 		d.close();
-		Preferences prefs=context.getSingleton2(Preferences.class);
+		Preferences prefs=context.getSingle(Preferences.class);
 		PreferencesGroup group=prefs.getGroup(this);
 		group.set(PREF_CHECKDONATION,"y");
 		try
@@ -197,7 +197,7 @@ public class DonationsPlugin implements Plugin
 		}
 		catch(IOException e)
 		{
-			UI ui=context.getSingleton2(UI.class);
+			UI ui=context.getSingle(UI.class);
 			ui.showUserError(null,"Unable to open browser",
 				"leafChat was unable to open your Web browser. Please visit the " +
 				"donation page manually; it is "+DONATEURL);
@@ -209,7 +209,7 @@ public class DonationsPlugin implements Plugin
 	public void actionYep()
 	{
 		d.close();
-		Preferences prefs=context.getSingleton2(Preferences.class);
+		Preferences prefs=context.getSingle(Preferences.class);
 		PreferencesGroup group=prefs.getGroup(this);
 		group.set(PREF_DONATEDTIME,System.currentTimeMillis()+"");
 		group.set(PREF_DONATEDVERSION,SystemVersion.getBuildVersion());
@@ -230,7 +230,7 @@ public class DonationsPlugin implements Plugin
 	public void actionLater()
 	{
 		d.close();
-		Preferences prefs=context.getSingleton2(Preferences.class);
+		Preferences prefs=context.getSingle(Preferences.class);
 		PreferencesGroup group=prefs.getGroup(this);
 		group.set(PREF_HIDEPROMPTUNTIL,(System.currentTimeMillis()+TWOMONTHS)+"");
 	}

@@ -48,7 +48,7 @@ public class PrefsWindow
 	{
 		this.pt=pt;
 
-		UI u=pt.getContext().getSingleton2(UI.class);
+		UI u=pt.getContext().getSingle(UI.class);
 		w=u.createWindow("options", this);
 		w.setRemember("tool","prefs");
 

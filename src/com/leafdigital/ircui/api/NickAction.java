@@ -48,7 +48,7 @@ public class NickAction extends AbstractIRCAction implements IRCAction
 		String selectedChannel,String[] selectedNicks,MessageDisplay caller)
 	{
 		String[] selected=selectedNicks==null ? new String[] {contextNick} : selectedNicks;
-		Commands c=pc.getSingleton2(Commands.class);
+		Commands c=pc.getSingle(Commands.class);
 
 		for(int i=0;i<selected.length;i++)
 		{

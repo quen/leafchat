@@ -56,7 +56,7 @@ public class NotificationPlugin implements Plugin,Notification
 		context.registerSingleton(Notification.class,this);
 
 		// Register prefs page
-		PreferencesUI preferencesUI = context.getSingleton2(PreferencesUI.class);
+		PreferencesUI preferencesUI = context.getSingle(PreferencesUI.class);
 		preferencesUI.registerPage(this,(new NotificationPage(context)).getPage());
 
 		// Need to know about preferences changes (in case of change to minimise-to-tray)
@@ -100,7 +100,7 @@ public class NotificationPlugin implements Plugin,Notification
 			new TreeSet<String>(Arrays.asList(list.getTypes()));
 		HashSet<String> defaultTypes =
 			new HashSet<String>(Arrays.asList(list.getDefaultTypes()));
-		Preferences p = context.getSingleton2(Preferences.class);
+		Preferences p = context.getSingle(Preferences.class);
 		PreferencesGroup group = p.getGroup(context.getPlugin());
 		for(String name : allTypes)
 		{
@@ -160,7 +160,7 @@ public class NotificationPlugin implements Plugin,Notification
 						{
 							if(e.getButton() == MouseEvent.BUTTON1)
 							{
-								context.getSingleton2(UI.class).activate();
+								context.getSingle(UI.class).activate();
 							}
 						}
 					};
@@ -311,7 +311,7 @@ public class NotificationPlugin implements Plugin,Notification
 			NotificationListMsg list = getNotifications();
 			HashSet<String> defaultTypes =
 				new HashSet<String>(Arrays.asList(list.getDefaultTypes()));
-			Preferences p = context.getSingleton2(Preferences.class);
+			Preferences p = context.getSingle(Preferences.class);
 			PreferencesGroup group = p.getGroup(context.getPlugin());
 
 			boolean enabled = p.toBoolean(group.get("enabled-" + getPrefName(type),

@@ -104,7 +104,7 @@ public class ChanWindow extends ServerChatWindow
 		modes=new ModeDisplay(pc,s,getWindow(),chan);
 		VerticalPanel vp=(VerticalPanel)getWindow().getWidget("controls");
 		if(!PlatformUtils.isMac()) vp.setBorder(4);
-		UI ui=pc.getSingleton2(UI.class);
+		UI ui=pc.getSingle(UI.class);
 		vp.add(ui.newJComponentWrapper(modes));
 
 		updateTopicBar();
@@ -298,7 +298,7 @@ public class ChanWindow extends ServerChatWindow
 	@Override
 	protected void doCommand(Commands c,String line) throws GeneralException
 	{
-		getPluginContext().getSingleton2(Idle.class).userAwake(
+		getPluginContext().getSingle(Idle.class).userAwake(
 			line.equals("/away") ? Idle.AWAKE_UNAWAY : Idle.AWAKE_COMMAND);
 		c.doCommand(line,getServer(),null,chan,this,true);
 	}
@@ -1084,7 +1084,7 @@ public class ChanWindow extends ServerChatWindow
 
 		TopicChangeDialog() throws GeneralException
 		{
-			UI ui=getPluginContext().getSingleton2(UI.class);
+			UI ui=getPluginContext().getSingle(UI.class);
 			d=ui.createDialog("changetopic", this);
 
 			topicUI.setValue(currentTopic);
@@ -1103,7 +1103,7 @@ public class ChanWindow extends ServerChatWindow
 		public void changeValue()
 		{
 			// Get encoding
-			IRCEncoding encoding=getPluginContext().getSingleton2(IRCEncoding.class);
+			IRCEncoding encoding=getPluginContext().getSingle(IRCEncoding.class);
 			int bytes=encoding.getEncoding(getServer(),chan,null).convertOutgoing(
 				topicUI.getValue()).length;
 			changeUI.setEnabled(bytes<=getServer().getMaxTopicLength());
@@ -1115,7 +1115,7 @@ public class ChanWindow extends ServerChatWindow
 		 */
 		public void actionChange() throws GeneralException
 		{
-			doCommand(getPluginContext().getSingleton2(Commands.class),
+			doCommand(getPluginContext().getSingle(Commands.class),
 				"/topic "+chan+" "+topicUI.getValue());
 			d.close();
 		}
@@ -1291,7 +1291,7 @@ public class ChanWindow extends ServerChatWindow
 			// Find
 			int numModes=s.getMaxModeParams();
 
-			Commands c=getPluginContext().getSingleton2(Commands.class);
+			Commands c=getPluginContext().getSingle(Commands.class);
 			LinkedList<String> l = new LinkedList<String>(Arrays.asList(selectedNicks));
 			while(!l.isEmpty())
 			{

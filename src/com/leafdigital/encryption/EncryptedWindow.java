@@ -59,7 +59,7 @@ public class EncryptedWindow implements GeneralChatWindow.Handler
 		this.s=s;
 		this.nick=nick;
 		this.ourNick=s.getOurNick();
-		w=context.getSingleton2(IRCUI.class).createGeneralChatWindow(
+		w=context.getSingle(IRCUI.class).createGeneralChatWindow(
 			context,this,null,null,null,300,s.getOurNick(),nick,true);
 		w.setEnabled(false);
 		context.requestMessages(NickIRCMsg.class,this);

@@ -71,7 +71,7 @@ public class IdlePlugin implements Plugin,Idle,Runnable
 		context.registerSingleton(Idle.class,this);
 
 		// Register prefs page
-		PreferencesUI preferencesUI=context.getSingleton2(PreferencesUI.class);
+		PreferencesUI preferencesUI=context.getSingle(PreferencesUI.class);
 		preferencesUI.registerPage(this,(new IdlePage(context)).getPage());
 
 		// Start tracking idle state
@@ -110,7 +110,7 @@ public class IdlePlugin implements Plugin,Idle,Runnable
 			long now=System.currentTimeMillis();
 			if(lastAction==0) lastAction=now;
 
-			Preferences p=context.getSingleton2(Preferences.class);
+			Preferences p=context.getSingle(Preferences.class);
 			PreferencesGroup pg=p.getGroup(context.getPlugin());
 			boolean includeMouse=pg.get(IdlePlugin.PREF_ACTIVE,IdlePlugin.PREFDEFAULT_ACTIVE).equals(
 				IdlePlugin.PREFVALUE_ACTIVE_MOUSE) && PlatformUtils.isJavaVersionAtLeast(1,5);
@@ -151,7 +151,7 @@ public class IdlePlugin implements Plugin,Idle,Runnable
 	{
 		String message="Auto-away: idle "+minutes+" minutes";
 
-		Connections c=context.getSingleton2(Connections.class);
+		Connections c=context.getSingle(Connections.class);
 		Server[] servers=c.getConnected();
 		markedServers = new LinkedList<Server>();
 		for(int i=0;i<servers.length;i++)
@@ -193,7 +193,7 @@ public class IdlePlugin implements Plugin,Idle,Runnable
 			// away ourselves.
 			if(!action.equals(Idle.AWAKE_UNAWAY))
 			{
-				Preferences p=context.getSingleton2(Preferences.class);
+				Preferences p=context.getSingle(Preferences.class);
 				PreferencesGroup pg=p.getGroup(context.getPlugin());
 				boolean cancel=p.toBoolean(
 					pg.get(IdlePlugin.PREF_AUTOUNAWAY,IdlePlugin.PREFDEFAULT_AUTOUNAWAY));

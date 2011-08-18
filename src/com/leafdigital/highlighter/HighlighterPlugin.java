@@ -86,7 +86,7 @@ public class HighlighterPlugin implements Plugin, Highlighter
 
 		// Register prefs page
 		PreferencesUI preferencesUI =
-			context.getSingleton2(PreferencesUI.class);
+			context.getSingle(PreferencesUI.class);
 		preferencesUI.registerPage(this,(new HighlighterPage(context)).getPage());
 	}
 
@@ -101,7 +101,7 @@ public class HighlighterPlugin implements Plugin, Highlighter
 	public String highlight(String currentNickname, String xml) throws XMLException
 	{
 		// Get data from prefs
-		Preferences prefs = context.getSingleton2(Preferences.class);
+		Preferences prefs = context.getSingle(Preferences.class);
 		PreferencesGroup group = prefs.getGroup(this);
 		PreferencesGroup[] anon = group.getAnon();
 		boolean includeNickname = currentNickname != null
@@ -152,7 +152,7 @@ public class HighlighterPlugin implements Plugin, Highlighter
 			long now = System.currentTimeMillis();
 			if(!restrict || (now - lastSound > RESTRICT_TIME))
 			{
-				Audio audio = context.getSingleton2(Audio.class);
+				Audio audio = context.getSingle(Audio.class);
 				if(audio.soundExists(sound))
 				{
 					lastSound = now;

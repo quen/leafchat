@@ -65,7 +65,7 @@ public class SpareWindow extends ServerChatWindow
 			"the relevant server. You can close it after connecting.</line></box>");
 		clearMark();
 
-		Preferences p=context.getSingleton2(Preferences.class);
+		Preferences p=context.getSingle(Preferences.class);
 		group=p.getGroup(context.getPlugin());
 		autoCloseUI.setChecked(
 			p.toBoolean(group.get(IRCUIPlugin.PREF_CLOSESPAREWINDOWS,

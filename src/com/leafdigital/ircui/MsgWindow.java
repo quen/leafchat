@@ -81,7 +81,7 @@ public class MsgWindow extends ServerChatWindow
 	{
 		if(firstMessage)
 		{
-			getPluginContext().getSingleton2(Notification.class).notify(
+			getPluginContext().getSingle(Notification.class).notify(
 				IRCUIPlugin.NOTIFICATION_NEWWINDOW, title,
 				text + "\n\n(New window opened)");
 
@@ -100,7 +100,7 @@ public class MsgWindow extends ServerChatWindow
 		// Remove watchlist
 		if(isConnected() && maskAdded)
 		{
-			getPluginContext().getSingleton2(WatchList.class).
+			getPluginContext().getSingle(WatchList.class).
 				removeTemporaryMask(getServer(), new IRCUserAddress(nick, true));
 			maskAdded = false;
 		}
@@ -161,7 +161,7 @@ public class MsgWindow extends ServerChatWindow
 			requestMessages(!firstTime);
 			if(!firstTime) 	// Can't do it here first time 'cause nick is not set
 			{
-				getPluginContext().getSingleton2(WatchList.class).
+				getPluginContext().getSingle(WatchList.class).
 					addTemporaryMask(s, new IRCUserAddress(nick, true));
 				maskAdded = true;
 			}
@@ -189,7 +189,7 @@ public class MsgWindow extends ServerChatWindow
 		pc.requestMessages(WatchMsg.class, this, null, Msg.PRIORITY_EARLY);
 
 		// Watch this user
-		WatchList wl = pc.getSingleton2(WatchList.class);
+		WatchList wl = pc.getSingle(WatchList.class);
 		wl.addTemporaryMask(s, new IRCUserAddress(nick, true));
 		maskAdded = true;
 		if(!(definitelyOnline || (!wl.isKnown(s, nick) || wl.isOnline(s, nick))))
@@ -252,7 +252,7 @@ public class MsgWindow extends ServerChatWindow
 	@Override
 	protected void doCommand(Commands c, String line) throws GeneralException
 	{
-		getPluginContext().getSingleton2(Idle.class).userAwake(
+		getPluginContext().getSingle(Idle.class).userAwake(
 			line.equals("/away") ? Idle.AWAKE_UNAWAY : Idle.AWAKE_COMMAND);
 
 		IRCUserAddress contextUser;
@@ -311,7 +311,7 @@ public class MsgWindow extends ServerChatWindow
 	@Override
 	public void msg(NickIRCMsg m) throws GeneralException
 	{
-		WatchList wl = getPluginContext().getSingleton2(WatchList.class);
+		WatchList wl = getPluginContext().getSingle(WatchList.class);
 		if(maskAdded)
 		{
 			wl.removeTemporaryMask(getServer(), new IRCUserAddress(nick, true));

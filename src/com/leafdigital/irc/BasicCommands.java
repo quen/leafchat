@@ -151,7 +151,7 @@ public class BasicCommands
 	byte[] convertEncoding(String text, Server s, String chan, IRCUserAddress user)
 	{
 		// Get encoding
-		IRCEncoding ie = context.getSingleton2(IRCEncoding.class);
+		IRCEncoding ie = context.getSingle(IRCEncoding.class);
 		IRCEncoding.EncodingInfo ei = ie.getEncoding(s, chan, user);
 		return ei.convertOutgoing(text);
 	}
@@ -301,7 +301,7 @@ public class BasicCommands
 			// Note, this code is basically the same as code in JoinTool.java
 			String channel = params[0];
 
-			Preferences p = context.getSingleton2(Preferences.class);
+			Preferences p = context.getSingle(Preferences.class);
 
 			// Obtain prefs for server, or network if it belongs to one
 			PreferencesGroup pg = msg.getServer().getPreferences().getAnonParent();
@@ -425,14 +425,14 @@ public class BasicCommands
 
 	private void away(UserCommandMsg msg) throws GeneralException
 	{
-		Preferences p = context.getSingleton2(Preferences.class);
+		Preferences p = context.getSingle(Preferences.class);
 		PreferencesGroup pg = p.getGroup(context.getPlugin());
 		boolean awayMultiServer = p.toBoolean(pg.get(
 			IRCPrefs.PREF_AWAYMULTISERVER, IRCPrefs.PREFDEFAULT_AWAYMULTISERVER));
 
 		if(awayMultiServer)
 		{
-			Connections c = context.getSingleton2(Connections.class);
+			Connections c = context.getSingle(Connections.class);
 			Server[] servers = c.getConnected();
 			for(int i=0; i<servers.length; i++)
 			{
@@ -509,7 +509,7 @@ public class BasicCommands
 	private void aquit(UserCommandMsg msg) throws GeneralException
 	{
 		Connections connections =
-			context.getSingleton2(Connections.class);
+			context.getSingle(Connections.class);
 		Server[] connected = connections.getConnected();
 		if(connected.length == 0)
 		{

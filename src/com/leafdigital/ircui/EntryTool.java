@@ -76,7 +76,7 @@ public class EntryTool implements PageTool
 
 	private void init() throws GeneralException
 	{
-		UI ui = context.getSingleton2(UI.class);
+		UI ui = context.getSingle(UI.class);
 
 		p = ui.createPage("entry", this);
 
@@ -130,7 +130,7 @@ public class EntryTool implements PageTool
 	private void updateServers() throws GeneralException
 	{
 		// Get connected servers
-		Connections c = context.getSingleton2(Connections.class);
+		Connections c = context.getSingle(Connections.class);
 		Server[] servers = c.getConnected();
 
 		// Get current value
@@ -158,7 +158,7 @@ public class EntryTool implements PageTool
 		closeUI.setVisible(servers.length > 0);
 
 		// May affect sizing of toolbar
-		context.getSingleton2(UI.class).resizeToolbar();
+		context.getSingle(UI.class).resizeToolbar();
 	}
 
 	/**
@@ -175,12 +175,12 @@ public class EntryTool implements PageTool
 		}
 
 		Server s = (Server)serverUI.getSelected();
-		Commands c = context.getSingleton2(Commands.class);
+		Commands c = context.getSingle(Commands.class);
 
 		commandUI.setValue("");
 
 		IRCUIPlugin ip = (IRCUIPlugin)context.getPlugin();
-		context.getSingleton2(Idle.class).userAwake(Idle.AWAKE_COMMAND);
+		context.getSingle(Idle.class).userAwake(Idle.AWAKE_COMMAND);
 		c.doCommand(command, s, null, null, ip.getMessageDisplay(s), true);
 	}
 
@@ -193,7 +193,7 @@ public class EntryTool implements PageTool
 	{
 		// Disconnect from server
 		Server s = (Server)serverUI.getSelected();
-		Commands c = context.getSingleton2(Commands.class);
+		Commands c = context.getSingle(Commands.class);
 		IRCUIPlugin ip = (IRCUIPlugin)context.getPlugin();
 		c.doCommand("/quit", s, null, null, ip.getMessageDisplay(s), true);
 	}

@@ -42,10 +42,10 @@ public class PrefsMiscPage
 
 	PrefsMiscPage(PluginContext context)
 	{
-		UI ui=context.getSingleton2(UI.class);
+		UI ui=context.getSingle(UI.class);
 		p = ui.createPage("prefs-misc", this);
 
-		prefs=context.getSingleton2(Preferences.class);
+		prefs=context.getSingle(Preferences.class);
 		group=prefs.getGroup(prefs.getPluginOwner(IRCPrefs.IRCPLUGIN_CLASS));
 
 		extraCommandUI.setValue(

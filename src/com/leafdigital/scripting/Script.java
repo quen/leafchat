@@ -273,7 +273,7 @@ public class Script
 	{
 		if(installed!=null) return;
 		if(!jar.exists()) throw new GeneralException("Can't install script when jar file doesn't exist: "+jar);
-		PluginList pl=context.getSingleton2(PluginList.class);
+		PluginList pl=context.getSingle(PluginList.class);
 	  installed=pl.loadPluginFile(jar);
 	}
 
@@ -284,7 +284,7 @@ public class Script
 	private void uninstall() throws GeneralException
 	{
 		if(installed==null) return;
-		PluginList pl=context.getSingleton2(PluginList.class);
+		PluginList pl=context.getSingle(PluginList.class);
 	  pl.unloadPluginFile(installed);
 	  installed=null;
 	  System.gc();
@@ -439,7 +439,7 @@ public class Script
 		}
 
 		// Do imports for system plugins
-		PluginList pl=context.getSingleton2(PluginList.class);
+		PluginList pl=context.getSingle(PluginList.class);
 		PluginInfo[] info=pl.getPluginList();
 		StringBuffer sb=new StringBuffer();
 		for(int i=0;i<info.length;i++)
@@ -568,7 +568,7 @@ public class Script
 			File java=new File(compile,className+".java");
 
 			// Work out classpath
-			PluginList pl=context.getSingleton2(PluginList.class);
+			PluginList pl=context.getSingle(PluginList.class);
 			String classPath=pl.getCoreJar().getAbsolutePath();
 			PluginInfo[] plugins=pl.getPluginList();
 			for(int i=0;i<plugins.length;i++)

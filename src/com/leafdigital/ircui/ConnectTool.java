@@ -106,7 +106,7 @@ public class ConnectTool implements SimpleTool, TreeBox.MultiSelectionHandler
 	{
 		if(msg.getType()==SystemStateMsg.UIREADY)
 		{
-			Preferences p=context.getSingleton2(Preferences.class);
+			Preferences p=context.getSingle(Preferences.class);
 			if(IRCUIPlugin.USEFAKESERVER || p.toBoolean(p.getGroup(plugin).get(PREFS_AUTOSHOW,"f")))
 			{
 				try
@@ -145,7 +145,7 @@ public class ConnectTool implements SimpleTool, TreeBox.MultiSelectionHandler
 	{
 		if(retrieveWindow(false))
 		{
-			Preferences p=context.getSingleton2(Preferences.class);
+			Preferences p=context.getSingle(Preferences.class);
 			if(IRCUIPlugin.USEFAKESERVER ||
 				(autoShow && p.toBoolean(p.getGroup(plugin).get(PREFS_ANDCONNECT,"f"))
 					&& connectUI.isEnabled())) actionConnect();
@@ -163,7 +163,7 @@ public class ConnectTool implements SimpleTool, TreeBox.MultiSelectionHandler
 	{
 		if(window == null)
 		{
-			UI u = context.getSingleton2(UI.class);
+			UI u = context.getSingle(UI.class);
 			window = u.createWindow("connect", this);
 			initWindow(direct);
 			window.show(false);
@@ -231,7 +231,7 @@ public class ConnectTool implements SimpleTool, TreeBox.MultiSelectionHandler
 
 	  serverselectUI.setHandler(this);
 
-		Preferences p=context.getSingleton2(Preferences.class);
+		Preferences p=context.getSingle(Preferences.class);
 		PreferencesGroup pg=p.getGroup(plugin).getChild(PREFS_LASTCONNECT);
 		PreferencesGroup[] apgList=pg.getChild(PREFS_LIST).getAnon();
 		if(apgList.length==0)
@@ -268,7 +268,7 @@ public class ConnectTool implements SimpleTool, TreeBox.MultiSelectionHandler
 		andConnectUI.setChecked(p.toBoolean(p.getGroup(plugin).get(PREFS_ANDCONNECT,"f")));
 
 		// Currently-connected servers
-		Connections c=context.getSingleton2(Connections.class);
+		Connections c=context.getSingle(Connections.class);
 		Server[] as=c.getConnected();
 		for(int i=0;i<as.length;i++)
 		{
@@ -446,7 +446,7 @@ public class ConnectTool implements SimpleTool, TreeBox.MultiSelectionHandler
 		}
 		else
 		{
-			Preferences p=context.getSingleton2(Preferences.class);
+			Preferences p=context.getSingle(Preferences.class);
 			PreferencesGroup pg=p.getGroup(plugin).getChild(PREFS_LASTCONNECT);
 			PreferencesGroup pgList=pg.getChild(PREFS_LIST);
 			pgList.clearAnon();
@@ -753,7 +753,7 @@ public class ConnectTool implements SimpleTool, TreeBox.MultiSelectionHandler
 
 	private void connect(String sServer,int iPort) throws GeneralException
 	{
-		Server s=context.getSingleton2(Connections.class).newServer();
+		Server s=context.getSingle(Connections.class).newServer();
 		synchronized(s)
 		{
 			s.beginConnect(sServer,iPort,new Server.ConnectionProgress()
@@ -805,7 +805,7 @@ public class ConnectTool implements SimpleTool, TreeBox.MultiSelectionHandler
 		String[] hosts = disconnectlistUI.getMultiSelected();
 		if(hosts.length==0) return;
 
-		Connections c = context.getSingleton2(Connections.class);
+		Connections c = context.getSingle(Connections.class);
 		Server[] connected = c.getConnected();
 
 		for(int disconnect=0; disconnect<hosts.length; disconnect++)
@@ -835,7 +835,7 @@ public class ConnectTool implements SimpleTool, TreeBox.MultiSelectionHandler
 	@UIAction
 	public void changeAutoShow() throws GeneralException
 	{
-		Preferences p=context.getSingleton2(Preferences.class);
+		Preferences p=context.getSingle(Preferences.class);
 		p.getGroup(plugin).set(PREFS_AUTOSHOW,p.fromBoolean(autoShowUI.isChecked()));
 		andConnectUI.setEnabled(autoShowUI.isChecked());
 	}
@@ -847,7 +847,7 @@ public class ConnectTool implements SimpleTool, TreeBox.MultiSelectionHandler
 	@UIAction
 	public void changeAndConnect() throws GeneralException
 	{
-		Preferences p=context.getSingleton2(Preferences.class);
+		Preferences p=context.getSingle(Preferences.class);
 		p.getGroup(plugin).set(PREFS_ANDCONNECT,p.fromBoolean(andConnectUI.isChecked()));
 	}
 

@@ -442,7 +442,7 @@ public class ModeDisplay extends JComponent implements SizeInfo
 	{
 		dialogPrevious=previous;
 		dialogLetter=letter;
-		UI ui=context.getSingleton2(UI.class);
+		UI ui=context.getSingle(UI.class);
 		d = ui.createDialog("modeparam", this);
 		Label l=(Label)d.getWidget("modeletter");
 		l.setText(letter+"=");

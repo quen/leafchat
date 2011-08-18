@@ -131,14 +131,14 @@ public class EncryptionPlugin implements Plugin
 			@Override
 			public void run(Server s,String contextChannel,String contextNick,String selectedChannel,String[] selectedNicks,MessageDisplay caller)
 			{
-				if(context.getSingleton2(UI.class).showOptionalQuestion(
+				if(context.getSingle(UI.class).showOptionalQuestion(
 					"encryption-requires-lc2-warning",null,"Encrypted chat requires leafChat 2",
 					"Encrypted chat only works if the other person is using leafChat 2. " +
 					"If you haven't checked, please make sure that they are leafChat " +
 					"users before continuing.",UI.BUTTON_YES|UI.BUTTON_CANCEL,
 					"Start encrypted chat",null,null,UI.BUTTON_CANCEL)==UI.BUTTON_YES)
 				{
-					context.getSingleton2(Commands.class).doCommand(
+					context.getSingle(Commands.class).doCommand(
 						"/encryptedquery "+nick,s,null,null,caller,false);
 				}
 			}
@@ -305,7 +305,7 @@ public class EncryptionPlugin implements Plugin
 
 	private MessageDisplay getMessageDisplay(Server s)
 	{
-		return context.getSingleton2(IRCUI.class).getMessageDisplay(s);
+		return context.getSingle(IRCUI.class).getMessageDisplay(s);
 	}
 
 	/**

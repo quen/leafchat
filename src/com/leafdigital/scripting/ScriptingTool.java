@@ -105,7 +105,7 @@ public class ScriptingTool implements SimpleTool
 	{
 		if(w==null)
 		{
-			UI u=context.getSingleton2(UI.class);
+			UI u=context.getSingle(UI.class);
 			w=u.createWindow("scripting", this);
 			w.setRemember("tool", "scripting");
 			initWindow();
@@ -146,7 +146,7 @@ public class ScriptingTool implements SimpleTool
 	private void initWindow()
 	{
 		targetUI.setFlag(EditBox.FLAG_ERROR);
-		PluginInfo[] plugins=context.getSingleton2(PluginList.class).getPluginList();
+		PluginInfo[] plugins=context.getSingle(PluginList.class).getPluginList();
 	  SortedSet<ExportedPackage> sortedPackages = new TreeSet<ExportedPackage>();
 		for(int i=0;i<plugins.length;i++)
 		{
@@ -190,7 +190,7 @@ public class ScriptingTool implements SimpleTool
 		String existing=targetUI.getValue();
 		if(existing.length()==0)
 			existing=PlatformUtils.getDocumentsFolder();
-		File selected=context.getSingleton2(UI.class).showFolderSelect(
+		File selected=context.getSingle(UI.class).showFolderSelect(
 			null,"Select parent folder", new File(existing));
 		if(selected!=null)
 		{
@@ -231,7 +231,7 @@ public class ScriptingTool implements SimpleTool
 			File target=new File(targetUI.getValue(),shortNameUI.getValue());
 			if(target.exists())
 			{
-				context.getSingleton2(UI.class).showUserError(w,
+				context.getSingle(UI.class).showUserError(w,
 					"Folder exists", "The project folder " + target
 					+ " already exists. If you want to overwrite it, you must manually delete it first.");
 				return;
@@ -249,7 +249,7 @@ public class ScriptingTool implements SimpleTool
 					packagesList.add(dependenciesUI.getString(index,COL_PACKAGE));
 			}
 			String[] packages=packagesList.toArray(new String[packagesList.size()]);
-			context.getSingleton2(PluginList.class).saveAPIJar(
+			context.getSingle(PluginList.class).saveAPIJar(
 				packages,
 				new File(lib,"leafchat.selectedapi.jar"));
 
@@ -309,7 +309,7 @@ public class ScriptingTool implements SimpleTool
 			createUI.setEnabled(false);
 			if(!PlatformUtils.systemOpen(target))
 			{
-				context.getSingleton2(UI.class).showUserError(w,
+				context.getSingle(UI.class).showUserError(w,
 					"Unable to open folder", "Because you are using an older Java version "
 					+ "or a platform that doesn't support opening folders, leafChat "
 					+ "cannot show the folder for you. However, the plugin template has "
@@ -380,7 +380,7 @@ public class ScriptingTool implements SimpleTool
 	{
 		boolean evenSystem=showSystemUI.isChecked();
 		PluginInfo[] plugins=
-			context.getSingleton2(PluginList.class).getPluginList();
+			context.getSingle(PluginList.class).getPluginList();
 		List<PluginInfo> includedPlugins = new LinkedList<PluginInfo>();
 		for(int i=0;i<plugins.length;i++)
 		{
@@ -506,7 +506,7 @@ public class ScriptingTool implements SimpleTool
 
 		NewScript() throws GeneralException
 		{
-			d = context.getSingleton2(UI.class).createDialog("newscript", this);
+			d = context.getSingle(UI.class).createDialog("newscript", this);
 			d.show(w);
 		}
 
@@ -574,7 +574,7 @@ public class ScriptingTool implements SimpleTool
 	@UIAction
 	public void actionImportScript() throws GeneralException
 	{
-		UI ui=context.getSingleton2(UI.class);
+		UI ui=context.getSingle(UI.class);
 		File selected=ui.showFileSelect(w,"Choose script to import",false,
 			new File(PlatformUtils.getDesktopFolder()),null,new String[] {".leafChatScript"},
 			"leafChat scripts");
@@ -634,7 +634,7 @@ public class ScriptingTool implements SimpleTool
 				scriptsUI.setSelectedIndex(displayedScripts.length-1);
 				informChanged(displayedScripts[displayedScripts.length-1]);
 
-				UI ui=context.getSingleton2(UI.class);
+				UI ui=context.getSingle(UI.class);
 				ui.showQuestion(w,"Import successful",
 					"<para><strong>"+s.getName()+"</strong> was successfully imported. This " +
 					"script has been disabled. To enable it, click the checkbox by its name.</para>" +
@@ -655,7 +655,7 @@ public class ScriptingTool implements SimpleTool
 	@UIAction
 	public void actionExportScript() throws GeneralException
 	{
-		UI ui=context.getSingleton2(UI.class);
+		UI ui=context.getSingle(UI.class);
 		File selected=ui.showFileSelect(w,"Export script as",true,
 			new File(PlatformUtils.getDesktopFolder()),null,new String[] {".leafChatScript"},
 			"leafChat scripts");
@@ -709,7 +709,7 @@ public class ScriptingTool implements SimpleTool
 	public void actionDeleteScript() throws GeneralException
 	{
 		Script script=displayedScripts[scriptsUI.getSelectedIndex()];
-		int value=context.getSingleton2(UI.class).showQuestion(w,"Confirm delete",
+		int value=context.getSingle(UI.class).showQuestion(w,"Confirm delete",
 			"Are you sure you want to delete the script <strong>"+
 			XML.esc(script.getName())+"</strong>? Deleted scripts cannot be restored.",
 			UI.BUTTON_YES|UI.BUTTON_CANCEL,"Delete script",null,null,UI.BUTTON_CANCEL);

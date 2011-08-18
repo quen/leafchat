@@ -109,7 +109,7 @@ public class CommandsSingleton implements Commands,MsgOwner
 	@Override
 	public boolean isCommandCharacter(char c)
 	{
-		Preferences p=pc.getSingleton2(Preferences.class);
+		Preferences p=pc.getSingle(Preferences.class);
 		PreferencesGroup pg=p.getGroup(pc.getPlugin());
 		String extra=pg.get(IRCPrefs.PREF_EXTRACOMMANDCHAR,IRCPrefs.PREFDEFAULT_EXTRACOMMANDCHAR);
 
@@ -122,7 +122,7 @@ public class CommandsSingleton implements Commands,MsgOwner
 		boolean variables)
 	{
 		// Set up regular expression matcher to handle extra command character if provided
-		Preferences p=pc.getSingleton2(Preferences.class);
+		Preferences p=pc.getSingle(Preferences.class);
 		PreferencesGroup pg=p.getGroup(pc.getPlugin());
 		String commandCharacters="[/"+regexpRangeQuote(
 			pg.get(IRCPrefs.PREF_EXTRACOMMANDCHAR,IRCPrefs.PREFDEFAULT_EXTRACOMMANDCHAR))+
@@ -137,7 +137,7 @@ public class CommandsSingleton implements Commands,MsgOwner
 		if(serverIndex!=null && !serverIndex.equals(""))
 		{
 			// Get connections singleton
-			Connections c=pc.getSingleton2(Connections.class);
+			Connections c=pc.getSingle(Connections.class);
 			try
 			{
 				resolvedServer=c.getNumbered(Integer.parseInt(serverIndex.substring(1)));

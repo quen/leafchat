@@ -74,7 +74,7 @@ public class TextDisplayPage
 	{
 		this.context=context;
 
-		UI ui=context.getSingleton2(UI.class);
+		UI ui=context.getSingle(UI.class);
 		p = ui.createPage("textdisplay", this);
 	}
 
@@ -88,7 +88,7 @@ public class TextDisplayPage
 	@UIAction
 	public void onSet()
 	{
-		Preferences p=context.getSingleton2(Preferences.class);
+		Preferences p=context.getSingle(Preferences.class);
 		PreferencesGroup pg=p.getGroup(p.getPluginOwner("com.leafdigital.ui.UIPlugin"));
 
 		// System font
@@ -114,7 +114,7 @@ public class TextDisplayPage
 
 		// Get available colours
 		colours.clear();
-		UI ui=context.getSingleton2(UI.class);
+		UI ui=context.getSingle(UI.class);
 		Stylesheet[] stylesheets=ui.getTheme().getStylesheets();
 		for(int i=0;i<stylesheets.length;i++)
 		{
@@ -158,10 +158,10 @@ public class TextDisplayPage
 	@UIAction
 	public void actionDefault()
 	{
-		Preferences p=context.getSingleton2(Preferences.class);
+		Preferences p=context.getSingle(Preferences.class);
 		PreferencesGroup pg=p.getGroup(p.getPluginOwner("com.leafdigital.ui.UIPlugin"));
 		pg.set(UIPrefs.PREF_SYSTEMFONT,p.fromBoolean(true),UIPrefs.PREFDEFAULT_SYSTEMFONT);
-		UI ui=context.getSingleton2(UI.class);
+		UI ui=context.getSingle(UI.class);
 		ui.refreshTheme();
 	}
 
@@ -169,10 +169,10 @@ public class TextDisplayPage
 	@UIAction
 	public void actionSelected()
 	{
-		Preferences p=context.getSingleton2(Preferences.class);
+		Preferences p=context.getSingle(Preferences.class);
 		PreferencesGroup pg=p.getGroup(p.getPluginOwner("com.leafdigital.ui.UIPlugin"));
 		pg.set(UIPrefs.PREF_SYSTEMFONT,p.fromBoolean(false),UIPrefs.PREFDEFAULT_SYSTEMFONT);
-		UI ui=context.getSingleton2(UI.class);
+		UI ui=context.getSingle(UI.class);
 		ui.refreshTheme();
 	}
 
@@ -180,7 +180,7 @@ public class TextDisplayPage
 	@UIAction
 	public void changeColoursDisable()
 	{
-		Preferences p=context.getSingleton2(Preferences.class);
+		Preferences p=context.getSingle(Preferences.class);
 		PreferencesGroup pg=p.getGroup(p.getPluginOwner("com.leafdigital.ui.UIPlugin"));
 		pg.set(UIPrefs.PREF_IRCCOLOURS,p.fromBoolean(!coloursDisableUI.isChecked()),UIPrefs.PREFDEFAULT_IRCCOLOURS);
 	}
@@ -189,7 +189,7 @@ public class TextDisplayPage
 	@UIAction
 	public void selectionChangeFontName()
 	{
-		Preferences p=context.getSingleton2(Preferences.class);
+		Preferences p=context.getSingle(Preferences.class);
 		PreferencesGroup pg=p.getGroup(p.getPluginOwner("com.leafdigital.ui.UIPlugin"));
 		pg.set(UIPrefs.PREF_FONTNAME,(String)fontNameUI.getSelected(),UIPrefs.PREFDEFAULT_FONTNAME);
 		fontSelectedUI.setSelected();
@@ -201,7 +201,7 @@ public class TextDisplayPage
 	public void changeFontSize()
 	{
 		if(fontSizeUI.getFlag()!=EditBox.FLAG_NORMAL) return;
-		Preferences p=context.getSingleton2(Preferences.class);
+		Preferences p=context.getSingle(Preferences.class);
 		PreferencesGroup pg=p.getGroup(p.getPluginOwner("com.leafdigital.ui.UIPlugin"));
 		pg.set(UIPrefs.PREF_FONTSIZE,fontSizeUI.getValue(),UIPrefs.PREFDEFAULT_FONTSIZE);
 		fontSelectedUI.setSelected();
@@ -287,11 +287,11 @@ public class TextDisplayPage
 			c=info.userRGB;
 		else
 			c=info.baseRGB;
-		UI ui=context.getSingleton2(UI.class);
+		UI ui=context.getSingle(UI.class);
 		c=ui.showColourSelect(p,info.description+" - Select colour",c);
 		if(c!=null)
 		{
-			Preferences p=context.getSingleton2(Preferences.class);
+			Preferences p=context.getSingle(Preferences.class);
 			PreferencesGroup pg=p.getGroup(p.getPluginOwner("com.leafdigital.ui.UIPlugin"));
 			PreferencesGroup[] colourPrefs=pg.getChild(UIPrefs.PREFGROUP_COLOURS).getAnon();
 			PreferencesGroup newGroup=null;
@@ -325,7 +325,7 @@ public class TextDisplayPage
 		if(keyword==null) return;
 		ColourInfo info=colours.get(keyword);
 
-		Preferences p=context.getSingleton2(Preferences.class);
+		Preferences p=context.getSingle(Preferences.class);
 		PreferencesGroup pg=p.getGroup(p.getPluginOwner("com.leafdigital.ui.UIPlugin"));
 		PreferencesGroup[] colourPrefs=pg.getChild(UIPrefs.PREFGROUP_COLOURS).getAnon();
 		for(int i=0;i<colourPrefs.length;i++)
@@ -337,7 +337,7 @@ public class TextDisplayPage
 				info.userRGB=null;
 				selectedColourUI.repaint();
 				defaultColourUI.setEnabled(false);
-				UI ui=context.getSingleton2(UI.class);
+				UI ui=context.getSingle(UI.class);
 				ui.refreshTheme();
 				return;
 			}

@@ -126,7 +126,7 @@ public abstract class ServerChatWindow extends ChatWindow
 		if(text.equals(INTERNALACTION_RECONNECT))
 		{
 			if(s.isConnected()) return;
-			if(getPluginContext().getSingleton2(UI.class).showQuestion(getWindow(),"Reconnect",
+			if(getPluginContext().getSingle(UI.class).showQuestion(getWindow(),"Reconnect",
 				"You can reconnect to server "+oldServerHost+", port "+oldServerPort+".",
 				UI.BUTTON_YES|UI.BUTTON_CANCEL,"Reconnect",null,null,UI.BUTTON_YES)==
 				UI.BUTTON_YES)
@@ -879,7 +879,7 @@ public abstract class ServerChatWindow extends ChatWindow
 			IRCUserAddress ua=unim.getSourceUser();
 			String sXML="-<nick>"+esc(ua.getNick())+"</nick>- "+esc(unim.convertEncoding(unim.getText()));
 			addLine(sXML);
-			getPluginContext().getSingleton2(Logger.class).log(
+			getPluginContext().getSingle(Logger.class).log(
 				getServer().getReportedOrConnectedHost(),Logger.CATEGORY_USER,ua.getNick(),"notice",sXML);
 		}
 		else if(msg instanceof ServerNoticeIRCMsg)
@@ -1050,7 +1050,7 @@ public abstract class ServerChatWindow extends ChatWindow
 	@UIAction
 	public void actionAway() throws GeneralException
 	{
-		Commands c=getPluginContext().getSingleton2(Commands.class);
+		Commands c=getPluginContext().getSingle(Commands.class);
 		doCommand(c,"/away");
 	}
 }

@@ -55,7 +55,7 @@ public class PrefsUIPlugin implements Plugin,PreferencesUI
 		pc.requestMessages(PluginUnloadMsg.class,this);
 		pc.requestMessages(SystemStateMsg.class,this,Msg.PRIORITY_LATE);
 
-		UI ui=pc.getSingleton2(UI.class);
+		UI ui=pc.getSingle(UI.class);
 		registerWizardPage(this,0,ui.createPage("wizard-intro", this));
 		registerWizardPage(this,9999,ui.createPage("wizard-outro", this));
 
@@ -65,7 +65,7 @@ public class PrefsUIPlugin implements Plugin,PreferencesUI
 	@Override
 	public void close() throws GeneralException
 	{
-		pc.getSingleton2(UI.class).unregisterTool(pt);
+		pc.getSingle(UI.class).unregisterTool(pt);
 	}
 
 	@Override
@@ -110,7 +110,7 @@ public class PrefsUIPlugin implements Plugin,PreferencesUI
 		// Show wizard on first run
 		if(msg.getType()==SystemStateMsg.UIREADY)
 		{
-			Preferences p=pc.getSingleton2(Preferences.class);
+			Preferences p=pc.getSingle(Preferences.class);
 			PreferencesGroup pg=p.getGroup(this);
 			if(!p.toBoolean(pg.get(PREF_DONEWIZARD,p.fromBoolean(false))))
 			{

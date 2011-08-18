@@ -259,7 +259,7 @@ public abstract class ScriptItem
 	protected Page getPage(Button ok)
 	{
 		this.okButton=ok;
-		UI u= parent.getContext().getSingleton2(UI.class);
+		UI u= parent.getContext().getSingle(UI.class);
 		return u.createPage("itemsettings."
 			+ getClass().getName().replaceAll("^.*Item","").toLowerCase() + ".xml",
 			this);

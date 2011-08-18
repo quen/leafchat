@@ -130,7 +130,7 @@ public class UISingleton implements UI
 			throw new BugException("Can't find shared theme");
 		}
 
-		Preferences p = context.getSingleton2(Preferences.class);
+		Preferences p = context.getSingle(Preferences.class);
 		PreferencesGroup pg = p.getGroup(context.getPlugin());
 		String themeID = pg.get("theme", "leaves");
 		for(int i=0; i<themes.length; i++)
@@ -439,7 +439,7 @@ public class UISingleton implements UI
 	private void minimized()
 	{
 		// Do we need to minimise to tray?
-		Preferences p = context.getSingleton2(Preferences.class);
+		Preferences p = context.getSingle(Preferences.class);
 		PreferencesGroup group = p.getGroup(p.getPluginOwner(context.getPlugin()));
 		if(group.get(UIPrefs.PREF_MINIMISE_TO_TRAY,
 			UIPrefs.PREFDEFAULT_MINIMISE_TO_TRAY).equals("t"))
@@ -520,7 +520,7 @@ public class UISingleton implements UI
 
 		f.getContentPane().setLayout(new BorderLayout());
 
-		Preferences p = context.getSingleton2(Preferences.class);
+		Preferences p = context.getSingle(Preferences.class);
 		final PreferencesGroup mainWindow = p.getGroup(context.getPlugin()).getChild(UIPlugin.PREFGROUP_MAINWINDOW);
 		Dimension size = new Dimension(
 			p.toInt(mainWindow.get(UIPlugin.PREF_WIDTH, UIPlugin.PREFDEFAULT_WIDTH)),
@@ -1457,7 +1457,7 @@ public class UISingleton implements UI
 	public int showOptionalQuestion(String prefID, WidgetOwner parent, String title, String message, int buttons,
 		String yesLabel, String noLabel, String cancelLabel, int defaultButton)
 	{
-		Preferences p = context.getSingleton2(Preferences.class);
+		Preferences p = context.getSingle(Preferences.class);
 		PreferencesGroup group = p.getGroup(context.getPlugin()).getChild("optional-questions");
 		String selected = group.get(prefID, null);
 		if(selected!=null)
@@ -1670,7 +1670,7 @@ public class UISingleton implements UI
 		Preferences p;
 		try
 		{
-			p = context.getSingleton2(Preferences.class);
+			p = context.getSingle(Preferences.class);
 		 p.getGroup(context.getPlugin()).set("theme",
 		 		currentTheme==null ? "" :
 		 		currentTheme.getFile().getName().replaceAll("\\" + THEME_EXTENSION, ""));
@@ -1967,7 +1967,7 @@ public class UISingleton implements UI
 		int styleBefore = this.uiStyle;
 		this.uiStyle = uiStyle;
 		sb.setUIStyle(uiStyle);
-		context.getSingleton2(Preferences.class).getGroup(context.getPlugin()).set(
+		context.getSingle(Preferences.class).getGroup(context.getPlugin()).set(
 			UIPrefs.PREF_UISTYLE,
 			uiStyle==UISTYLE_TABBED ? UIPrefs.PREFVALUE_UISTYLE_TABS
 				: uiStyle==UISTYLE_MULTIWINDOW ? UIPrefs.PREFVALUE_UISTYLE_SEPARATE
@@ -2186,7 +2186,7 @@ public class UISingleton implements UI
 
 				if(styleBefore==UISTYLE_MULTIWINDOW)
 				{
-					Preferences p = context.getSingleton2(Preferences.class);
+					Preferences p = context.getSingle(Preferences.class);
 					PreferencesGroup mainWindow = p.getGroup(context.getPlugin()).getChild(UIPlugin.PREFGROUP_MAINWINDOW);
 					Dimension size = new Dimension(
 						p.toInt(mainWindow.get(UIPlugin.PREF_WIDTH, UIPlugin.PREFDEFAULT_WIDTH)),
@@ -2282,7 +2282,7 @@ public class UISingleton implements UI
 	{
 		StringBuffer sb = new StringBuffer();
 
-		Preferences p = context.getSingleton2(Preferences.class);
+		Preferences p = context.getSingle(Preferences.class);
 		PreferencesGroup pg = p.getGroup(context.getPlugin());
 		if(!p.toBoolean(pg.get(UIPrefs.PREF_SYSTEMFONT, UIPrefs.PREFDEFAULT_SYSTEMFONT)))
 		{
@@ -2309,7 +2309,7 @@ public class UISingleton implements UI
 	/** @return Font if user-set, or null if default should be used */
 	Font getFont()
 	{
-		Preferences p = context.getSingleton2(Preferences.class);
+		Preferences p = context.getSingle(Preferences.class);
 		PreferencesGroup pg = p.getGroup(context.getPlugin());
 		if(p.toBoolean(pg.get(UIPrefs.PREF_SYSTEMFONT, UIPrefs.PREFDEFAULT_SYSTEMFONT)))
 			return null;

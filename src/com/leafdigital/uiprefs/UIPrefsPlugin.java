@@ -35,7 +35,7 @@ public class UIPrefsPlugin implements Plugin
 	{
 		context=pc;
 
-		PreferencesUI pui=context.getSingleton2(PreferencesUI.class);
+		PreferencesUI pui=context.getSingle(PreferencesUI.class);
 		pui.registerPage(this,(new InterfaceStylePage(context,false)).getPage());
 		pui.registerWizardPage(this,300,(new InterfaceStylePage(context,true)).getPage());
 		pui.registerPage(this,(new ThemesPage(context)).getPage());

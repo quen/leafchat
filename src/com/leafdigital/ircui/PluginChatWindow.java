@@ -95,7 +95,7 @@ public class PluginChatWindow extends ChatWindow implements GeneralChatWindow
 	@Override
 	protected void doCommand(Commands c,String line) throws GeneralException
 	{
-		getPluginContext().getSingleton2(Idle.class).userAwake(Idle.AWAKE_COMMAND);
+		getPluginContext().getSingle(Idle.class).userAwake(Idle.AWAKE_COMMAND);
 		h.doCommand(c,line);
 	}
 

@@ -269,7 +269,7 @@ public class IRCMessageParser implements MsgOwner
 	private void setEncoding(IRCMsg msg, Server s, String chan, IRCUserAddress user)
 	{
 		IRCEncoding.EncodingInfo ei =
-			context.getSingleton2(IRCEncoding.class).getEncoding(s, chan, user);
+			context.getSingle(IRCEncoding.class).getEncoding(s, chan, user);
 		msg.setEncoding(ei);
 	}
 

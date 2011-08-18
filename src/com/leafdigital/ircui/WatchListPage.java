@@ -55,7 +55,7 @@ public class WatchListPage
 	WatchListPage(PluginContext pc)
 	{
 		this.pc=pc;
-		UI ui = pc.getSingleton2(UI.class);
+		UI ui = pc.getSingle(UI.class);
 		p = ui.createPage("watchlist", this);
 		pc.requestMessages(WatchListChangeMsg.class,this,Msg.PRIORITY_FIRST);
 		msg(null);
@@ -80,7 +80,7 @@ public class WatchListPage
 		}
 		watchListUI.clear();
 
-		WatchList il=pc.getSingleton2(WatchList.class);
+		WatchList il=pc.getSingle(WatchList.class);
 		IRCUserAddress[] masks=il.getMasks();
 		Arrays.sort(masks);
 		for(int i=0;i<masks.length;i++)
@@ -109,7 +109,7 @@ public class WatchListPage
 	@UIAction
 	public void actionAdd() throws GeneralException
 	{
-		UI ui = pc.getSingleton2(UI.class);
+		UI ui = pc.getSingle(UI.class);
 		addMask = ui.createDialog("addwatchmask", this);
 		addMask.show(p);
 	}
@@ -127,7 +127,7 @@ public class WatchListPage
 			watchListUI.getString(row,COL_USER),
 			watchListUI.getString(row,COL_HOST));
 
-		WatchList il=pc.getSingleton2(WatchList.class);
+		WatchList il=pc.getSingle(WatchList.class);
 		il.removeMask(selectedMask);
 	}
 
@@ -213,7 +213,7 @@ public class WatchListPage
 		IRCUserAddress newMask=new IRCUserAddress(
 			nickUI.getValue(),userUI.getValue(),hostUI.getValue());
 
-		WatchList il=pc.getSingleton2(WatchList.class);
+		WatchList il=pc.getSingle(WatchList.class);
 		il.addMask(newMask);
 
 		addMask.close();

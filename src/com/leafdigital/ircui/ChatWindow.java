@@ -81,7 +81,7 @@ public abstract class ChatWindow implements MessageDisplay,TextView.MenuHandler
 	{
 		this.context=context;
 
-		UI ui=context.getSingleton2(UI.class);
+		UI ui=context.getSingle(UI.class);
 
 		// Create window
 		w=ui.createWindow(xml, this);
@@ -193,7 +193,7 @@ public abstract class ChatWindow implements MessageDisplay,TextView.MenuHandler
 	public void actionSend() throws GeneralException
 	{
 		String[] asLine=commandUI.getValueLines();
-		Commands c=context.getSingleton2(Commands.class);
+		Commands c=context.getSingle(Commands.class);
 		if(asLine.length==1)
 		{
 			doCommand(c,asLine[0]);
@@ -387,13 +387,13 @@ public abstract class ChatWindow implements MessageDisplay,TextView.MenuHandler
 	 */
 	protected String processColours(String s)
 	{
-		Preferences p=context.getSingleton2(Preferences.class);
+		Preferences p=context.getSingle(Preferences.class);
 		PreferencesGroup pg=p.getGroup(p.getPluginOwner("com.leafdigital.ui.UIPlugin"));
 		boolean allowColours=p.toBoolean(
 			pg.get(UIPrefs.PREF_IRCCOLOURS,UIPrefs.PREFDEFAULT_IRCCOLOURS));
 
 		// Do IRC colours
-		s = context.getSingleton2(IRCEncoding.class).processEscapes(
+		s = context.getSingle(IRCEncoding.class).processEscapes(
 			s, true, allowColours);
 		return s.replaceAll("[\\x00-\\x1f]","");
 	}
@@ -455,7 +455,7 @@ public abstract class ChatWindow implements MessageDisplay,TextView.MenuHandler
 			// Highlighter
 			try
 			{
-				safe = context.getSingleton2(Highlighter.class).highlight(
+				safe = context.getSingle(Highlighter.class).highlight(
 					getOwnNick(), safe);
 			}
 			catch(XMLException e)
@@ -476,7 +476,7 @@ public abstract class ChatWindow implements MessageDisplay,TextView.MenuHandler
 			if(bAttention) w.attention();
 			if(sLogType!=null && getLogSource()!=null)
 			{
-				getPluginContext().getSingleton2(Logger.class).log(
+				getPluginContext().getSingle(Logger.class).log(
 					getLogSource(),getLogCategory(),getLogItem(),sLogType,safe);
 			}
 		}
@@ -624,7 +624,7 @@ public abstract class ChatWindow implements MessageDisplay,TextView.MenuHandler
 			}
 			originalLines=lines.toArray(new String[lines.size()]);
 
-			UI ui=context.getSingleton2(UI.class);
+			UI ui=context.getSingle(UI.class);
 			d = ui.createDialog("multiline", this);
 			asIsUI.setSelected();
 			actionAsIs();
@@ -717,7 +717,7 @@ public abstract class ChatWindow implements MessageDisplay,TextView.MenuHandler
 		{
 			if(lines.length<=2)
 			{
-				Commands c=context.getSingleton2(Commands.class);
+				Commands c=context.getSingle(Commands.class);
 				for(int i=0;i<lines.length;i++)
 					doCommand(c,"/say "+lines[i]);
 			}
@@ -752,7 +752,7 @@ public abstract class ChatWindow implements MessageDisplay,TextView.MenuHandler
 		public void run()
 		{
 			String line=multiLineBuffer.removeFirst();
-			Commands c=context.getSingleton2(Commands.class);
+			Commands c=context.getSingle(Commands.class);
 			try
 			{
 				doCommand(c,"/say "+line);
@@ -787,18 +787,18 @@ public abstract class ChatWindow implements MessageDisplay,TextView.MenuHandler
 		long now=System.currentTimeMillis();
 		if(w.isHidden() || w.isMinimized())
 		{
-			context.getSingleton2(Notification.class).notify(
+			context.getSingle(Notification.class).notify(
 				IRCUIPlugin.NOTIFICATION_WINDOWMINIMIZED,title,text);
 		}
 		else if(now-lastMessage > IDLE_TIME)
 		{
 			long minutes=(now-lastMessage) / (60*1000);
-			context.getSingleton2(Notification.class).notify(
+			context.getSingle(Notification.class).notify(
 				IRCUIPlugin.NOTIFICATION_DEIDLE,title,text+"\n\n(Previously idle "+minutes+" minutes)");
 		}
-		else if(!context.getSingleton2(UI.class).isAppActive())
+		else if(!context.getSingle(UI.class).isAppActive())
 		{
-			context.getSingleton2(Notification.class).notify(
+			context.getSingle(Notification.class).notify(
 				IRCUIPlugin.NOTIFICATION_APPLICATIONINACTIVE,title,text);
 		}
 		lastMessage=now;

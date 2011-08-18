@@ -86,7 +86,7 @@ public class IRCPlugin implements Plugin, IRCPrefs
 				try
 				{
 					// Resolve our address
-					Network n=pc.getSingleton2(Network.class);
+					Network n=pc.getSingle(Network.class);
 					n.reportPublicAddress(InetAddress.getByName(check.group(1)));
 				}
 				catch(UnknownHostException e)
@@ -177,7 +177,7 @@ public class IRCPlugin implements Plugin, IRCPrefs
 	public void close() throws GeneralException
 	{
 		wl.close(); // Need to stop its timed event, though
-		((ConnectionsSingleton)pc.getSingleton2(Connections.class)).closeAll();
+		((ConnectionsSingleton)pc.getSingle(Connections.class)).closeAll();
 	}
 
 	@Override
@@ -192,7 +192,7 @@ public class IRCPlugin implements Plugin, IRCPrefs
 	 */
 	private void updateOldIdentifyPrefs() throws GeneralException
 	{
-		Preferences p=pc.getSingleton2(Preferences.class);
+		Preferences p=pc.getSingle(Preferences.class);
 		PreferencesGroup root=p.getGroup(p.getPluginOwner(this));
 		updateOldIdentifyPrefs(root.getChild(PREFGROUP_SERVERS));
 	}

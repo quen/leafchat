@@ -136,7 +136,7 @@ public interface PluginContext
 	 * @return Singleton implementing interface
 	 * @throws BugException If singleton doesn't exist or is of wrong type, etc.
 	 */
-	public <C extends Singleton> C getSingleton2(Class<C> singletonInterface);
+	public <C extends Singleton> C getSingle(Class<C> singletonInterface);
 
 	/**
 	 * Returns singleton implementing the desired interface.
@@ -144,7 +144,7 @@ public interface PluginContext
 	 * @return Singleton implementing interface (it is always safe to cast this
 	 *   into the interface)
 	 * @throws BugException If singleton doesn't exist or is of wrong type, etc.
-	 * @deprecated Replaced by {@link #getSingleton2(Class)}
+	 * @deprecated Replaced by {@link #getSingle(Class)}
 	 */
 	public Object getSingleton(Class<? extends Singleton> singletonInterface);
 

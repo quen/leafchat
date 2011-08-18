@@ -58,7 +58,7 @@ public class AudioPlugin implements Plugin, Audio
 
 		// Register prefs page
 		PreferencesUI preferencesUI =
-			context.getSingleton2(PreferencesUI.class);
+			context.getSingle(PreferencesUI.class);
 		preferencesUI.registerPage(this,(new SoundsPage(context)).getPage());
 	}
 

@@ -52,7 +52,7 @@ public class WizardThemePage
 	{
 		this.context=context;
 
-		UI ui=context.getSingleton2(UI.class);
+		UI ui=context.getSingle(UI.class);
 		p=ui.createPage("wizard-theme", this);
 	}
 
@@ -62,7 +62,7 @@ public class WizardThemePage
 	@UIAction
 	public void onSet()
 	{
-		UI ui=context.getSingleton2(UI.class);
+		UI ui=context.getSingle(UI.class);
 		Theme[] available=ui.getAvailableThemes();
 		for(int i=0;i<available.length;i++)
 		{
@@ -109,7 +109,7 @@ public class WizardThemePage
 
 	private void setTheme(String name)
 	{
-		UI ui=context.getSingleton2(UI.class);
+		UI ui=context.getSingle(UI.class);
 		Theme[] available=ui.getAvailableThemes();
 		for(int i=0;i<available.length;i++)
 		{

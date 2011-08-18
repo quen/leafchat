@@ -21,7 +21,7 @@ package leafchat.core.api;
 /**
  * Interface does nothing: just marks an interface as available via
  * Singleton access.
- * @see PluginContext#getSingleton2(Class)
+ * @see PluginContext#getSingle(Class)
  */
 public interface Singleton
 {

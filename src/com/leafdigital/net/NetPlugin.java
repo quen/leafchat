@@ -78,11 +78,11 @@ public class NetPlugin implements Plugin
 	{
 		this.context=context;
 
-		prefs=context.getSingleton2(Preferences.class);
+		prefs=context.getSingle(Preferences.class);
 		group=prefs.getGroup(prefs.getPluginOwner(context.getPlugin()));
 
 		context.registerSingleton(Network.class,new NetworkSingleton(context));
-		PreferencesUI pui=context.getSingleton2(PreferencesUI.class);
+		PreferencesUI pui=context.getSingle(PreferencesUI.class);
 		pui.registerPage(this,(new ConnectionPage(context)).getPage());
 
 		// If UPnP is not configured or is set to yes, see if we have UPnP device

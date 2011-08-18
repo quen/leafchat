@@ -513,7 +513,7 @@ public class ItemEvent extends UserCodeItem implements TreeBox.SingleSelectionHa
 
 		if(filterUI.getSelected()!=null)
 		{
-			UI ui=getContext().getSingleton2(UI.class);
+			UI ui=getContext().getSingle(UI.class);
 
 			FilterInfo.Parameter[] parameters=((FilterInfo)filterUI.getSelected()).getScriptingParameters();
 			for(int i=0;i<parameters.length;i++)

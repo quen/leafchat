@@ -75,7 +75,7 @@ public class DCCChatWindow implements GeneralChatWindow.Handler
 		this.server = s;
 
 		// Create window, minimised if this is newly-received message
-		IRCUI ircui = context.getSingleton2(IRCUI.class);
+		IRCUI ircui = context.getSingle(IRCUI.class);
 		w = ircui.createGeneralChatWindow(context, this, "DCC",
 			Logger.CATEGORY_USER, nick, 510, s.getOurNick(), nick, address!=null);
 		w.setTitle(nick + " - DCC chat");
@@ -150,7 +150,7 @@ public class DCCChatWindow implements GeneralChatWindow.Handler
 	{
 		context.log("DCC chat: connecting to " + remoteAddress.getHostAddress() + ":"+remotePort);
 		w.addLine("Connecting to <key>" + remoteAddress.getHostAddress() + "</key>:<key>"+remotePort+"</key>...");
-		Network n = context.getSingleton2(Network.class);
+		Network n = context.getSingle(Network.class);
 		Socket s;
 		InputStream input;
 		try
@@ -364,7 +364,7 @@ public class DCCChatWindow implements GeneralChatWindow.Handler
 
 	private IRCEncoding.EncodingInfo getEncoding()
 	{
-		IRCEncoding encoding = context.getSingleton2(IRCEncoding.class);
+		IRCEncoding encoding = context.getSingle(IRCEncoding.class);
 		IRCEncoding.EncodingInfo ei = encoding.getEncoding(
 			null, null, new IRCUserAddress(nick, "", ""));
 		return ei;

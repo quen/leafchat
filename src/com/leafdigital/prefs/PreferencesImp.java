@@ -337,7 +337,7 @@ public class PreferencesImp implements Preferences,MsgOwner
 					{
 					}
 				}
-				context.getSingleton2(SystemLog.class).log(
+				context.getSingle(SystemLog.class).log(
 				  context.getPlugin(),"Preferences saved");
 				dirtyTime=0;
 			}

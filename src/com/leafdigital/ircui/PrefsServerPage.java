@@ -84,12 +84,12 @@ public class PrefsServerPage implements TreeBox.DragSingleSelectionHandler,IRCPr
 
 	PrefsServerPage(PluginContext pc) throws GeneralException
 	{
-		UI u=pc.getSingleton2(UI.class);
+		UI u=pc.getSingle(UI.class);
 		pThis = u.createPage("prefs-server", this);
 
 		context=pc;
 
-		Preferences p=pc.getSingleton2(Preferences.class);
+		Preferences p=pc.getSingle(Preferences.class);
 		PreferencesGroup pg=p.getGroup(p.getPluginOwner(IRCPrefs.IRCPLUGIN_CLASS)).getChild("servers");
 		piRoot=new PrefsServerItem(pg,null);
 
@@ -908,7 +908,7 @@ public class PrefsServerPage implements TreeBox.DragSingleSelectionHandler,IRCPr
 	@UIAction
 	public void actionAdd()
 	{
-		UI ui = context.getSingleton2(UI.class);
+		UI ui = context.getSingle(UI.class);
 		addDialog = ui.createDialog("addserver", this);
 		addDialog.show(pThis.getOwner());
 	}
@@ -1048,7 +1048,7 @@ public class PrefsServerPage implements TreeBox.DragSingleSelectionHandler,IRCPr
 	{
 		String network=selectedGroup.get(IRCPrefs.PREF_NETWORK,null);
 		String server=selectedGroup.get(IRCPrefs.PREF_HOST,null);
-		UI ui=context.getSingleton2(UI.class);
+		UI ui=context.getSingle(UI.class);
 		if(ui.showQuestion(pThis,"Confirm delete",
 			network!=null ?
 				"Are you sure you want to delete preferences for the network "+network+

@@ -53,10 +53,10 @@ public class WizardPersonalPage
 	WizardPersonalPage(PluginContext context) throws GeneralException
 	{
 		this.context=context;
-		UI ui = context.getSingleton2(UI.class);
+		UI ui = context.getSingle(UI.class);
 		p = ui.createPage("wizard-personal", this);
 
-		Preferences p=context.getSingleton2(Preferences.class);
+		Preferences p=context.getSingle(Preferences.class);
 		serverPrefs=p.getGroup(p.getPluginOwner("com.leafdigital.irc.IRCPlugin")).getChild("servers");
 
 		quitUI.setValue(serverPrefs.get(IRCPrefs.PREF_QUITMESSAGE,IRCPrefs.PREFDEFAULT_QUITMESSAGE));

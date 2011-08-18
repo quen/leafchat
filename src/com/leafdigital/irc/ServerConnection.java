@@ -71,7 +71,7 @@ public class ServerConnection implements Server, IRCPrefs
 	/** @return How often (in 10-second units) we should send server pings if no data */
 	private int getServerPingFrequency()
 	{
-		Preferences p=context.getSingleton2(Preferences.class);
+		Preferences p=context.getSingle(Preferences.class);
 		if(p.toBoolean(p.getGroup(context.getPlugin()).get(PREF_FREQUENTPINGS,PREFDEFAULT_FREQUENTPINGS)))
 			return SERVERPING_10SECS_FREQUENT;
 		return SERVERPING_10SECS_NORMAL;
@@ -414,7 +414,7 @@ public class ServerConnection implements Server, IRCPrefs
 	{
 		try
 		{
-			IRCEncoding ie=connections.getPluginContext().getSingleton2(IRCEncoding.class);
+			IRCEncoding ie=connections.getPluginContext().getSingle(IRCEncoding.class);
 			IRCEncoding.EncodingInfo ei=ie.getEncoding(this,null,null);
 	 		internalSend(IRCMsg.constructBytes(
 				"QUIT :",ei.convertOutgoing(getQuitMessage())),true);
@@ -463,7 +463,7 @@ public class ServerConnection implements Server, IRCPrefs
 				InetAddress ia=InetAddress.getByName(host);
 				address = ia.getHostAddress();
 				cp.progress("Connecting to <key>"+ia.getHostAddress()+"</key>...");
-				s=context.getSingleton2(Network.class).connect(host, port, 30000, secureMode);
+				s=context.getSingle(Network.class).connect(host, port, 30000, secureMode);
 				s.setSoTimeout(10000);
 				if(isSecureConnection())
 				{
@@ -617,7 +617,7 @@ public class ServerConnection implements Server, IRCPrefs
 
 		// Find preferences group for server
 		Preferences p=
-			connections.getPluginContext().getSingleton2(Preferences.class);
+			connections.getPluginContext().getSingle(Preferences.class);
 		PreferencesGroup pg=p.getGroup(connections.getPlugin()).getChild("servers");
 		PreferencesGroup pgNow=pg.findAnonGroup(PREF_HOST, sSearch, true, true);
 
@@ -642,7 +642,7 @@ public class ServerConnection implements Server, IRCPrefs
 		this.reportedHost = reportedHost;
 
 		Preferences p =
-			connections.getPluginContext().getSingleton2(Preferences.class);
+			connections.getPluginContext().getSingle(Preferences.class);
 		PreferencesGroup pg = p.getGroup(connections.getPlugin()).getChild("servers");
 
 		PreferencesGroup thisGroup=null;
@@ -1196,7 +1196,7 @@ public class ServerConnection implements Server, IRCPrefs
 			{
 				String claimedHost = msg.getParamISO(1);
 				// Some idiot servers put colours in this, so strip them out
-				claimedHost = context.getSingleton2(IRCEncoding.class).
+				claimedHost = context.getSingle(IRCEncoding.class).
 					processEscapes(claimedHost, false, false);
 			  setReportedHost(claimedHost);
 			}
@@ -1270,7 +1270,7 @@ public class ServerConnection implements Server, IRCPrefs
 
 	private void autojoin() throws GeneralException
 	{
-		Preferences p=connections.getPluginContext().getSingleton2(Preferences.class);
+		Preferences p=connections.getPluginContext().getSingle(Preferences.class);
 
 		PreferencesGroup serverPrefs=getPreferences(),networkPrefs=serverPrefs.getAnonParent();
 		PreferencesGroup[] serverAndNetwork;
@@ -1336,7 +1336,7 @@ public class ServerConnection implements Server, IRCPrefs
 				{
 				}
 			};
-			context.getSingleton2(Commands.class).doCommand(
+			context.getSingle(Commands.class).doCommand(
 				sCommand, this, null, null, secret, false);
 		}
 	}
