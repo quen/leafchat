@@ -33,7 +33,7 @@ import leafchat.core.api.*;
 /**
  * Window that lets user choose whether or not to accept a file.
  */
-@UIHandler("acceptexists")
+@UIHandler({"acceptexists", "accept"})
 public class FileAcceptWindow
 {
 	/**
