@@ -594,6 +594,7 @@ public abstract class ChatWindow implements MessageDisplay,TextView.MenuHandler
 	}
 
 	/** Dialog used when pasting in multi-line text. */
+	@UIHandler("multiline")
 	public class MultiLineDialog
 	{
 		private Dialog d;
@@ -635,6 +636,7 @@ public abstract class ChatWindow implements MessageDisplay,TextView.MenuHandler
 		 * Callback: When separator field is changed.
 		 * @throws GeneralException
 		 */
+		@UIAction
 		public void changeSeparator() throws GeneralException
 		{
 			joinUI.setSelected(); // If it isn't already
@@ -645,6 +647,7 @@ public abstract class ChatWindow implements MessageDisplay,TextView.MenuHandler
 		 * Callback: When 'as is' is clicked
 		 * @throws GeneralException
 		 */
+		@UIAction
 		public void actionAsIs() throws GeneralException
 		{
 			update(originalLines);
@@ -654,6 +657,7 @@ public abstract class ChatWindow implements MessageDisplay,TextView.MenuHandler
 		 * Callback: When 'join' is clicked
 		 * @throws GeneralException
 		 */
+		@UIAction
 		public void actionJoin() throws GeneralException
 		{
 			String separator=separatorUI.getValue();
@@ -713,6 +717,7 @@ public abstract class ChatWindow implements MessageDisplay,TextView.MenuHandler
 		 * Callback: When user clicks OK
 		 * @throws GeneralException
 		 */
+		@UIAction
 		public void actionPaste() throws GeneralException
 		{
 			if(lines.length<=2)
@@ -736,6 +741,7 @@ public abstract class ChatWindow implements MessageDisplay,TextView.MenuHandler
 		/**
 		 * Callback: When user clicks Cancel.
 		 */
+		@UIAction
 		public void actionCancel()
 		{
 			d.close();
