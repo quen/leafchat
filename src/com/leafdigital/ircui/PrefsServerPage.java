@@ -675,7 +675,7 @@ public class PrefsServerPage implements TreeBox.DragSingleSelectionHandler,IRCPr
 		case COLUMN_NICK:
 		{
 			// Check nick is one of the permitted patterns
-			if(!value.matches("[A-Za-z_][A-Za-z0-9-_\\[\\]\\\\`^{}]*"))
+			if(!value.matches("[A-Za-z_\\[\\]\\\\`^{}][A-Za-z0-9-_\\[\\]\\\\`^{}]*"))
 			{
 				ec.markError();
 				return;

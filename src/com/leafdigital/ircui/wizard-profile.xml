@@ -4,7 +4,7 @@
 		<BorderPanel Spacing="12">
 			<west><Label WidthGroup="width_labels" Text="Nickname" BaseGroup="a"/></west>
 			<central><VerticalPanel>
-				<EditBox id="nickname" Require="[A-Za-z][A-Za-z0-9-_\[\]\\`^{}]*" OnFocus="focusNickname" OnChange="changeNickname" BaseGroup="a"/>
+				<EditBox id="nickname" Require="[A-Za-z_\[\]\\`^{}|][A-Za-z0-9-_\[\]\\`^{}|]*" OnFocus="focusNickname" OnChange="changeNickname" BaseGroup="a"/>
 				<Spacer Height="2"/>
 				<Label Small="y" Text="This is your primary name online."/>
 				<Label Small="y" Text="Once you connect, you might need to change your nickname if somebody else is using the same one. You can change by typing &lt;strong>/nick NewName&lt;/strong>."/>
