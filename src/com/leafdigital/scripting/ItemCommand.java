@@ -204,9 +204,9 @@ public class ItemCommand extends UserCodeItem
 	/** UI: Command edit */
 	public EditBox commandUI;
 	/** UI: type */
-	public Dropdown[] classDropdowns;
+	public Dropdown[] classUI;
 	/** UI: name */
-	public EditBox[] nameDropdowns;
+	public EditBox[] nameUI;
 
 	@Override
 	protected Page getPage(Button ok)
@@ -214,16 +214,16 @@ public class ItemCommand extends UserCodeItem
 		Page p=super.getPage(ok);
 		commandUI.setValue(command);
 
-		for(int i=0;i<classDropdowns.length;i++)
+		for(int i=0;i<classUI.length;i++)
 		{
-			classDropdowns[i].addValue(null,"-");
-			classDropdowns[i].addValue(String.class,"String");
-			classDropdowns[i].addValue(int.class,"int");
+			classUI[i].addValue(null,"-");
+			classUI[i].addValue(String.class,"String");
+			classUI[i].addValue(int.class,"int");
 
 			if(params.length>i)
 			{
-				classDropdowns[i].setSelected(params[i].c);
-				nameDropdowns[i].setValue(params[i].name);
+				classUI[i].setSelected(params[i].c);
+				nameUI[i].setValue(params[i].name);
 			}
 		}
 		change();
@@ -240,25 +240,25 @@ public class ItemCommand extends UserCodeItem
 		boolean ok=commandUI.getFlag()==EditBox.FLAG_NORMAL;
 
 		boolean hideAfter=false;
-		for(int i=0;i<classDropdowns.length;i++)
+		for(int i=0;i<classUI.length;i++)
 		{
 			if(hideAfter)
 			{
-				classDropdowns[i].setVisible(false);
-				nameDropdowns[i].setVisible(false);
+				classUI[i].setVisible(false);
+				nameUI[i].setVisible(false);
 				continue;
 			}
-			classDropdowns[i].setVisible(true);
-			nameDropdowns[i].setVisible(true);
-			if(classDropdowns[i].getSelected()==null || nameDropdowns[i].getValue().equals(""))
+			classUI[i].setVisible(true);
+			nameUI[i].setVisible(true);
+			if(classUI[i].getSelected()==null || nameUI[i].getValue().equals(""))
 			{
 				hideAfter=true;
-				if(classDropdowns[i].getSelected()!=null || !nameDropdowns[i].getValue().equals(""))
+				if(classUI[i].getSelected()!=null || !nameUI[i].getValue().equals(""))
 					ok=false;
 			}
 			else
 			{
-				if(nameDropdowns[i].getFlag()!=EditBox.FLAG_NORMAL) ok=false;
+				if(nameUI[i].getFlag()!=EditBox.FLAG_NORMAL) ok=false;
 			}
 		}
 
@@ -275,17 +275,17 @@ public class ItemCommand extends UserCodeItem
 			markChanged();
 	  }
 	  int count=0;
-		for(;count<classDropdowns.length;count++)
+		for(;count<classUI.length;count++)
 		{
-			if(classDropdowns[count].getSelected()==null) break;
+			if(classUI[count].getSelected()==null) break;
 		}
 		if(count==params.length)
 		{
 			boolean same=true;
 			for(int i=0;i<params.length;i++)
 			{
-				if(!(params[i].c.equals(classDropdowns[i].getSelected()) &&
-					params[i].name.equals(nameDropdowns[i].getValue())))
+				if(!(params[i].c.equals(classUI[i].getSelected()) &&
+					params[i].name.equals(nameUI[i].getValue())))
 				{
 					same=false;
 					break;
@@ -297,8 +297,8 @@ public class ItemCommand extends UserCodeItem
 		for(int i=0;i<params.length;i++)
 		{
 			params[i]=new Param();
-			params[i].c=(Class<?>)classDropdowns[i].getSelected();
-			params[i].name=nameDropdowns[i].getValue();
+			params[i].c=(Class<?>)classUI[i].getSelected();
+			params[i].name=nameUI[i].getValue();
 		}
 		markChanged();
 	}
