@@ -900,10 +900,13 @@ public class ConnectTool implements SimpleTool, TreeBox.MultiSelectionHandler
 	@UIAction
 	public void focusAddress()
 	{
-		// Deselect list so that address is used
-		serverselectUI.select((Item)null);
-		selected((Item[])null);
-		checkServerValid();
+		// Deselect list so that address is used - if something's in there
+		if(serverUI.getValue().length() > 0)
+		{
+			serverselectUI.select((Item)null);
+			selected((Item[])null);
+			checkServerValid();
+		}
 	}
 
 	@Override
