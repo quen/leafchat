@@ -29,8 +29,18 @@ public interface PluginList extends Singleton
 	/** @return Array of all plugins installed in the system */
 	PluginInfo[] getPluginList();
 
-	/** @return leafChat core jar file */
+	/**
+	 * Used to return the core jar, but there are now multiple core jars.
+	 * @deprecated Use {@link #getCoreJars()} instead
+	 * @return Never returns
+	 * @throws UnsupportedOperationException
+	 */
 	File getCoreJar();
+
+	/**
+	 * @return leafChat core jar files
+	 */
+	File[] getCoreJars();
 
 	/**
 	 * Loads a plugin.

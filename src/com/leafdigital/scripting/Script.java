@@ -569,7 +569,15 @@ public class Script
 
 			// Work out classpath
 			PluginList pl=context.getSingle(PluginList.class);
-			String classPath=pl.getCoreJar().getAbsolutePath();
+			String classPath = "";
+			for(File file : pl.getCoreJars())
+			{
+				if(classPath.length() > 0)
+				{
+					classPath += System.getProperty("path.separator");
+				}
+				classPath += file.getAbsolutePath();
+			}
 			PluginInfo[] plugins=pl.getPluginList();
 			for(int i=0;i<plugins.length;i++)
 			{

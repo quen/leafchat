@@ -30,7 +30,6 @@ import leafchat.core.api.*;
 public class StartupHandler
 {
 	private static boolean doneInit;
-	private static boolean ideStartup;
 
 	protected SplashScreen ss;
 
@@ -92,7 +91,7 @@ public class StartupHandler
 		if(doneInit) return;
 		doneInit=true;
 
-		StartupHandler.ideStartup=ideStartup;
+		StartupClassLoader.setIdeStartup(ideStartup);
 		PlatformUtils.setUserFolder("leafChat");
 		TimeUtils.setErrorHandler(new ErrorHandler()
 		{
@@ -103,14 +102,6 @@ public class StartupHandler
 				  "An error occurred inside a timed method",t);
 				}
 		});
-	}
-
-	/**
-	 * @return True if the program was launched from IDE
-	 */
-	public static boolean isIDEStartup()
-	{
-		return ideStartup;
 	}
 
 	private MinuteMsgOwner minutes;

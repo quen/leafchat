@@ -596,9 +596,10 @@ public class PluginManager implements APIClassLocator,MsgOwner,PluginList
 			JarOutputStream jos=new JarOutputStream(new FileOutputStream(target));
 
 			// Find system jar file (used to load this class)
-			File main=getCoreJar();
-		  copyClasses(jos,main,null); // Do main API
-		  copyClasses(jos,main,"util"); // Do util.*
+			File main = StartupClassLoader.getMainJar();
+		  copyClasses(jos, main, null); // Do main API
+		  File util = StartupClassLoader.getUtilJar();
+		  copyClasses(jos, util, "util"); // Do util.*
 
 			// Copy each file into it
 			for(int i=0;i<packages.length;i++)
@@ -621,7 +622,13 @@ public class PluginManager implements APIClassLocator,MsgOwner,PluginList
 	@Override
 	public File getCoreJar()
 	{
-		return StartupClassLoader.getMainJar();
+		throw new UnsupportedOperationException("Cannot use this method");
+	}
+
+	@Override
+	public File[] getCoreJars()
+	{
+		return StartupClassLoader.getMainJars();
 	}
 
 	/**

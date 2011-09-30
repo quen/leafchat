@@ -22,11 +22,20 @@ import java.io.File;
 import java.net.*;
 import java.util.LinkedList;
 
-import leafchat.core.api.BugException;
-
-/** Classloader that will be able to find *.api as well */
+/**
+ * Classloader that will be able to find *.api as well.
+ * <p>
+ * IMPORTANT: This file must not reference ANY other leafChat classes. If
+ * it does, those are loaded with the system classloader and not this one.
+ * The only classes that are supposed to be loaded by the system classloader
+ * are {@link Main}, {@link APIClassLocator}, and this class.
+ */
 public class StartupClassLoader extends URLClassLoader
 {
+	private static boolean ideStartup;
+
+	private static File mainJar;
+
 	/** PluginManager is stored here */
 	private APIClassLocator acl=null;
 
@@ -39,18 +48,59 @@ public class StartupClassLoader extends URLClassLoader
 		super(getJarList(url));
 	}
 
-	private static File mainJar;
+	/**
+	 * Sets the IDE startup value. Called from {@link StartupHandler}.
+	 * <p>
+	 * NOTE: It looks like this function doesn't need to be public (same package)
+	 * but it does because the other class is from a different classloader.
+	 * @param ideStartup True if started up from IDE, else false
+	 */
+	public static void setIdeStartup(boolean ideStartup)
+	{
+		StartupClassLoader.ideStartup = ideStartup;
+	}
+
+	/**
+	 * @return True if this was startup up from IDE and not using classloader
+	 */
+	public static boolean isIdeStartup()
+	{
+		return ideStartup;
+	}
 
 	/**
 	 * @return Main jar file
 	 */
 	public static File getMainJar()
 	{
-		if(StartupHandler.isIDEStartup()) return new File(
+		if(isIdeStartup()) return new File(
 			"/Applications/leafChat.app/Contents/Resources/Java/leafChat.jar");
 		if(mainJar==null)
-			throw new BugException("Main jar file not set");
+		{
+			throw new Error("Main jar file not set");
+		}
 		return mainJar;
+	}
+
+	/**
+	 * @return Util jar file
+	 */
+	public static File getUtilJar()
+	{
+		return new File(getLibFolder(), "leafdigital/util.jar");
+	}
+
+	/**
+	 * Main (core) jar files; currently the main jar plus util.jar
+	 * @return Array of jar files
+	 */
+	public static File[] getMainJars()
+	{
+		return new File[]
+		{
+			getMainJar(),
+			getUtilJar()
+		};
 	}
 
 	static void hackMainJar(File f)
@@ -65,12 +115,7 @@ public class StartupClassLoader extends URLClassLoader
 		try
 		{
 			mainJar=(new File(new URI(main.toString()))).getAbsoluteFile();
-			File mainFolder=mainJar.getParentFile();
-			File lib;
-			if(mainFolder.toString().endsWith("/Contents/Resources/Java"))
-				lib=new File(mainFolder,"../../../lib");
-			else
-				lib=new File(mainFolder,"lib");
+			File lib = getLibFolder();
 			addJars(lib,list);
 		}
 		catch(URISyntaxException e)
@@ -81,6 +126,20 @@ public class StartupClassLoader extends URLClassLoader
 		}
 
 		return list.toArray(new URL[list.size()]);
+	}
+
+	/**
+	 * @return Lib folder based on main jar folder
+	 */
+	private static File getLibFolder()
+	{
+		File mainFolder=mainJar.getParentFile();
+		File lib;
+		if(mainFolder.toString().endsWith("/Contents/Resources/Java"))
+			lib=new File(mainFolder,"../../../lib");
+		else
+			lib=new File(mainFolder,"lib");
+		return lib;
 	}
 
 	private static void addJars(File folder,LinkedList<URL> list)
