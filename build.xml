@@ -35,10 +35,10 @@
 	  Version numbers used in various different places (these should be
 	  consistent).
 	  -->
-	<property name="numericversion" value="2.4"/>
-	<property name="stringversion" value="2.4b"/>
-	<property name="fileversion" value="24b"/>
-	<property name="fullrelease" value="n"/>
+	<property name="numericversion" value="2.41"/>
+	<property name="stringversion" value="2.41"/>
+	<property name="fileversion" value="241"/>
+	<property name="fullrelease" value="y"/>
 
 	<!--
 	  Target locations for final build products.
