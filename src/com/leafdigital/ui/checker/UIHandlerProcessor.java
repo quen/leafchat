@@ -434,8 +434,17 @@ public class UIHandlerProcessor extends AbstractProcessor
 				}
 				else
 				{
-					// Store name without UI suffix
-					uiFields.put(name.substring(0, name.length()-2), e);
+					// Remove UI suffix from name
+					String searchName = name.substring(0, name.length()-2);
+
+					// Is it an array? If so, look for element 0
+					if(e.asType().getKind().equals(TypeKind.ARRAY))
+					{
+						searchName += "0";
+					}
+
+					// Store name
+					uiFields.put(searchName, e);
 				}
 			}
 			else if(e.getKind() == ElementKind.METHOD)
