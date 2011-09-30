@@ -73,6 +73,8 @@ public class PageImp
 		private HashMap<String, Set<BaseGroup>> arbitraryGroups =
 			new HashMap<String, Set<BaseGroup>>();
 
+		private boolean created;
+
 		@Override
 		public void setTitle(String title)
 		{
@@ -226,6 +228,18 @@ public class PageImp
 			{
 				w.informClosed();
 			}
+		}
+
+		@Override
+		public boolean isCreated()
+		{
+			return created;
+		}
+
+		@Override
+		public void markCreated()
+		{
+			created = true;
 		}
 	};
 

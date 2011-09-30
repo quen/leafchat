@@ -95,7 +95,7 @@ public class DialogImp extends JDialog
 	{
 		private Dimension initialSize=null;
 
-		private boolean shown;
+		private boolean shown, created;
 
 		/** Map of string -> Widget for contained widgets */
 		private Map<String, Widget> widgetIDs = new HashMap<String, Widget>();
@@ -303,6 +303,16 @@ public class DialogImp extends JDialog
 			return (JComponent)getContentPane();
 		}
 
-	}
+		@Override
+		public boolean isCreated()
+		{
+			return created;
+		}
 
+		@Override
+		public void markCreated()
+		{
+			created = true;
+		}
+	}
 }

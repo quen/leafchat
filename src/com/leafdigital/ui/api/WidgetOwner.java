@@ -57,4 +57,11 @@ public interface WidgetOwner
 	 * @return Callback handler for the given window
 	 */
 	public CallbackHandler getCallbackHandler();
+
+	/**
+	 * Returns true if the WidgetOwner has been fully created. If this
+	 * returns false, you shouldn't call any callbacks.
+	 * @return True if it's safe to run callbacks
+	 */
+	public boolean isCreated();
 }

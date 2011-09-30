@@ -105,7 +105,7 @@ public class WindowImp
 	{
 		private Dimension initialSize=null;
 
-		private boolean shown;
+		private boolean shown, created;
 
 		// Stuff that needs to be stored if fh isn't up yet
 		private String titlePre=null;
@@ -454,6 +454,18 @@ public class WindowImp
 			{
 				w.informClosed();
 			}
+		}
+
+		@Override
+		public boolean isCreated()
+		{
+			return created;
+		}
+
+		@Override
+		public void markCreated()
+		{
+			created = true;
 		}
 	}
 

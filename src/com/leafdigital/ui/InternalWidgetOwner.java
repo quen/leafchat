@@ -44,4 +44,10 @@ public interface InternalWidgetOwner extends WidgetOwner
 	 * @return Group as set (can add things to it, should synch on it)
 	 */
 	public Set<BaseGroup> getArbitraryGroup(String group);
+
+	/**
+	 * Marks item as created, meaning that callbacks can be called now.
+	 * @see WidgetOwner#isCreated()
+	 */
+	void markCreated();
 }

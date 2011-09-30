@@ -779,7 +779,32 @@ public class EditBoxImp extends JComponent implements ActionListener,FocusListen
 	{
 		if(onFocus!=null)
 		{
-			getInterface().getOwner().getCallbackHandler().callHandleErrors(onFocus);
+			// Defensive programming: it appears possible that sometimes this gets
+			// called before the owning dialog is fully created. To account for that,
+			// add an invokeLater. See issue #7.
+			final WidgetOwner widgetOwner = getInterface().getOwner();
+			if(widgetOwner.isCreated())
+			{
+				widgetOwner.getCallbackHandler().callHandleErrors(onFocus);
+			}
+			else
+			{
+				SwingUtilities.invokeLater(new Runnable()
+				{
+					@Override
+					public void run()
+					{
+						if(widgetOwner.isCreated())
+						{
+							widgetOwner.getCallbackHandler().callHandleErrors(onFocus);
+						}
+						else
+						{
+							ErrorMsg.report("Focus in uncreated container", null);
+						}
+					}
+				});
+			}
 		}
 	}
 

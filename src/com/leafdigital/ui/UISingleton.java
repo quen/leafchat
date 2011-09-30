@@ -682,20 +682,24 @@ public class UISingleton implements UI
 	public Window createWindow(Document d, Object callbacks)
 	{
 		// Check document
-		Element eWindow = d.getDocumentElement();
-		if(!eWindow.getTagName().equals("Window"))
+		Element el = d.getDocumentElement();
+		if(!el.getTagName().equals("Window"))
 		 throw new BugException("Window document must have <Window> as root");
 
 		// Create window and set properties
 		Window w = newWindow(callbacks);
-		invokeSetMethods(eWindow, w, "Window: ", callbacks);
+		invokeSetMethods(el, w, "Window: ", callbacks);
 
 		// Create window contents
-		Element[] ae = XML.getChildren(eWindow);
-		if(ae.length!=1)
-		 throw new BugException("Window tag must contain single child");
+		Element[] children = XML.getChildren(el);
+		if(children.length!=1)
+		{
+			throw new BugException("Window tag must contain single child");
+		}
 
-		w.setContents(ae[0]);
+		w.setContents(children[0]);
+
+		((InternalWidgetOwner)w).markCreated();
 
 		return w;
 	}
@@ -720,20 +724,22 @@ public class UISingleton implements UI
 	public Page createPage(Document d, Object callbacks)
 	{
 		// Check document
-		Element ePage = d.getDocumentElement();
-		if(!ePage.getTagName().equals("Page"))
+		Element el = d.getDocumentElement();
+		if(!el.getTagName().equals("Page"))
 		 throw new BugException("Page document must have <Page> as root");
 
 		// Create page and set properties
 		Page p = newPage(callbacks);
-		invokeSetMethods(ePage, p, "Page: ", callbacks);
+		invokeSetMethods(el, p, "Page: ", callbacks);
 
 		// Create page contents
-		Element[] ae = XML.getChildren(ePage);
-		if(ae.length!=1)
+		Element[] children = XML.getChildren(el);
+		if(children.length!=1)
 		 throw new BugException("Page tag must contain single child");
 
-		p.setContents(ae[0]);
+		p.setContents(children[0]);
+
+		((InternalWidgetOwner)p).markCreated();
 
 		return p;
 	}
@@ -758,22 +764,24 @@ public class UISingleton implements UI
 	public Dialog createDialog(Document d, Object callbacks)
 	{
 		// Check document
-		Element eDialog = d.getDocumentElement();
-		if(!eDialog.getTagName().equals("Dialog"))
+		Element el = d.getDocumentElement();
+		if(!el.getTagName().equals("Dialog"))
 			throw new BugException("Dialog document must have <Dialog> as root");
 
 		// Create dialog and set properties
-		Dialog dNew = newDialog(callbacks);
-		invokeSetMethods(eDialog, dNew, "Dialog: ", callbacks);
+		Dialog newDialog = newDialog(callbacks);
+		invokeSetMethods(el, newDialog, "Dialog: ", callbacks);
 
 		// Create window contents
-		Element[] ae = XML.getChildren(eDialog);
-		if(ae.length!=1)
+		Element[] children = XML.getChildren(el);
+		if(children.length!=1)
 			throw new BugException("Dialog tag must contain single child");
 
-		dNew.setContents(ae[0]);
+		newDialog.setContents(children[0]);
 
-		return dNew;
+		((InternalWidgetOwner)newDialog).markCreated();
+
+		return newDialog;
 	}
 
 	@Override
