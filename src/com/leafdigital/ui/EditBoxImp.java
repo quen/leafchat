@@ -654,6 +654,15 @@ public class EditBoxImp extends JComponent implements ActionListener,FocusListen
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
+		// There's an error I can't reproduce which seems like it's possible for
+		// this to be called after the editbox has been hidden (maybe if you sent
+		// two CRs very quickly, and the first one closes it - but I can't make
+		// this happen)
+		if(!tf.isShowing())
+		{
+			return;
+		}
+
 		if(onEnter!=null)
 		{
 			if(historyPos!=-1)
