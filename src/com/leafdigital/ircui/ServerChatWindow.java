@@ -943,7 +943,7 @@ public abstract class ServerChatWindow extends ChatWindow
 		else if(msg instanceof ErrorIRCMsg)
 		{
 			byte[][] params = msg.getParams();
-			addLine(EVENTSYMBOL + "<server>" + esc(msg.getServer().getReportedHost())
+			addLine(EVENTSYMBOL + "<server>" + esc(msg.getServer().getReportedOrConnectedHost())
 				+ "</server> " + esc(msg.convertEncoding(params[params.length - 1])));
 		}
 		else
