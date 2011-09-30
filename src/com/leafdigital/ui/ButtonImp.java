@@ -192,7 +192,9 @@ public class ButtonImp extends JComponent implements ActionListener,HierarchyLis
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if(onAction!=null)
+		// Only send event if button is showing. It's just possible that queued
+		// events happen after button was hidden (I think) - see #17
+		if(onAction!=null && isShowing())
 		{
 			getInterface().getOwner().getCallbackHandler().callHandleErrors(onAction);
 		}
