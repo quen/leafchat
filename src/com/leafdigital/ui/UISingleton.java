@@ -2158,6 +2158,11 @@ public class UISingleton implements UI
 					if(fh instanceof FrameInside)
 					{
 						FrameInside fi = (FrameInside)fh;
+						if(fi.getParent() == null)
+						{
+							// Dunno why this would happen, but it does (#13)
+							continue;
+						}
 						Point
 							local = fi.getLocation(), // This is done because it might not be visible
 							parent = fi.getParent().getLocationOnScreen();
@@ -2198,7 +2203,7 @@ public class UISingleton implements UI
 					PreferencesGroup mainWindow = p.getGroup(context.getPlugin()).getChild(UIPlugin.PREFGROUP_MAINWINDOW);
 					Dimension size = new Dimension(
 						p.toInt(mainWindow.get(UIPlugin.PREF_WIDTH, UIPlugin.PREFDEFAULT_WIDTH)),
-						p.toInt(mainWindow.get(UIPlugin.PREF_HEIGHT, UIPlugin.PREFDEFAULT_HEIGHT)			));
+						p.toInt(mainWindow.get(UIPlugin.PREF_HEIGHT, UIPlugin.PREFDEFAULT_HEIGHT)));
 					f.setSize(size);
 				}
 			}
