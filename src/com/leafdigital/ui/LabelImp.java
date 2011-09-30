@@ -342,9 +342,9 @@ public class LabelImp extends JComponent implements BaseGroup
 						{
 							ah.action((Element)n,me);
 						}
-						catch(GeneralException ge)
+						catch(Throwable t)
 						{
-							ErrorMsg.report("Error carrying out text view action",ge);
+							ErrorMsg.report("Error carrying out text view action", t);
 						}
 						return;
 					}

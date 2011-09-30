@@ -1073,6 +1073,7 @@ public class ChanWindow extends ServerChatWindow
 	/**
 	 * Dialog used to change the topic.
 	 */
+	@UIHandler("changetopic")
 	public class TopicChangeDialog
 	{
 		private Dialog d;
@@ -1094,12 +1095,14 @@ public class ChanWindow extends ServerChatWindow
 		}
 
 		/** Callback: Cancel button. */
+		@UIAction
 		public void actionCancel()
 		{
 			d.close();
 		}
 
 		/** Callback: Text change in edit box. */
+		@UIAction
 		public void changeValue()
 		{
 			// Get encoding
@@ -1113,6 +1116,7 @@ public class ChanWindow extends ServerChatWindow
 		 * Callback: Change button.
 		 * @throws GeneralException
 		 */
+		@UIAction
 		public void actionChange() throws GeneralException
 		{
 			doCommand(getPluginContext().getSingle(Commands.class),
