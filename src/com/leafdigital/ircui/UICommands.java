@@ -32,6 +32,7 @@ public class UICommands
 	{
 		this.context=context;
 		context.requestMessages(UserCommandMsg.class,this,Msg.PRIORITY_LATE);
+		context.requestMessages(UserCommandListMsg.class,this,Msg.PRIORITY_LATE);
 	}
 
 	/**
@@ -46,6 +47,17 @@ public class UICommands
 
   		if("query".equals(command)) query(msg);
   }
+
+	/**
+	 * Message: Listing available commands.
+	 * @param msg Message
+	 */
+	public void msg(UserCommandListMsg msg)
+	{
+		msg.addCommand(true, "query", UserCommandListMsg.FREQ_COMMON,
+			"/query <nick>",
+			"Open a message window with the named user");
+	}
 
   private void query(UserCommandMsg ucm) throws GeneralException
   {

@@ -24,7 +24,7 @@ import java.util.*;
 import util.*;
 
 import com.growl.GrowlWrapper;
-import com.leafdigital.irc.api.UserCommandMsg;
+import com.leafdigital.irc.api.*;
 import com.leafdigital.notification.api.*;
 import com.leafdigital.prefs.api.*;
 import com.leafdigital.prefsui.api.PreferencesUI;
@@ -50,6 +50,7 @@ public class NotificationPlugin implements Plugin,Notification
 
 		// Handle /popup
 		context.requestMessages(UserCommandMsg.class,this);
+		context.requestMessages(UserCommandListMsg.class,this);
 		context.requestMessages(NotificationListMsg.class,this);
 
 		// Become a notification singleton
@@ -301,7 +302,19 @@ public class NotificationPlugin implements Plugin,Notification
 		}
 	}
 
-	@Override
+	/**
+	 * Message: Listing available commands.
+	 * @param msg Message
+	 */
+	public void msg(UserCommandListMsg msg)
+	{
+		msg.addCommand(false, "popup", UserCommandListMsg.FREQ_OBSCURE,
+			"/popup <title> [/ <text>]",
+			"<key>Scripting:</key> Show a notification popup with the given title and " +
+			"optional text (after a slash)");
+	}
+
+  @Override
 	public void notify(String type, String title, String message)
 	{
 		// Let's see if we can use Java 6 to notify

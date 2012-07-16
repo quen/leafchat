@@ -1,0 +1,13 @@
+<Page Title="Command list" OnSet="onSet">
+	<BorderPanel Spacing="8">
+		<north>
+			<Label Text="This list shows leafChat and IRC commands that you can type at a text input prompt."/>
+		</north>
+		<central>
+			<TextView id="tv" ThemeType="commandlist"/>
+		</central>
+		<south>
+			<Label Small="y" Text="Additional commands may be available, depending on the server you are connected to."/>
+		</south>
+	</BorderPanel>
+</Page>

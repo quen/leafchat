@@ -30,39 +30,41 @@ import leafchat.core.api.*;
 /** Provides support for connection to IRC servers */
 public class IRCPlugin implements Plugin, IRCPrefs
 {
-	private PluginContext pc;
-	private IgnoreListSingleton il;
-	private WatchListSingleton wl;
-	private IRCEncodingSingleton ie;
-	private BasicCommands bc;
+	private PluginContext context;
+	private IgnoreListSingleton ignoreList;
+	private WatchListSingleton watchList;
+	private IRCEncodingSingleton ircEncoding;
+	private BasicCommands basicCommands;
 
-	IgnoreListSingleton getIgnoreListSingleton() { return il; }
+	IgnoreListSingleton getIgnoreListSingleton() { return ignoreList; }
 
 	@Override
-	public void init(PluginContext pc, PluginLoadReporter plr) throws GeneralException
+	public void init(PluginContext context, PluginLoadReporter plr) throws GeneralException
 	{
-		this.pc=pc;
+		this.context = context;
 
-		pc.registerSingleton(Connections.class,new ConnectionsSingleton(pc,this));
-		pc.registerSingleton(Commands.class,new CommandsSingleton(pc));
+		new CommandListOwner(context);
+		context.registerSingleton(Connections.class, new ConnectionsSingleton(context, this));
+		context.registerSingleton(Commands.class, new CommandsSingleton(context));
 
-		new IRCMessageParser(pc);
+		new IRCMessageParser(context);
 
-		il=new IgnoreListSingleton(pc);
-		pc.registerSingleton(IgnoreList.class,il);
-		wl=new WatchListSingleton(pc);
-		pc.registerSingleton(WatchList.class,wl);
-		ie=new IRCEncodingSingleton(pc);
-		pc.registerSingleton(IRCEncoding.class,ie);
+		ignoreList = new IgnoreListSingleton(context);
+		context.registerSingleton(IgnoreList.class, ignoreList);
+		watchList = new WatchListSingleton(context);
+		context.registerSingleton(WatchList.class, watchList);
+		ircEncoding = new IRCEncodingSingleton(context);
+		context.registerSingleton(IRCEncoding.class, ircEncoding);
 
-		bc=new BasicCommands(pc);
+		basicCommands = new BasicCommands(context);
 
 		updateOldIdentifyPrefs();
-		pc.requestMessages(PingIRCMsg.class,this);
-		pc.requestMessages(UserCTCPRequestIRCMsg.class,new CTCPHandler(pc),Msg.PRIORITY_FIRST);
-		pc.requestMessages(UserCommandMsg.class,this,Msg.PRIORITY_LAST);
-		pc.requestMessages(ServerConnectedMsg.class,this,Msg.PRIORITY_FIRST);
-		pc.requestMessages(NumericIRCMsg.class,this);
+		context.requestMessages(PingIRCMsg.class, this);
+		context.requestMessages(UserCTCPRequestIRCMsg.class, new CTCPHandler(context), Msg.PRIORITY_FIRST);
+		context.requestMessages(UserCommandMsg.class, this, Msg.PRIORITY_LAST);
+		context.requestMessages(UserCommandListMsg.class, this, Msg.PRIORITY_LAST);
+		context.requestMessages(ServerConnectedMsg.class, this, Msg.PRIORITY_FIRST);
+		context.requestMessages(NumericIRCMsg.class, this);
 	}
 
 	/** Pattern to find IRC-style address mask from welcome message */
@@ -86,7 +88,7 @@ public class IRCPlugin implements Plugin, IRCPrefs
 				try
 				{
 					// Resolve our address
-					Network n=pc.getSingle(Network.class);
+					Network n=context.getSingle(Network.class);
 					n.reportPublicAddress(InetAddress.getByName(check.group(1)));
 				}
 				catch(UnknownHostException e)
@@ -115,7 +117,7 @@ public class IRCPlugin implements Plugin, IRCPrefs
 	 */
 	public void msg(UserCommandMsg m) throws GeneralException
 	{
-		bc.handle(m);
+		basicCommands.handle(m);
 		if(!(m.isHandled() || m.isStopped()))
 		{
 			// Fallback handling
@@ -129,7 +131,7 @@ public class IRCPlugin implements Plugin, IRCPrefs
 				{
 					m.getServer().sendLine(IRCMsg.constructBytes(
 						m.getCommand().toUpperCase() + " ",
-						bc.convertEncoding(m.getParams(), m.getServer(), null, null)));
+						basicCommands.convertEncoding(m.getParams(), m.getServer(), null, null)));
 				}
 			}
 			else
@@ -137,6 +139,16 @@ public class IRCPlugin implements Plugin, IRCPrefs
 				m.error("Don't know how to handle this command.");
 			}
 		}
+	}
+
+	/**
+	 * Fallback command listing that lists basic commands and standard IRC commands.
+	 * @param m Message
+	 * @throws GeneralException
+	 */
+	public void msg(UserCommandListMsg m) throws GeneralException
+	{
+		basicCommands.handle(m);
 	}
 
 	/**
@@ -169,15 +181,15 @@ public class IRCPlugin implements Plugin, IRCPrefs
 		if(user != null)
 		{
 			s.sendLine(IRCMsg.constructBytes("USER " + user + " 0 * :",
-				bc.convertEncoding(realName, s, null, null)));
+				basicCommands.convertEncoding(realName, s, null, null)));
 		}
 	}
 
 	@Override
 	public void close() throws GeneralException
 	{
-		wl.close(); // Need to stop its timed event, though
-		((ConnectionsSingleton)pc.getSingle(Connections.class)).closeAll();
+		watchList.close(); // Need to stop its timed event, though
+		((ConnectionsSingleton)context.getSingle(Connections.class)).closeAll();
 	}
 
 	@Override
@@ -192,7 +204,7 @@ public class IRCPlugin implements Plugin, IRCPrefs
 	 */
 	private void updateOldIdentifyPrefs() throws GeneralException
 	{
-		Preferences p=pc.getSingle(Preferences.class);
+		Preferences p=context.getSingle(Preferences.class);
 		PreferencesGroup root=p.getGroup(p.getPluginOwner(this));
 		updateOldIdentifyPrefs(root.getChild(PREFGROUP_SERVERS));
 	}

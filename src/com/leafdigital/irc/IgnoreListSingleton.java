@@ -60,6 +60,7 @@ public class IgnoreListSingleton implements IgnoreList,MsgOwner
 		pc.registerMessageOwner(this);
 		pc.requestMessages(UserSourceIRCMsg.class,this,Msg.PRIORITY_EARLY);
 		pc.requestMessages(UserCommandMsg.class,this,Msg.PRIORITY_NORMAL);
+		pc.requestMessages(UserCommandListMsg.class,this,Msg.PRIORITY_NORMAL);
 		pc.requestMessages(SilenceIRCMsg.class,this,Msg.PRIORITY_EARLY);
 	}
 
@@ -118,6 +119,17 @@ public class IgnoreListSingleton implements IgnoreList,MsgOwner
 
 			msg.markHandled();
 		}
+	}
+
+	/**
+	 * Message: Listing available commands.
+	 * @param msg Message
+	 */
+	public void msg(UserCommandListMsg msg)
+	{
+		msg.addCommand(false, "ignore", UserCommandListMsg.FREQ_COMMON,
+			"/ignore [-r] <mask>",
+			"Ignore somebody based on a user mask; or stop ignoring a mask with -r");
 	}
 
 	@Override

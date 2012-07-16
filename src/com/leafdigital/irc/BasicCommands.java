@@ -51,6 +51,126 @@ public class BasicCommands
 		this.context=pc;
 	}
 
+	void handle(UserCommandListMsg msg) throws GeneralException
+	{
+		// Commands that are handled specifically in this file.
+		msg.addCommand(true, "say", UserCommandListMsg.FREQ_OBSCURE,
+			"/say <message>", "Say something in the current channel/message.");
+		msg.addCommand(true, "msg", UserCommandListMsg.FREQ_COMMON,
+			"/msg <nick> <message>", "Send private message to the named user");
+		msg.addCommand(true, "me", UserCommandListMsg.FREQ_COMMON,
+			"/me <action text>", "Send action message in the current " +
+			"channel/message");
+		msg.addCommand(true, "raw", UserCommandListMsg.FREQ_UNCOMMON,
+			"/raw <command>", "Send a raw IRC command to the server");
+		msg.addCommand(true, "quote", UserCommandListMsg.FREQ_UNCOMMON,
+			"/quote <command>", "Send a raw IRC command to the server");
+		msg.addCommand(true, "ctcp", UserCommandListMsg.FREQ_UNCOMMON,
+			"/ctcp <nick> <command> [params]", "Send a CTCP command to the " +
+			"named user");
+		msg.addCommand(true, "ctcpreply", UserCommandListMsg.FREQ_OBSCURE,
+			"/ctcpreply <nick> <command> [params]", "Send a CTCP reply to the " +
+			"named user");
+		msg.addCommand(true, "nick", UserCommandListMsg.FREQ_COMMON,
+			"/nick <new nick>", "Change to a new nickname");
+		msg.addCommand(true, "quit", UserCommandListMsg.FREQ_COMMON,
+			"/quit [message]", "Close IRC connection to current server, leaving an " +
+			"optional message in your channels");
+		msg.addCommand(true, "aquit", UserCommandListMsg.FREQ_COMMON,
+			"/aquit [message]", "Close IRC connection to all servers, leaving " +
+			"optional message on channels");
+		msg.addCommand(false, "clear", UserCommandListMsg.FREQ_COMMON,
+			"/clear", "Clear the current scrollback window");
+		msg.addCommand(false, "echo", UserCommandListMsg.FREQ_OBSCURE,
+			"/echo <message>", "<key>Scripting:</key> Display the message in current window");
+		msg.addCommand(true, "join", UserCommandListMsg.FREQ_COMMON,
+			"/join <channel> [key]", "Join the named channel (include a key if " +
+			"required by the channel)");
+		msg.addCommand(true, "away", UserCommandListMsg.FREQ_COMMON,
+			"/away [message]", "Mark yourself away, with specified message (use " +
+			"with no message when you come back)");
+		msg.addCommand(true, "ban", UserCommandListMsg.FREQ_COMMON,
+			"/ban [channel] <nick>", "Ban a user from a channel; if no channel " +
+			"specified, uses current channel");
+		msg.addCommand(true, "kick", UserCommandListMsg.FREQ_COMMON,
+			"/kick [channel] <nick>",	"Kick a user from a channel; if no channel " +
+			"specified, uses current channel");
+		msg.addCommand(true, "squit", UserCommandListMsg.FREQ_OBSCURE,
+			"/squit <server> <comment>", "<key>IRCop:</key> Disconnect a remote server");
+		msg.addCommand(true, "part", UserCommandListMsg.FREQ_COMMON,
+			"/part <channel>", "Leave the named channel");
+		msg.addCommand(true, "topic", UserCommandListMsg.FREQ_COMMON,
+			"/topic <channel> [new topic]", "View or (if topic specified) change " +
+			"the topic for a channel");
+		msg.addCommand(true, "kill", UserCommandListMsg.FREQ_OBSCURE,
+			"/kill <nick> <comment>",	"<key>IRCop:</key> Cause user to be disconnected from " +
+			"the server, with supplied message");
+
+		// Other commands from RFC1459 that can be typed by user
+		msg.addCommand(true, "oper", UserCommandListMsg.FREQ_OBSCURE,
+			"/oper <user> <password>", "<key>IRCop:</key> Enable operator privileges");
+		msg.addCommand(true, "mode", UserCommandListMsg.FREQ_COMMON,
+			"/mode <channel/nick> <flags> [params]", "Set channel or nickname modes");
+		msg.addCommand(true, "names", UserCommandListMsg.FREQ_UNCOMMON,
+			"/names <channel>", "<key>Low-level:</key> List all nicknames in a channel");
+		msg.addCommand(true, "list", UserCommandListMsg.FREQ_UNCOMMON,
+			"/list", "List channels on a server (note: most servers support extra " +
+			"parameters, without which this command is pretty useless)");
+		msg.addCommand(true, "invite", UserCommandListMsg.FREQ_UNCOMMON,
+			"/invite <nick> <channel>", "Invite somebody to a channel");
+		msg.addCommand(true, "version", UserCommandListMsg.FREQ_UNCOMMON,
+			"/version [server]", "Show server version (by default, for current " +
+			"server)");
+		msg.addCommand(true, "stats", UserCommandListMsg.FREQ_OBSCURE,
+			"/stats [query] [server]", "<key>IRCop:</key> Returns server information");
+		msg.addCommand(true, "links", UserCommandListMsg.FREQ_UNCOMMON,
+			"/links [server] [server mask]", "List all servers known by the " +
+			"current/specified server (matching the mask, if supplied)");
+		msg.addCommand(true, "time", UserCommandListMsg.FREQ_UNCOMMON,
+			"/time [server]", "Show local time from current or specified server");
+		msg.addCommand(true, "connect", UserCommandListMsg.FREQ_OBSCURE,
+			"/connect <target> [port] [existing]", "<key>IRCop:</key> Cause an existing " +
+			"server to connect to the target server");
+		msg.addCommand(true, "trace", UserCommandListMsg.FREQ_OBSCURE,
+			"/trace <server>", "Show route to named server");
+		msg.addCommand(true, "admin", UserCommandListMsg.FREQ_OBSCURE,
+			"/admin [server]", "Show information about administrator of current " +
+			"or named server");
+		msg.addCommand(true, "info", UserCommandListMsg.FREQ_OBSCURE,
+			"/info [server]", "Show miscellaneous information about current or " +
+			"named server");
+		msg.addCommand(true, "privmsg", UserCommandListMsg.FREQ_OBSCURE,
+			"/privmsg <channel/nick> <text>",	"<key>Low-level:</key> Send ordinary text to " +
+			"channel or nickname");
+		msg.addCommand(true, "notice", UserCommandListMsg.FREQ_COMMON,
+			"/notice <nick> <text>", "Send a notice (message which doesn't appear " +
+			"in its own window); some servers also let you send notices to " +
+			"channels or other groups");
+		msg.addCommand(true, "who", UserCommandListMsg.FREQ_COMMON,
+			"/who <channel/other> [o]", "List all users in current channel " +
+			"(optional 'o' flag restricts to ops)");
+		msg.addCommand(true, "whois", UserCommandListMsg.FREQ_COMMON,
+			"/whois [server] <nick>",	"Display information about user");
+		msg.addCommand(true, "whowas", UserCommandListMsg.FREQ_UNCOMMON,
+			"/whowas <nick> [count] [server]", "Display information about a user " +
+			"who was previously corrected");
+		msg.addCommand(true, "pong", UserCommandListMsg.FREQ_OBSCURE,
+			"/pong <param> [param]", "<key>Low-level:</key> Reply to a server PING message");
+		msg.addCommand(true, "rehash", UserCommandListMsg.FREQ_OBSCURE,
+			"/rehash", "<key>IRCop:</key> Make server reload its configuration file");
+		msg.addCommand(true, "restart", UserCommandListMsg.FREQ_OBSCURE,
+			"/restart", "<key>IRCop:</key> Restart server");
+		msg.addCommand(true, "users", UserCommandListMsg.FREQ_OBSCURE,
+			"/users [server]", "List users on the given or current server " +
+			"(normally disabled)");
+		msg.addCommand(true, "userhost", UserCommandListMsg.FREQ_UNCOMMON,
+			"/userhost <nickname> [nickname]*",	"Show username and host for each " +
+			"nickname");
+		msg.addCommand(true, "ison", UserCommandListMsg.FREQ_UNCOMMON,
+			"/ison <nickname> [nickname]*", "<key>Low-level:</key> List which of the given " +
+			"users are on IRC");
+	}
+
 	void handle(UserCommandMsg msg) throws GeneralException
 	{
 		if(msg.isHandled())

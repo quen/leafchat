@@ -542,6 +542,7 @@ public class WatchListSingleton implements WatchList
 		context.registerExtraMessageClass(OnWatchMsg.class);
 		context.registerExtraMessageClass(OffWatchMsg.class);
 		context.requestMessages(UserCommandMsg.class,this,Msg.PRIORITY_NORMAL);
+		context.requestMessages(UserCommandListMsg.class,this,Msg.PRIORITY_NORMAL);
 		context.requestMessages(ServerConnectionFinishedMsg.class,this,Msg.PRIORITY_EARLY);
 		context.requestMessages(ServerConnectedMsg.class,this,Msg.PRIORITY_EARLY);
 		context.requestMessages(ServerDisconnectedMsg.class,this,Msg.PRIORITY_EARLY);
@@ -728,6 +729,17 @@ public class WatchListSingleton implements WatchList
 
 			msg.markHandled();
 		}
+	}
+
+	/**
+	 * Message: Listing available commands.
+	 * @param msg Message
+	 */
+	public void msg(UserCommandListMsg msg)
+	{
+		msg.addCommand(false, "watch", UserCommandListMsg.FREQ_UNCOMMON,
+			"/watch <+/-mask>",
+			"Start or stop watching a given user mask.");
 	}
 
 	@Override

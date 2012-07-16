@@ -50,6 +50,7 @@ public class EncryptionPlugin implements Plugin
 		context.requestMessages(UserCTCPRequestIRCMsg.class,this);
 		context.requestMessages(UserCTCPResponseIRCMsg.class,this);
 		context.requestMessages(UserCommandMsg.class,this);
+		context.requestMessages(UserCommandListMsg.class,this);
 		context.requestMessages(IRCActionListMsg.class,this);
 	}
 
@@ -94,6 +95,17 @@ public class EncryptionPlugin implements Plugin
 			w.initLocal();
 			msg.markHandled();
 		}
+	}
+
+	/**
+	 * Message: Listing available commands.
+	 * @param msg Message
+	 */
+	public void msg(UserCommandListMsg msg)
+	{
+		msg.addCommand(true, "encryptedquery", UserCommandListMsg.FREQ_UNCOMMON,
+			"/encryptedquery <nick>",
+			"Open a securely-encrypted chat window with the named user");
 	}
 
 	/**

@@ -87,6 +87,7 @@ public class IRCUIPlugin implements Plugin,IRCUI,DefaultMessageDisplay
 		preferencesUI.registerPage(this,(new WatchListPage(context)).getPage());
 		preferencesUI.registerPage(this,(new EncodingPage(context)).getPage());
 		preferencesUI.registerPage(this,(new PrefsMiscPage(context)).getPage());
+		preferencesUI.registerPage(this,(new CommandListPage(context)).getPage());
 		preferencesUI.registerWizardPage(this,100,(new WizardProfilePage(context)).getPage());
 		preferencesUI.registerWizardPage(this,200,(new WizardPersonalPage(context)).getPage());
 
@@ -436,30 +437,59 @@ public class IRCUIPlugin implements Plugin,IRCUI,DefaultMessageDisplay
 		@Override
 		public String[] complete(String partial, boolean atStart)
 		{
-			TabCompletionList tcl=new TabCompletionList(partial,atStart);
+			TabCompletionList tcl = new TabCompletionList(partial, atStart);
 
 			// Do the specified chat window
-			if(first!=null)	first.fillTabCompletionList(tcl);
+			if(first != null)
+			{
+				first.fillTabCompletionList(tcl);
+			}
 
 			// Do all other windows
 			for(ChatWindow cw : activeChatWindows)
 			{
-				if(cw==first) continue;
+				if(cw == first)
+				{
+					continue;
+				}
 				cw.fillTabCompletionList(tcl);
 			}
 
 			// Include favourite channels
 			try
 			{
-				JoinTool.ChannelInfo[] favourites=JoinTool.getFavouriteChannels(context);
-				for(int i=0;i<favourites.length;i++)
+				JoinTool.ChannelInfo[] favourites = JoinTool.getFavouriteChannels(context);
+				for(int i=0; i<favourites.length; i++)
 				{
-					tcl.add(favourites[i].name,false);
+					tcl.add(favourites[i].name, false);
 				}
 			}
 			catch(GeneralException ge)
 			{
-				ErrorMsg.report("Error obtaining favourite channels for tab-completion list",ge);
+				ErrorMsg.report("Error obtaining favourite channels for tab-completion list", ge);
+			}
+
+			// Include commands
+			if(atStart && partial.startsWith("/"))
+			{
+				Server server = null;
+				if(first != null && (first instanceof ServerChatWindow))
+				{
+					server = ((ServerChatWindow)first).getServer();
+				}
+				UserCommandListMsg m = new UserCommandListMsg(server);
+				try
+				{
+					context.dispatchExternalMessage(UserCommandListMsg.class, m, true);
+				}
+				catch(GeneralException e)
+				{
+					ErrorMsg.report("Error obtaining command list for tab completion", e);
+				}
+				for(String command : m.getCommands())
+				{
+					tcl.add("/" + command + " ", false);
+				}
 			}
 
 			return tcl.getResult();

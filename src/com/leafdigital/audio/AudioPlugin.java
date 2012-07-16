@@ -30,7 +30,7 @@ import util.*;
 import util.xml.XML;
 
 import com.leafdigital.audio.api.Audio;
-import com.leafdigital.irc.api.UserCommandMsg;
+import com.leafdigital.irc.api.*;
 import com.leafdigital.prefsui.api.PreferencesUI;
 
 import leafchat.core.api.*;
@@ -55,6 +55,7 @@ public class AudioPlugin implements Plugin, Audio
 
 		// Listen for /sound command
 		context.requestMessages(UserCommandMsg.class, this, Msg.PRIORITY_NORMAL);
+		context.requestMessages(UserCommandListMsg.class, this, Msg.PRIORITY_NORMAL);
 
 		// Register prefs page
 		PreferencesUI preferencesUI =
@@ -107,6 +108,16 @@ public class AudioPlugin implements Plugin, Audio
 			sound(msg);
 		}
   }
+
+	/**
+	 * Message: Listing available commands.
+	 * @param msg Message
+	 */
+	public void msg(UserCommandListMsg msg)
+	{
+		msg.addCommand(false, "sound", UserCommandListMsg.FREQ_OBSCURE,
+			"/sound <name>", "<key>Scripting:</key> Plays the named system sound (see Options/Sounds for list)");
+	}
 
   private void sound(UserCommandMsg msg) throws GeneralException
   {

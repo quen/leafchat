@@ -46,6 +46,7 @@ public class MonitorPlugin implements Plugin
 		this.context=context;
 
 		context.requestMessages(UserCommandMsg.class,this);
+		context.requestMessages(UserCommandListMsg.class,this);
 
 		context.requestMessages(ServerSendMsg.class,this,Msg.PRIORITY_LAST);
 		context.requestMessages(ServerLineMsg.class,this,Msg.PRIORITY_LAST);
@@ -79,7 +80,19 @@ public class MonitorPlugin implements Plugin
 		}
 	}
 
-	private void addLine(Server s,String line)
+	/**
+	 * Message: Listing available commands.
+	 * @param msg Message
+	 */
+	public void msg(UserCommandListMsg msg)
+	{
+		msg.addCommand(false, "debugmonitor", UserCommandListMsg.FREQ_UNCOMMON,
+			"/debugmonitor",
+			"Open the connection monitoring window (used for debugging leafChat " +
+			"or scripts)");
+	}
+
+  private void addLine(Server s,String line)
 	{
 		String host=s.getConnectedHost();
 		String colour=serverColours.get(host);

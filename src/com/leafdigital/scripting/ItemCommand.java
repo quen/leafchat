@@ -34,7 +34,7 @@ import leafchat.core.api.GeneralException;
 @UIHandler({"itemsettings.command"})
 public class ItemCommand extends UserCodeItem
 {
-	private String command;
+	private String command, description = "(User script command)";
 
 	private static class Param
 	{
@@ -56,7 +56,12 @@ public class ItemCommand extends UserCodeItem
 	{
 		super(parent,e,index);
 
-		command=XML.getRequiredAttribute(e,"name");
+		command = XML.getRequiredAttribute(e,"name");
+		if(e.hasAttribute("description"))
+		{
+			description = e.getAttribute("description");
+		}
+
 		Element[] paramElements=XML.getChildren(e,"param");
 		params=new Param[paramElements.length];
 		for(int i=0;i<paramElements.length;i++)
@@ -91,7 +96,8 @@ public class ItemCommand extends UserCodeItem
 	@Override
 	void save(Element e)
 	{
-		e.setAttribute("name",command);
+		e.setAttribute("name", command);
+		e.setAttribute("description", description);
 		super.save(e);
 
 		for(int i=0;i<params.length;i++)
@@ -106,8 +112,10 @@ public class ItemCommand extends UserCodeItem
 	String getSourceInit()
 	{
 		return
-			"\t\tcontext.requestMessages(UserCommandMsg.class,new Item"+getIndex()+"(),\n"+
-			"\t\t\tnew CommandFilter(\""+command+"\"),Msg.PRIORITY_NORMAL);\n";
+			"\t\tcontext.requestMessages(UserCommandMsg.class,new Item"+getIndex()+"(),\n" +
+			"\t\t\tnew CommandFilter(\""+command+"\"),Msg.PRIORITY_NORMAL);\n" +
+			"\t\tcontext.requestMessages(UserCommandListMsg.class,new Item"+getIndex()+"(),\n" +
+			"\t\t\tMsg.PRIORITY_NORMAL);\n";
 	}
 
 	@Override
@@ -166,8 +174,19 @@ public class ItemCommand extends UserCodeItem
 		}
 
 		sb.append(
-			convertUserCode()+"\n"+
-			"\t\t}\n"+
+			convertUserCode()+"\n" +
+			"\t\t}\n" +
+			"\t\tpublic void msg(UserCommandListMsg msg)\n" +
+			"\t\t{\n" +
+			"\t\t\tmsg.addCommand(false, \"" + command +
+				"\", UserCommandListMsg.FREQ_UNCOMMON, \"/" + command);
+		for(int i=0; i<params.length; i++)
+		{
+			sb.append(" <" + params[i].name + ">");
+		}
+		sb.append(
+			"\", \"" + XML.esc(description) + "\");\n" +
+			"\t\t}\n" +
 			"\t}\n");
 		return sb.toString();
 	}
@@ -203,6 +222,8 @@ public class ItemCommand extends UserCodeItem
 
 	/** UI: Command edit */
 	public EditBox commandUI;
+	/** UI: Description edit */
+	public EditBox descriptionUI;
 	/** UI: type */
 	public Dropdown[] classUI;
 	/** UI: name */
@@ -213,6 +234,7 @@ public class ItemCommand extends UserCodeItem
 	{
 		Page p=super.getPage(ok);
 		commandUI.setValue(command);
+		descriptionUI.setValue(description);
 
 		for(int i=0;i<classUI.length;i++)
 		{
@@ -268,12 +290,18 @@ public class ItemCommand extends UserCodeItem
 	@Override
 	protected void saveSettings()
 	{
-		String newCommand=commandUI.getValue();;
+		String newCommand = commandUI.getValue();
 	  if(!newCommand.equals(command))
 	  {
-			command=newCommand;
+			command = newCommand;
 			markChanged();
 	  }
+		String newDescription = descriptionUI.getValue();
+		if(!newDescription.equals(description))
+		{
+			description = newDescription;
+			markChanged();
+		}
 	  int count=0;
 		for(;count<classUI.length;count++)
 		{

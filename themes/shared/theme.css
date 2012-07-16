@@ -214,6 +214,29 @@ searchresult found
 	font-weight:bold;
 }
 
+command
+{
+	type: block;
+	gap-bottom: 0.25f;
+	gap-top: 0.25f;
+	gap-left: 4;
+	gap-right: 4;
+}
+command > example
+{
+	type: block;
+}
+command > example > name
+{
+	font-weight: bold;
+}
+command > description
+{
+	type: block;
+	gap-top: 2;
+	gap-left: 0.5f;
+}
+
 irc-b
 {
 	type:inline;

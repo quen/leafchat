@@ -39,6 +39,7 @@ public class DCCCommands
 	{
 		this.context=context;
 		context.requestMessages(UserCommandMsg.class,this,Msg.PRIORITY_LATE);
+		context.requestMessages(UserCommandListMsg.class,this,Msg.PRIORITY_LATE);
 	}
 
 	/**
@@ -55,6 +56,24 @@ public class DCCCommands
   		else if("dccchat".equals(command)) dccchat(msg);
   		else if("dccaddress".equals(command)) dccaddress(msg);
   }
+
+	/**
+	 * Message: Listing available commands.
+	 * @param msg Message
+	 */
+	public void msg(UserCommandListMsg msg)
+	{
+		msg.addCommand(true, "dccsend", UserCommandListMsg.FREQ_UNCOMMON,
+			"/dccsend <nick>",
+			"Opens the file select dialog box so you can send a file to the user");
+		msg.addCommand(true, "dccchat", UserCommandListMsg.FREQ_UNCOMMON,
+			"/dccchat <nick>",
+			"Opens DCC chat with the user");
+		msg.addCommand(true, "dccaddress", UserCommandListMsg.FREQ_UNCOMMON,
+			"/dccaddress <nick> <IP address>",
+			"When connecting through a proxy, sets the public address for " +
+			"connection from given user (before /dccsend or /dccchat)");
+	}
 
   private void dccaddress(UserCommandMsg msg) throws GeneralException
   {

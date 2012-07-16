@@ -64,7 +64,7 @@
  as full numbers. In other words, 1.10 (major="1" minor="10") is newer than 
  1.2 (major="1" minor="2").
 -->
-<version major="1" minor="0" sub="0"/>
+<version major="3" minor="5" sub="0"/>
  
 
 <!-- 
@@ -133,7 +133,7 @@ Provides facilities for encrypted private-message communication.
 <dependencies>
   <api>
     <package>com.leafdigital.irc.api</package>
-    <version>1</version>
+    <version>6</version>
   </api>
   <api>
     <package>com.leafdigital.ircui.api</package>
