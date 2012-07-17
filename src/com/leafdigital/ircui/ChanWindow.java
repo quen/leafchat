@@ -1217,11 +1217,27 @@ public class ChanWindow extends ServerChatWindow
 	{
 		if(!chan.equalsIgnoreCase(m.getContextChannel())) return;
 
-		if(m.notUs() && m.hasSelectedNicks() && hasAtLeastPrefix('@'))
+		if(m.hasSelectedNicks() && hasAtLeastPrefix('@'))
 		{
 			String[] selected=m.getSelectedNicks();
-			String name=selected.length==1 ? selected[0] :
-				selected.length+" people";
+			boolean us = !m.notUs();
+			String name;
+			if (selected.length == 1)
+			{
+				name = us ? "yourself" : selected[0];
+			}
+			else
+			{
+				if(us)
+				{
+					name = "yourself & " + (selected.length-1) + " other" +
+						(selected.length > 2 ? "s" : "");
+				}
+				else
+				{
+					name = selected.length + " people";
+				}
+			}
 
 			m.addIRCAction(new NickAction(getPluginContext(),
 				"Kick "+name+" out of "+chan,IRCAction.CATEGORY_USERCHAN,200,

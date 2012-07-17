@@ -597,14 +597,22 @@ public class IRCUIPlugin implements Plugin,IRCUI,DefaultMessageDisplay
 	 */
 	public void msg(IRCActionListMsg m)
 	{
-		if(m.hasSingleNick() && m.notUs())
+		if(m.hasSingleNick())
 		{
-			m.addIRCAction(new NickAction(context,"Chat privately with "+m.getSingleNick(),IRCAction.CATEGORY_USER,10,
-				"/query %%NICK%%"));
-			m.addIRCAction(new NickAction(context,"Get info about "+m.getSingleNick(),IRCAction.CATEGORY_USER,20,
-				"/whois %%NICK%%"));
-			m.addIRCAction(new NickAction(context,"Block messages from "+m.getSingleNick(),IRCAction.CATEGORY_USER,1000,
-				"/ignore %%NICK%%"));
+			boolean us = !m.notUs();
+
+			m.addIRCAction(new NickAction(context,
+				"Chat privately with " + (us ? "yourself" : m.getSingleNick()),
+				IRCAction.CATEGORY_USER, 10, "/query %%NICK%%"));
+			m.addIRCAction(new NickAction(context,
+				"Get info about " + (us ? "yourself" : m.getSingleNick()),
+				IRCAction.CATEGORY_USER, 20, "/whois %%NICK%%"));
+			if(!us)
+			{
+				m.addIRCAction(new NickAction(context,
+					"Block messages from " + m.getSingleNick(), IRCAction.CATEGORY_USER, 1000,
+					"/ignore %%NICK%%"));
+			}
 		}
 	}
 
