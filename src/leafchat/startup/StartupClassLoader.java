@@ -90,15 +90,15 @@ public class StartupClassLoader extends URLClassLoader
 			throw new BugException(
 				"When running from IDE or command-line, you must provide the " +
 				"location (root folder) of a leafChat client installation.\n" +
-				"Example: -Dleafchat.installed=/Applications/leafChat.app");
+				"Example: -Dleafchat.installation=/Applications/leafChat.app");
 		}
 		File file = new File(installed);
 		if(!file.exists() || !file.isDirectory())
 		{
 			throw new BugException(
-				"leafchat.installed value points to an invalid location (" +
+				"leafchat.installation value points to an invalid location (" +
 				installed + ").\n" +
-				"Example: -Dleafchat.installed=/Applications/leafChat.app");
+				"Example: -Dleafchat.installation=/Applications/leafChat.app");
 		}
 		return file;
 	}
