@@ -174,7 +174,7 @@ public class StartupClassLoader extends URLClassLoader
 	 */
 	private static File getLibFolder()
 	{
-		File mainFolder=mainJar.getParentFile();
+		File mainFolder = getMainJar().getParentFile();
 		File lib;
 		if(mainFolder.toString().endsWith("/Contents/Resources/Java"))
 			lib=new File(mainFolder,"../../../lib");
