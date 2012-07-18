@@ -2206,6 +2206,13 @@ public class UISingleton implements UI
 						p.toInt(mainWindow.get(UIPlugin.PREF_HEIGHT, UIPlugin.PREFDEFAULT_HEIGHT)));
 					f.setSize(size);
 				}
+
+				// On some platforms (tested on Ubuntu 12.04 with Java 7r3), a
+				// revalidate is needed here, or else it doesn't update the display.
+				if(styleBefore==UISTYLE_SINGLEWINDOW)
+				{
+					((JComponent)f.getContentPane()).revalidate();
+				}
 			}
 			break;
 		}
