@@ -22,6 +22,10 @@ import java.io.File;
 import java.net.*;
 import java.util.LinkedList;
 
+import util.PlatformUtils;
+
+import leafchat.core.api.BugException;
+
 /**
  * Classloader that will be able to find *.api as well.
  * <p>
@@ -69,12 +73,49 @@ public class StartupClassLoader extends URLClassLoader
 	}
 
 	/**
+	 * When starting up from IDE or command-line, you must provide an existing
+	 * installation of leafChat client which it uses for a few resources that it
+	 * has to access in compiled jar form.
+	 * <p>
+	 * (This is mainly used when scripting, and means if you're changing
+	 * scripting, you need to do a full build & install the app if you change
+	 * certain things.)
+	 * @return Location of template app
+	 */
+	public static File getIdeStartupTemplateApp()
+	{
+		String installed = System.getProperty("leafchat.installation");
+		if(installed == null)
+		{
+			throw new BugException(
+				"When running from IDE or command-line, you must provide the " +
+				"location (root folder) of a leafChat client installation.\n" +
+				"Example: -Dleafchat.installed=/Applications/leafChat.app");
+		}
+		File file = new File(installed);
+		if(!file.exists() || !file.isDirectory())
+		{
+			throw new BugException(
+				"leafchat.installed value points to an invalid location (" +
+				installed + ").\n" +
+				"Example: -Dleafchat.installed=/Applications/leafChat.app");
+		}
+		return file;
+	}
+
+	/**
 	 * @return Main jar file
 	 */
 	public static File getMainJar()
 	{
-		if(isIdeStartup()) return new File(
-			"/Applications/leafChat.app/Contents/Resources/Java/leafChat.jar");
+		// Requires the jar file, so if using IDE startup (which doesn't run from
+		// jar files), this must point to a normal installation.
+		if(isIdeStartup())
+		{
+			return new File(getIdeStartupTemplateApp(),
+				(PlatformUtils.isMac() ? "Contents/Resources/Java/" : "") +
+				"leafChat.jar");
+		}
 		if(mainJar==null)
 		{
 			throw new Error("Main jar file not set");

@@ -29,6 +29,11 @@ To run in an IDE:
    build path. This should make all the compiler errors go away.
 3) Right-click on the source file leafchat.startup.IDEStartupHandler and
    choose 'Run as... Java application', or the equivalent in your IDE.
+4) You will also need to set the Java runtime variable 'leafchat.installation',
+   for example by using the following command line parameter on the Java launch:
+   -Dleafchat.installation=/Applications/leafChat.app
+   This must be set to the root directory of a normal leafChat client
+   installation.
 
 Running in an IDE skips some compile-time correctness checks that the build
 script does and the launch process is not exactly compatible, so you should
@@ -83,7 +88,7 @@ but obviously excludes third-party libraries which have their own licenses.)
 Credits
 -------
 
-All contents copyright 2011 Samuel Marshall, except:
+All contents copyright 2012 Samuel Marshall, except:
 
 - Third-party libraries in 'lib' folder
 - Third-party content in 'mac' folder

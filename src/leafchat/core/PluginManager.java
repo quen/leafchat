@@ -379,7 +379,7 @@ public class PluginManager implements APIClassLocator,MsgOwner,PluginList
 			{
 				fakePluginInfos.add(new PluginXMLDetails(
 					p.getClass().getResourceAsStream("plugininfo.xml"),
-					new File("/Applications/leafChat.app/core/"+
+					new File(StartupClassLoader.getIdeStartupTemplateApp().getPath() + "/core/"+
 						p.getClass().getPackage().getName().replaceAll("^.*\\.","")+".jar"),true));
 			}
 			catch(XMLException e)
