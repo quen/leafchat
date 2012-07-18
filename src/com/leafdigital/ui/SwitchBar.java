@@ -54,9 +54,9 @@ public class SwitchBar extends JPanel
 		setLayout(null);
 		setOpaque(true);
 
-		// Get default button font size (0.85* JButton font)
-		JButton fontSample=new JButton("Hello");
-		int defaultSize=Math.round(0.85f*fontSample.getFont().getSize());
+		// Get default button font size (0.7 * JButton font)
+		JButton fontSample = new JButton("Hello");
+		int defaultSize=Math.round(0.7f * fontSample.getFont().getSize());
 
 		// Find most suited button set
 		for(buttonSize=1;buttonSize<=ui.getTheme().getIntProperty("tabs","numSizes",1);buttonSize++)
