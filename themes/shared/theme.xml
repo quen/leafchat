@@ -107,9 +107,9 @@
 	  <buttonLeftInactive2>96_button-left-inactive.png</buttonLeftInactive2>
 	  <buttonRightInactive2>96_button-right-inactive.png</buttonRightInactive2>
 	  <buttonMiddleInactive2>96_button-mid-inactive.png</buttonMiddleInactive2>
-	  <buttonTitleBaselineOffset2>6</buttonTitleBaselineOffset2>
-	  <buttonTitleLeftOffset2>6</buttonTitleLeftOffset2>
-	  <buttonTitleRightOffset2>6</buttonTitleRightOffset2>
+	  <buttonTitleBaselineOffset2>30</buttonTitleBaselineOffset2>
+	  <buttonTitleLeftOffset2>20</buttonTitleLeftOffset2>
+	  <buttonTitleRightOffset2>20</buttonTitleRightOffset2>
 	  <buttonGap2>0</buttonGap2>
 	  <buttonWidth2>400</buttonWidth2>
 

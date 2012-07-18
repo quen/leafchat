@@ -366,8 +366,8 @@ public class SwitchBar extends JPanel
 		{
 			super.setBounds(x,y,width,height);
 
-			Font f=title.getFont();
-			int ascent=(int)f.getLineMetrics("Aj",GraphicsUtils.getFontRenderContext()).getAscent();
+			int ascent=(int)tabButtonFont.getLineMetrics("Aj",
+				GraphicsUtils.getFontRenderContext()).getAscent();
 			title.setBounds(
 				getIntProperty("buttonTitleLeftOffset"),
 				height-getIntProperty("buttonTitleBaselineOffset")-ascent,
