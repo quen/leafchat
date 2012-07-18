@@ -126,32 +126,41 @@ public class UIPlugin implements Plugin
 			PreferencesGroup group = prefs.getGroup(this);
 			if(group.get(PREF_AGREEDLICENSE, null) == null)
 			{
+				// Send license display state message
+				m = new SystemStateMsg(SystemStateMsg.LICENSEDIALOG);
+				context.dispatchExternalMessage(SystemStateMsg.class, m, true);
+
+				// Display license
 				try
 				{
 					license = uis.createDialog(XML.parse(
 						UIPlugin.class.getResourceAsStream("license.xml")), this);
 					licenseTextUI.setStyleSheet("output { pad-left:4; pad-right:4; }");
 					licenseTextUI.addXML(
-						"<head>Free for personal non-commercial use</head>" +
-						"<para>The author and copyright owner (Samuel Marshall) grants a " +
-						"free license to use this program for personal, " +
-						"non-commercial use only.</para>" +
-						"<para>Commercial or institutional use (use for the " +
-						"purposes of a company, educational institution, or other organisation) " +
-						"requires a specific license which may be purchased from the author, " +
-						"or otherwise negotiated. See Web site for details.</para>" +
-						"<head>No warranty</head>" +
-						"<para>This program is provided on an 'as is' basis without warranty of any kind, either express or implied. You are solely responsible for determining the appropriateness of using this program, and you assume all risks associated with its use, including but not limited to the risks and costs of program errors, compliance with applicable laws, and damage to or loss of data, programs or equipment.</para>" +
-						"<head>Disclaimer of liability</head>" +
-						"<para>The program's author accepts no liability for any direct, indirect, incidental, special, exemplary, or consequential damages, however caused, arising in any way out of the use of this program, even if advised of the possibility of such damages.</para>"+
-						"<head>Copyright</head>"+
-						"<para>leafChat is copyright &#x00a9; 2007 Samuel Marshall. All rights reserved.</para>"+
+						"<head>GNU General Public License version 3</head>" +
+						"<para>leafChat is free software: you can redistribute it and/or " +
+						"modify it under the terms of the GNU General Public License as " +
+						"published by the Free Software Foundation, either version 3 of " +
+						"the License, or (at your option) any later version.</para>" +
+						"<para>leafChat is distributed in the hope that it will be useful, " +
+						"but WITHOUT ANY WARRANTY; without even the implied warranty of " +
+						"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the " +
+						"GNU General Public License for more details.</para>"+
+						"<para>To read the license, see " +
+						"<url>http://www.gnu.org/licenses/</url>.</para>" +
+						"<para>leafChat is copyright &#x00a9; 2012 Samuel Marshall.</para>"+
 						"<head>Other components</head>"+
-						"<para>The leafChat distribution incorporates two external libraries, " +
-						"which have their own licenses and copyrights. These can be found in the 'lib' folder "+
+						"<para>The leafChat distribution incorporates external libraries " +
+						"which have their own licenses and copyrights. These can be found " +
+						"in the 'lib' folder "+
 						"within the distribution. Specifically:</para>"+
-						"<para>This product includes a modified version of the Eclipse JDT Core compiler package, developed by Eclipse contributors and others.</para>"+
-						"<para>This product includes software developed by SuperBonBon Industries (http://www.sbbi.net/).</para>"
+						"<para>This product includes a modified version of the Eclipse " +
+						"JDT Core compiler package, developed by Eclipse contributors " +
+						"and others.</para>" +
+						"<para>This product includes software developed by SuperBonBon " +
+						"Industries (http://www.sbbi.net/).</para>" +
+						"<para>This product includes JOrbis audio playback library " +
+						"(www.jcraft.com/jorbis/).</para>"
 						);
 					license.show(null);
 				}

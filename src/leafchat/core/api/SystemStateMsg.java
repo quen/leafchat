@@ -32,6 +32,9 @@ public class SystemStateMsg extends Msg
 	/** Type: sent when application UI has started, just before splash screen goes */
 	public final static int UIREADY=2;
 
+	/** Type: sent when license dialog is being displayed */
+	public final static int LICENSEDIALOG = 4;
+
 	/**
 	 * Type: sent when user has done something that causes the app to quit, to give
 	 * a chance to ask if they're sure.

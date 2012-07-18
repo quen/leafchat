@@ -242,7 +242,8 @@ public class StartupHandler
 		 */
 		public void msg(SystemStateMsg msg) throws GeneralException
 		{
-			if(msg.getType()==SystemStateMsg.UIREADY)
+			if(msg.getType() == SystemStateMsg.UIREADY ||
+				msg.getType() == SystemStateMsg.LICENSEDIALOG)
 			{
 				// Get rid of splash screen and remove request
 				ss.dispose();
