@@ -22,6 +22,8 @@ import java.io.*;
 import java.net.*;
 import java.util.regex.*;
 
+import javax.swing.UIManager;
+
 import util.*;
 import util.xml.*;
 
@@ -69,6 +71,7 @@ public class UIPlugin implements Plugin
 	public void init(PluginContext pc, PluginLoadReporter plr) throws GeneralException
 	{
 		this.context=pc;
+		UIManager.put("DesktopPaneUI", "javax.swing.plaf.basic.BasicDesktopPaneUI");
 		UISingleton uis=new UISingleton(pc);
 		pc.registerSingleton(UI.class,uis);
 		pc.requestMessages(SystemStateMsg.class,this);
