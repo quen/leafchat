@@ -38,6 +38,9 @@ public class FrameOutside extends JFrame implements FrameHolder
 	/** Set true when we actually called close() */
 	private boolean directClose=false;
 
+	/** Time of last attention call */
+	private long lastAttentionTime;
+
 	FrameOutside(WindowImp fc)
 	{
 		this(fc,null);
@@ -231,7 +234,15 @@ public class FrameOutside extends JFrame implements FrameHolder
 	@Override
 	public void attention()
 	{
-		// TODO Attention is not implemented for FrameOutside
+		// Attention is not really implemented for FrameOutside, but we do
+		// track the last time.
+		lastAttentionTime = System.currentTimeMillis();
+	}
+
+	@Override
+	public long getAttentionTime()
+	{
+		return lastAttentionTime;
 	}
 
 	private boolean closable=true;

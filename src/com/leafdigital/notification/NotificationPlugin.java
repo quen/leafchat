@@ -154,7 +154,7 @@ public class NotificationPlugin implements Plugin,Notification
 							new Object[] {icon, "leafChat notifications"});
 					trayIconClass.getMethod("setImageAutoSize", new Class[] { boolean.class }).invoke(
 						trayIcon, new Object[] { Boolean.TRUE });
-					MouseListener listener = new MouseAdapter()
+					MouseListener mouseListener = new MouseAdapter()
 					{
 						@Override
 						public void mouseClicked(MouseEvent e)
@@ -165,9 +165,21 @@ public class NotificationPlugin implements Plugin,Notification
 							}
 						}
 					};
+					ActionListener actionListener = new ActionListener()
+					{
+						@Override
+						public void actionPerformed(ActionEvent e)
+						{
+							context.getSingle(UI.class).activate();
+							context.getSingle(UI.class).showLatest();
+						}
+					};
 					trayIconClass.getMethod("addMouseListener",
 						new Class[] { MouseListener.class }).invoke(
-							trayIcon, new Object[] { listener });
+							trayIcon, new Object[] { mouseListener });
+					trayIconClass.getMethod("addActionListener",
+						new Class[] { ActionListener.class }).invoke(
+							trayIcon, new Object[] { actionListener });
 					trayClass.getMethod("add",new Class[] {trayIcon.getClass()}).invoke(
 						tray, new Object[] {trayIcon});
 				}

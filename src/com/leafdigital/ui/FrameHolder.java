@@ -63,6 +63,14 @@ interface FrameHolder
 	/** Called when something happens in the window that users should notice */
 	public void attention();
 
+	/**
+	 * Gets the time at which {@link #attention()} was most recently called.
+	 * The intention is that this can be used to find out how recently something
+	 * was attentioned.
+	 * @return Time of last attention or 0 if not currently showing attention
+	 */
+	public long getAttentionTime();
+
 	/** Called when X box is clicked */
 	public void handleClose();
 

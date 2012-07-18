@@ -453,4 +453,10 @@ public interface UI extends Singleton
 	 * called to make it visible again.)
 	 */
 	public void activate();
+
+	/**
+	 * Switches to the window with most recent changes (if any window has
+	 * changes).
+	 */
+	public void showLatest();
 }

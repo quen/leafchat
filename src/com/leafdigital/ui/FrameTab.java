@@ -84,6 +84,16 @@ public class FrameTab extends JPanel implements FrameHolder
 	}
 
 	@Override
+	public long getAttentionTime()
+	{
+		if(sb != null)
+		{
+			return sb.getAttentionTime();
+		}
+		return 0;
+	}
+
+	@Override
 	public void focusFrame()
 	{
 		ui.selectTab(this);

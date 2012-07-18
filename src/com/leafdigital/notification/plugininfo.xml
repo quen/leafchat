@@ -101,7 +101,7 @@ might otherwise be missed.
   </api>
   <api>
     <package>com.leafdigital.ui.api</package>
-    <version>7</version>
+    <version>8</version>
   </api>
  <!-- You could include additional <api> sections here -->
 </dependencies>

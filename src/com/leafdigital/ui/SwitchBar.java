@@ -308,6 +308,8 @@ public class SwitchBar extends JPanel
 	{
 		private FrameInside fi;
 		private JLabel title;
+		private boolean attention;
+		private long attentionTime;
 
 		InsideSwitchButton(FrameInside fiSet)
 		{
@@ -397,8 +399,6 @@ public class SwitchBar extends JPanel
 
 		boolean paintedActive=false;
 
-		private boolean attention;
-
 		boolean isActive()
 		{
 			return fi==active && fi.isVisible();
@@ -434,9 +434,19 @@ public class SwitchBar extends JPanel
 		@Override
 		public void attention()
 		{
-			if(attention) return;
-			attention=true;
+			attentionTime = System.currentTimeMillis();
+			if(attention)
+			{
+				return;
+			}
+			attention = true;
 			repaint();
+		}
+
+		@Override
+		public long getAttentionTime()
+		{
+			return attention ? attentionTime : 0;
 		}
 
 		@Override
@@ -478,6 +488,8 @@ public class SwitchBar extends JPanel
 		private FrameTab ft;
 		private JLabel title;
 		private JButton close;
+		private boolean attention;
+		private long attentionTime;
 
 		TabSwitchButton(FrameTab ft)
 		{
@@ -589,8 +601,6 @@ public class SwitchBar extends JPanel
 
 		boolean paintedFG=false;
 
-		private boolean attention;
-
 		boolean isFG()
 		{
 			return ft==active;
@@ -627,11 +637,18 @@ public class SwitchBar extends JPanel
 		@Override
 		public void attention()
 		{
+			attentionTime = System.currentTimeMillis();
 			if(attention) return;
 
 			title.setForeground(attentionRGB);
 			attention=true;
 			repaint();
+		}
+
+		@Override
+		public long getAttentionTime()
+		{
+			return attention ? attentionTime : 0;
 		}
 
 		@Override
@@ -680,6 +697,12 @@ public class SwitchBar extends JPanel
 		void informChanged();
 		void informMoved();
 		void attention();
+		/**
+		 * If the button has attention, returns the last time it was attentioned;
+		 * otherwise returns 0.
+		 * @return Time at which button was most recently attentioned
+		 */
+		long getAttentionTime();
 		void close();
 		boolean hasAttention();
 		void click();

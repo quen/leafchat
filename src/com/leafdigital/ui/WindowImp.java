@@ -535,7 +535,12 @@ public class WindowImp
 		return bi;
 	}
 
-	/** Put the focus within this component */
+	/**
+	 * Sets the focus (only) to a component within this window.
+	 * <p>
+	 * This is <b>not</b> the right command to programmatically switch to a
+	 * window. For that, see {@link FrameHolder#focusFrame()}.
+	 */
 	void focus()
 	{
 		focusFirstAppropriateComponent(new java.awt.Component[] {contents});

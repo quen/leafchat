@@ -279,6 +279,16 @@ public class FrameInside extends MacFixInternalFrame implements FrameHolder
 		if(sb!=null) sb.attention();
 	}
 
+	@Override
+	public long getAttentionTime()
+	{
+		if(sb != null)
+		{
+			return sb.getAttentionTime();
+		}
+		return 0;
+	}
+
 	boolean isReasonablyVisible()
 	{
 		return owner.isReasonablyVisible(this);

@@ -459,6 +459,45 @@ public class UISingleton implements UI
 			{
 				f.setVisible(true);
 				f.setExtendedState(Frame.NORMAL);
+				if (!f.isActive())
+				{
+					// This is necessary to bring the window to front. You can't do
+					// f.bringToFront; that doesn't work on any platform because the
+					// platforms decided to block it (which was a pretty stupid idea
+					// because although it's bad practice in some cases, not in response
+					// to a user request it isn't, and the platform can't tell that).
+					f.setVisible(false);
+					f.setVisible(true);
+				}
+			}
+		});
+	}
+
+	@Override
+	public void showLatest()
+	{
+		runInSwing(new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				// Find most recently changed window
+				long bestTime = 0;
+				WindowImp bestWindow = null;
+				for(WindowImp window : windows)
+				{
+					long time = window.getHolder().getAttentionTime();
+					if(time > bestTime)
+					{
+						bestTime = time;
+						bestWindow = window;
+					}
+				}
+				// Focus it
+				if(bestWindow != null)
+				{
+					bestWindow.getHolder().focusFrame();
+				}
 			}
 		});
 	}
