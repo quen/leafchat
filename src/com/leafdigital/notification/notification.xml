@@ -45,6 +45,7 @@
 	  	<Page id="nosupport">	  	  
 	  	  <VerticalPanel Spacing="8">
 		      <Label Text="Unfortunately, your Java 1.6 runtime does not support desktop notification (java.awt.SystemTray). Popup notifications are not available on your platform."/>
+					<Label Small="y" Text="If you are using Ubuntu, you may be able to enable the notification tray. Check these instructions: &lt;url&gt;https://github.com/quen/leafchat/wiki/Notifications-in-ubuntu&lt;/url&gt;."/>
 		    </VerticalPanel>
 	  	</Page>
 		</ChoicePanel>

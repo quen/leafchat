@@ -21,7 +21,7 @@ package com.leafdigital.notification;
 import java.awt.event.*;
 import java.util.*;
 
-import util.*;
+import util.GraphicsUtils;
 
 import com.growl.GrowlWrapper;
 import com.leafdigital.irc.api.*;
@@ -176,7 +176,12 @@ public class NotificationPlugin implements Plugin,Notification
 			{
 				isUsingSystemTray = false;
 				trayIcon = null;
-				ErrorMsg.report("Unable to add icon to system tray",e);
+				// This happens on Ubuntu where Java incorrectly reports
+				// isSupported = true when it actually throws an exception.
+				// So to avoid causing unnecessary user annoyance, log this
+				// instead of reporting it as a visible error.
+				context.getSingle(SystemLog.class).log(this,
+					"Unable to add icon to system tray", e);
 			}
 		}
 		else if(!enabled && trayIcon != null)
