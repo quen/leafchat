@@ -14,7 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with leafChat. If not, see <http://www.gnu.org/licenses/>.
 
-Copyright 2011 Samuel Marshall.
+Copyright 2012 Samuel Marshall.
 */
 package com.leafdigital.ircui;
 
@@ -34,7 +34,7 @@ import leafchat.core.api.PluginContext;
 @UIHandler({"encoding", "addencodingoverride"})
 public class EncodingPage implements TreeBox.SingleSelectionHandler
 {
-	private PluginContext pc;
+	private PluginContext context;
 	private Page p;
 
 	/** Dropdown: incoming encoding. */
@@ -81,7 +81,7 @@ public class EncodingPage implements TreeBox.SingleSelectionHandler
 
 	EncodingPage(PluginContext pc)
 	{
-		this.pc=pc;
+		this.context=pc;
 		UI ui=pc.getSingle(UI.class);
 
 		p = ui.createPage("encoding", this);
@@ -135,12 +135,12 @@ public class EncodingPage implements TreeBox.SingleSelectionHandler
 
 	private void openAddDialog(boolean edit)
 	{
-		UI ui=pc.getSingle(UI.class);
+		UI ui=context.getSingle(UI.class);
 
 		addDialog = ui.createDialog("addencodingoverride", this);
 		addEditMode=edit;
 
-		Preferences prefs=pc.getSingle(Preferences.class);
+		Preferences prefs=context.getSingle(Preferences.class);
 		PreferencesGroup encoding=getMainPrefs();
 
 		// Fill and set up encoding selection
@@ -150,7 +150,7 @@ public class EncodingPage implements TreeBox.SingleSelectionHandler
 		// Fill server list
 		PreferencesGroup pg=prefs.
 			getGroup("Plugin_com.leafdigital.irc.IRCPlugin").getChild("servers");
-		piRoot=new PrefsServerItem(pg,null);
+		rootItem = new PrefsServerItem(pg, null, context);
 		addServerTreeUI.setHandler(this);
 
 		// Set up defaults or existing values
@@ -268,7 +268,7 @@ public class EncodingPage implements TreeBox.SingleSelectionHandler
 	@UIAction
 	public void actionRemove()
 	{
-		Preferences prefs=pc.getSingle(Preferences.class);
+		Preferences prefs=context.getSingle(Preferences.class);
 		PreferencesGroup encoding=getMainPrefs();
 
 		int index=overridesUI.getSelectedIndex();
@@ -313,7 +313,7 @@ public class EncodingPage implements TreeBox.SingleSelectionHandler
 			addIncomingUI.setSelected(pg.get(IRCPrefs.PREF_ENCODING));
 			addOutgoingUI.setSelected(pg.get(IRCPrefs.PREF_OUTGOING));
 			addUTF8UI.setChecked(pg.getPreferences().toBoolean(pg.get(IRCPrefs.PREF_UTF8)));
-			addServerTreeUI.select(piRoot.find(pg));
+			addServerTreeUI.select(rootItem.find(pg));
 			addTabsUI.display("addServerPage");
 			addEditGroup=pg;
 			return;
@@ -473,7 +473,7 @@ public class EncodingPage implements TreeBox.SingleSelectionHandler
 		if(addEditMode) actionRemove();
 
 		// Prepare preferences
-		Preferences p=pc.getSingle(Preferences.class);
+		Preferences p=context.getSingle(Preferences.class);
 		PreferencesGroup encoding=getMainPrefs();
 
 		// Get encoding details
@@ -515,7 +515,7 @@ public class EncodingPage implements TreeBox.SingleSelectionHandler
 
 	private void fillServerOverrides(PreferencesGroup pg)
 	{
-		Preferences p=pc.getSingle(Preferences.class);
+		Preferences p=context.getSingle(Preferences.class);
 
 		// Check this server
 		String serverEncoding=pg.get(IRCPrefs.PREF_ENCODING,null);
@@ -541,7 +541,7 @@ public class EncodingPage implements TreeBox.SingleSelectionHandler
 	/** Update the overrides table */
 	private void fillOverrides()
 	{
-		Preferences p=pc.getSingle(Preferences.class);
+		Preferences p=context.getSingle(Preferences.class);
 		PreferencesGroup encoding=getMainPrefs();
 
 		overridesUI.clear();
@@ -571,7 +571,7 @@ public class EncodingPage implements TreeBox.SingleSelectionHandler
 
 	private PreferencesGroup getMainPrefs()
 	{
-		Preferences p=pc.getSingle(Preferences.class);
+		Preferences p=context.getSingle(Preferences.class);
 		return p.getGroup(
 			p.getPluginOwner("com.leafdigital.irc.IRCPlugin")).
 			getChild(IRCPrefs.PREFGROUP_ENCODING);
@@ -593,7 +593,7 @@ public class EncodingPage implements TreeBox.SingleSelectionHandler
 	@UIAction
 	public void changeUTF8()
 	{
-		Preferences p=pc.getSingle(Preferences.class);
+		Preferences p=context.getSingle(Preferences.class);
 		getMainPrefs().set(IRCPrefs.PREF_UTF8,
 			p.fromBoolean(utf8UI.isChecked()),IRCPrefs.PREFDEFAULT_UTF8);
 	}
@@ -620,12 +620,12 @@ public class EncodingPage implements TreeBox.SingleSelectionHandler
 		changeAdd();
 	}
 
-	private PrefsServerItem piRoot;
+	private PrefsServerItem rootItem;
 
 	@Override
 	public Item getRoot()
 	{
-		return piRoot;
+		return rootItem;
 	}
 
 	@Override

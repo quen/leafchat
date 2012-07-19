@@ -14,7 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with leafChat. If not, see <http://www.gnu.org/licenses/>.
 
-Copyright 2011 Samuel Marshall.
+Copyright 2012 Samuel Marshall.
 */
 package com.leafdigital.ircui;
 
@@ -84,18 +84,18 @@ public class PrefsServerPage implements TreeBox.DragSingleSelectionHandler,IRCPr
 
 	private PluginContext context;
 
-	PrefsServerPage(PluginContext pc) throws GeneralException
+	PrefsServerPage(PluginContext context) throws GeneralException
 	{
-		UI u=pc.getSingle(UI.class);
+		UI u = context.getSingle(UI.class);
 		pThis = u.createPage("prefs-server", this);
 
-		context=pc;
+		this.context = context;
 
-		Preferences p=pc.getSingle(Preferences.class);
-		PreferencesGroup pg=p.getGroup(p.getPluginOwner(IRCPrefs.IRCPLUGIN_CLASS)).getChild("servers");
-		piRoot=new PrefsServerItem(pg,null);
+		Preferences p=context.getSingle(Preferences.class);
+		PreferencesGroup group = p.getGroup(p.getPluginOwner(IRCPrefs.IRCPLUGIN_CLASS)).getChild("servers");
+		rootItem = new PrefsServerItem(group, null, context);
 
-		verifyPrefs(pg,null);
+		verifyPrefs(group,null);
 
 		// Fill security options
 		securityUI.addValue(PREF_SECUREMODE_NONE, "Unencrypted connection");
@@ -172,12 +172,12 @@ public class PrefsServerPage implements TreeBox.DragSingleSelectionHandler,IRCPr
 
 	Page getPage() { return pThis; }
 
-	PrefsServerItem piRoot;
+	PrefsServerItem rootItem;
 
 	@Override
 	public Item getRoot()
 	{
-		return piRoot;
+		return rootItem;
 	}
 
 	@Override
@@ -220,7 +220,7 @@ public class PrefsServerPage implements TreeBox.DragSingleSelectionHandler,IRCPr
 				tNick.removeItem(0);
 			}
 
-			deleteUI.setEnabled(selectedGroup!=null && selectedGroup!=piRoot.getGroup());
+			deleteUI.setEnabled(selectedGroup!=null && selectedGroup!=rootItem.getGroup());
 			addUI.setEnabled(selectedGroup!=null);
 
 			if(selectedGroup==null)
@@ -243,7 +243,7 @@ public class PrefsServerPage implements TreeBox.DragSingleSelectionHandler,IRCPr
 			else
 			{
 				fillNickTable(tNick,selectedGroup,true);
-				passwordGlobalWarningUI.setVisible(i==piRoot);
+				passwordGlobalWarningUI.setVisible(i==rootItem);
 
 				ebUser.setValue(
 					selectedGroup.getAnonHierarchical(PREF_USER,PREFDEFAULT_USER)
@@ -335,7 +335,7 @@ public class PrefsServerPage implements TreeBox.DragSingleSelectionHandler,IRCPr
 			int iNewRow=t.addItem();
 			t.setString(iNewRow,COLUMN_NICK,sNick);
 			t.setString(iNewRow,COLUMN_PASSWORD,sPassword);
-			t.setEditable(iNewRow,COLUMN_PASSWORD,selectedItem!=piRoot);
+			t.setEditable(iNewRow,COLUMN_PASSWORD,selectedItem!=rootItem);
 			if(!bCurrent)
 			{
 				t.setEditable(iNewRow,COLUMN_NICK,false);
@@ -888,7 +888,7 @@ public class PrefsServerPage implements TreeBox.DragSingleSelectionHandler,IRCPr
 	@Override
 	public boolean canDrag(Item i)
 	{
-		return i!=piRoot;
+		return i!=rootItem;
 	}
 
 	@Override
@@ -897,7 +897,7 @@ public class PrefsServerPage implements TreeBox.DragSingleSelectionHandler,IRCPr
 		if(((PrefsServerItem)moving).isNetwork())
 		{
 			// Can't drag networks into networks
-			return parent==piRoot;
+			return parent==rootItem;
 		}
 		else
 		{
@@ -933,23 +933,23 @@ public class PrefsServerPage implements TreeBox.DragSingleSelectionHandler,IRCPr
 		PrefsServerItem newItem;
 		if(addTabsUI.getDisplayed().equals("addNetworkPage"))
 		{
-			PreferencesGroup newNetwork=piRoot.getGroup().addAnon();
+			PreferencesGroup newNetwork=rootItem.getGroup().addAnon();
 			newNetwork.set(IRCPrefs.PREF_NETWORK,addNetworkNameUI.getValue());
 			newNetwork.set(IRCPrefs.PREF_NETWORKSUFFIX,addNetworkSuffixUI.getValue());
 			newNetwork.set(IRCPrefs.PREF_HANDADDED,"yes");
-			newItem = new PrefsServerItem(newNetwork,piRoot);
-			piRoot.addItemOnly(newItem);
+			newItem = new PrefsServerItem(newNetwork, rootItem, context);
+			rootItem.addItemOnly(newItem);
 		}
 		else
 		{
 			PrefsServerItem parent=selectedItem;
 			while(parent!=null && parent.isServer()) parent=(PrefsServerItem)parent.getParent();
-			if(parent==null) parent=piRoot;
+			if(parent==null) parent=rootItem;
 
 			PreferencesGroup newServer=parent.getGroup().addAnon();
 			newServer.set(IRCPrefs.PREF_HOST,addServerAddressUI.getValue());
 			newServer.set(IRCPrefs.PREF_HANDADDED,"yes");
-			newItem = new PrefsServerItem(newServer,parent);
+			newItem = new PrefsServerItem(newServer, parent, context);
 			parent.addItemOnly(newItem);
 		}
 		servertreeUI.update();
@@ -1069,8 +1069,8 @@ public class PrefsServerPage implements TreeBox.DragSingleSelectionHandler,IRCPr
 		{
 			selectedItem.remove();
 			servertreeUI.update();
-			servertreeUI.select(piRoot);
-			selected(piRoot);
+			servertreeUI.select(rootItem);
+			selected(rootItem);
 		}
 	}
 

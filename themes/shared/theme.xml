@@ -7,128 +7,134 @@
 		<buttonBorders>n</buttonBorders>
 		<buttonLabels>y</buttonLabels>
 	</meta>
-	
+
 	<channel>
 		<leftMargin>2</leftMargin>
 		<rightMargin>4</rightMargin>
 	</channel>
-	
+
 	<message>
 		<leftMargin>2</leftMargin>
 		<rightMargin>4</rightMargin>
 	</message>
-	
+
 	<connect>
 		<leftMargin>4</leftMargin>
 		<rightMargin>4</rightMargin>
 	</connect>
-	
+
 	<spare>
 		<leftMargin>4</leftMargin>
 		<rightMargin>4</rightMargin>
 	</spare>
-	
+
 	<log>
 		<leftMargin>2</leftMargin>
 		<rightMargin>4</rightMargin>
 	</log>
-	
-	<dcc>
-	  <downloadIcon>download.png</downloadIcon>
-	  <uploadIcon>upload.png</uploadIcon>
-	</dcc>
-	
-	<tabs>
-	  <numSizes>2</numSizes>
 
-	  <height1>24</height1>
-	  <width1>200</width1>
-	  <gap1>2</gap1>
+	<dcc>
+		<downloadIcon>download.png</downloadIcon>
+		<uploadIcon>upload.png</uploadIcon>
+	</dcc>
+
+	<tabs>
+		<numSizes>2</numSizes>
+
+		<height1>24</height1>
+		<width1>200</width1>
+		<gap1>2</gap1>
 		<background1>24_tab-bg.png</background1>
 		<midground1>24_tab-line.png</midground1>
-	  <leftFG1>24_tab-left-fg.png</leftFG1>
-	  <middleFG1>24_tab-middle-fg.png</middleFG1>
-	  <rightFG1>24_tab-right-fg.png</rightFG1>
-	  <closeFG1>24_tab-x-fg.png</closeFG1>
-	  <closeHoverFG1>24_tab-x-hover.png</closeHoverFG1>
-	  <leftBG1>24_tab-left-bg.png</leftBG1>
-	  <middleBG1>24_tab-middle-bg.png</middleBG1>
-	  <rightBG1>24_tab-right-bg.png</rightBG1>
-	  <closeBG1>24_tab-x-bg.png</closeBG1>
-	  <closeHoverBG1>24_tab-x-hover.png</closeHoverBG1>
-	  <textBaseline1>4</textBaseline1>
-	  <closeRightOffset1>6</closeRightOffset1>
-	  <closeBottomOffset1>6</closeBottomOffset1>	  
-	  <titleLeftOffset1>6</titleLeftOffset1>
-	  <titleRightOffset1>6</titleRightOffset1>
-	  <titleBaselineOffset1>7</titleBaselineOffset1>
-	  <titleSize1>11</titleSize1>
-	  
-	  <buttonBackground1>24_button-bg.png</buttonBackground1>
-	  <buttonLeftActive1>24_button-left-active.png</buttonLeftActive1>
-	  <buttonRightActive1>24_button-right-active.png</buttonRightActive1>
-	  <buttonMiddleActive1>24_button-mid-active.png</buttonMiddleActive1>
-	  <buttonLeftInactive1>24_button-left-inactive.png</buttonLeftInactive1>
-	  <buttonRightInactive1>24_button-right-inactive.png</buttonRightInactive1>
-	  <buttonMiddleInactive1>24_button-mid-inactive.png</buttonMiddleInactive1>
-	  <buttonTitleBaselineOffset1>8</buttonTitleBaselineOffset1>
-	  <buttonTitleLeftOffset1>8</buttonTitleLeftOffset1>
-	  <buttonTitleRightOffset1>8</buttonTitleRightOffset1>
-	  <buttonGap1>0</buttonGap1>
-	  <buttonWidth1>200</buttonWidth1>
-	  
-	  <height2>96</height2>
-	  <width2>400</width2>
-	  <gap2>4</gap2>
+		<leftFG1>24_tab-left-fg.png</leftFG1>
+		<middleFG1>24_tab-middle-fg.png</middleFG1>
+		<rightFG1>24_tab-right-fg.png</rightFG1>
+		<closeFG1>24_tab-x-fg.png</closeFG1>
+		<closeHoverFG1>24_tab-x-hover.png</closeHoverFG1>
+		<leftBG1>24_tab-left-bg.png</leftBG1>
+		<middleBG1>24_tab-middle-bg.png</middleBG1>
+		<rightBG1>24_tab-right-bg.png</rightBG1>
+		<closeBG1>24_tab-x-bg.png</closeBG1>
+		<closeHoverBG1>24_tab-x-hover.png</closeHoverBG1>
+		<textBaseline1>4</textBaseline1>
+		<closeRightOffset1>6</closeRightOffset1>
+		<closeBottomOffset1>6</closeBottomOffset1>
+		<titleLeftOffset1>6</titleLeftOffset1>
+		<titleRightOffset1>6</titleRightOffset1>
+		<titleBaselineOffset1>7</titleBaselineOffset1>
+		<titleSize1>11</titleSize1>
+
+		<buttonBackground1>24_button-bg.png</buttonBackground1>
+		<buttonLeftActive1>24_button-left-active.png</buttonLeftActive1>
+		<buttonRightActive1>24_button-right-active.png</buttonRightActive1>
+		<buttonMiddleActive1>24_button-mid-active.png</buttonMiddleActive1>
+		<buttonLeftInactive1>24_button-left-inactive.png</buttonLeftInactive1>
+		<buttonRightInactive1>24_button-right-inactive.png</buttonRightInactive1>
+		<buttonMiddleInactive1>24_button-mid-inactive.png</buttonMiddleInactive1>
+		<buttonTitleBaselineOffset1>8</buttonTitleBaselineOffset1>
+		<buttonTitleLeftOffset1>8</buttonTitleLeftOffset1>
+		<buttonTitleRightOffset1>8</buttonTitleRightOffset1>
+		<buttonGap1>0</buttonGap1>
+		<buttonWidth1>200</buttonWidth1>
+
+		<height2>96</height2>
+		<width2>400</width2>
+		<gap2>4</gap2>
 		<background2>96_tab-bg.png</background2>
 		<midground2>96_tab-line.png</midground2>
-	  <leftFG2>96_tab-left-fg.png</leftFG2>
-	  <middleFG2>96_tab-middle-fg.png</middleFG2>
-	  <rightFG2>96_tab-right-fg.png</rightFG2>
-	  <closeFG2>96_tab-x-fg.png</closeFG2>
-	  <closeHoverFG2>96_tab-x-hover.png</closeHoverFG2>
-	  <leftBG2>96_tab-left-bg.png</leftBG2>
-	  <middleBG2>96_tab-middle-bg.png</middleBG2>
-	  <rightBG2>96_tab-right-bg.png</rightBG2>
-	  <closeBG2>96_tab-x-bg.png</closeBG2>
-	  <closeHoverBG2>96_tab-x-hover.png</closeHoverBG2>
-	  <textBaseline2>16</textBaseline2>
-	  <closeRightOffset2>24</closeRightOffset2>
-	  <closeBottomOffset2>24</closeBottomOffset2>	  
-	  <titleLeftOffset2>16</titleLeftOffset2>
-	  <titleRightOffset2>16</titleRightOffset2>
-	  <titleBaselineOffset2>29</titleBaselineOffset2>
-	  <titleSize2>48</titleSize2>
+		<leftFG2>96_tab-left-fg.png</leftFG2>
+		<middleFG2>96_tab-middle-fg.png</middleFG2>
+		<rightFG2>96_tab-right-fg.png</rightFG2>
+		<closeFG2>96_tab-x-fg.png</closeFG2>
+		<closeHoverFG2>96_tab-x-hover.png</closeHoverFG2>
+		<leftBG2>96_tab-left-bg.png</leftBG2>
+		<middleBG2>96_tab-middle-bg.png</middleBG2>
+		<rightBG2>96_tab-right-bg.png</rightBG2>
+		<closeBG2>96_tab-x-bg.png</closeBG2>
+		<closeHoverBG2>96_tab-x-hover.png</closeHoverBG2>
+		<textBaseline2>16</textBaseline2>
+		<closeRightOffset2>24</closeRightOffset2>
+		<closeBottomOffset2>24</closeBottomOffset2>
+		<titleLeftOffset2>16</titleLeftOffset2>
+		<titleRightOffset2>16</titleRightOffset2>
+		<titleBaselineOffset2>29</titleBaselineOffset2>
+		<titleSize2>48</titleSize2>
 
-	  <buttonBackground2>96_button-bg.png</buttonBackground2>
-	  <buttonLeftActive2>96_button-left-active.png</buttonLeftActive2>
-	  <buttonRightActive2>96_button-right-active.png</buttonRightActive2>
-	  <buttonMiddleActive2>96_button-mid-active.png</buttonMiddleActive2>
-	  <buttonLeftInactive2>96_button-left-inactive.png</buttonLeftInactive2>
-	  <buttonRightInactive2>96_button-right-inactive.png</buttonRightInactive2>
-	  <buttonMiddleInactive2>96_button-mid-inactive.png</buttonMiddleInactive2>
-	  <buttonTitleBaselineOffset2>30</buttonTitleBaselineOffset2>
-	  <buttonTitleLeftOffset2>20</buttonTitleLeftOffset2>
-	  <buttonTitleRightOffset2>20</buttonTitleRightOffset2>
-	  <buttonGap2>0</buttonGap2>
-	  <buttonWidth2>400</buttonWidth2>
+		<buttonBackground2>96_button-bg.png</buttonBackground2>
+		<buttonLeftActive2>96_button-left-active.png</buttonLeftActive2>
+		<buttonRightActive2>96_button-right-active.png</buttonRightActive2>
+		<buttonMiddleActive2>96_button-mid-active.png</buttonMiddleActive2>
+		<buttonLeftInactive2>96_button-left-inactive.png</buttonLeftInactive2>
+		<buttonRightInactive2>96_button-right-inactive.png</buttonRightInactive2>
+		<buttonMiddleInactive2>96_button-mid-inactive.png</buttonMiddleInactive2>
+		<buttonTitleBaselineOffset2>30</buttonTitleBaselineOffset2>
+		<buttonTitleLeftOffset2>20</buttonTitleLeftOffset2>
+		<buttonTitleRightOffset2>20</buttonTitleRightOffset2>
+		<buttonGap2>0</buttonGap2>
+		<buttonWidth2>400</buttonWidth2>
 
 	</tabs>
-	
+
 	<uiprefs>
-	  <exampleClassic>example-classic.png</exampleClassic>
-	  <exampleSeparate>example-separate.png</exampleSeparate>
-	  <exampleTabs>example-tabs.png</exampleTabs>
+		<exampleClassic>example-classic.png</exampleClassic>
+		<exampleSeparate>example-separate.png</exampleSeparate>
+		<exampleTabs>example-tabs.png</exampleTabs>
 	</uiprefs>
-	
+
 	<away>
-	  <normal>away.png</normal>
-	  <hover>away-hover.png</hover>
+		<normal>away.png</normal>
+		<hover>away-hover.png</hover>
 	</away>
-	
+
 	<close>
 		<normal>close.png</normal>
 		<hover>close-hover.png</hover>
 	</close>
-	
+
+	<serverTree>
+		<server>server_server.png</server>
+		<network>server_network.png</network>
+		<redirect>server_redirect.png</redirect>
+	</serverTree>
+
 </theme>

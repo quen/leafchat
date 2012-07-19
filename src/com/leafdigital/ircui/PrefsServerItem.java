@@ -14,26 +14,38 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with leafChat. If not, see <http://www.gnu.org/licenses/>.
 
-Copyright 2011 Samuel Marshall.
+Copyright 2012 Samuel Marshall.
 */
 package com.leafdigital.ircui;
 
 import java.awt.Image;
 import java.util.*;
 
+import com.leafdigital.irc.api.IRCPrefs;
 import com.leafdigital.prefs.api.PreferencesGroup;
-import com.leafdigital.ui.api.TreeBox;
+import com.leafdigital.ui.api.*;
 import com.leafdigital.ui.api.TreeBox.Item;
+
+import leafchat.core.api.PluginContext;
 
 class PrefsServerItem implements TreeBox.Item
 {
-	private PreferencesGroup pg;
+	private PreferencesGroup group;
 	private PrefsServerItem parent;
 	private PrefsServerItem[] children;
+	private PluginContext context;
 
-	boolean isRoot() { return parent==null; }
-	boolean isNetwork() { return pg.exists("network"); }
-	boolean isServer() { return pg.exists("host"); }
+	boolean isRoot() { return parent == null; }
+	boolean isNetwork() { return group.exists("network"); }
+	boolean isServer() { return group.exists("host"); }
+
+	/**
+	 * @return True if this server is a redirector
+	 */
+	boolean isRedirect()
+	{
+		return group.exists(IRCPrefs.PREF_REDIRECTOR);
+	}
 
 	@Override
 	public boolean isLeaf()
@@ -41,17 +53,18 @@ class PrefsServerItem implements TreeBox.Item
 		return isServer();
 	}
 
-	PreferencesGroup getGroup() { return pg; }
+	PreferencesGroup getGroup() { return group; }
 
-	PrefsServerItem(PreferencesGroup pg,PrefsServerItem parent)
+	PrefsServerItem(PreferencesGroup group, PrefsServerItem parent, PluginContext context)
 	{
-		this.pg=pg;
-		this.parent=parent;
-		PreferencesGroup[] apg=pg.getAnon();
-		children=new PrefsServerItem[apg.length];
-		for(int i=0;i<apg.length;i++)
+		this.group = group;
+		this.parent = parent;
+		this.context = context;
+		PreferencesGroup[] groupAnon = group.getAnon();
+		children=new PrefsServerItem[groupAnon.length];
+		for(int i=0; i<groupAnon.length; i++)
 		{
-			children[i]=new PrefsServerItem(apg[i],this);
+			children[i] = new PrefsServerItem(groupAnon[i], this, context);
 		}
 	}
 
@@ -62,7 +75,7 @@ class PrefsServerItem implements TreeBox.Item
 	 */
 	PrefsServerItem find(PreferencesGroup pg)
 	{
-		if(this.pg==pg) return this;
+		if(this.group==pg) return this;
 		for(int i=0;i<children.length;i++)
 		{
 			PrefsServerItem result=children[i].find(pg);
@@ -73,7 +86,7 @@ class PrefsServerItem implements TreeBox.Item
 
 	void remove()
 	{
-		pg.remove();
+		group.remove();
 		LinkedList<PrefsServerItem> parentKids =
 			new LinkedList<PrefsServerItem>(Arrays.asList(parent.children));
 		parentKids.remove(this);
@@ -83,7 +96,7 @@ class PrefsServerItem implements TreeBox.Item
 
 	void add(PrefsServerItem newChild,int newPos)
 	{
-		pg.addAnon(newChild.pg,newPos);
+		group.addAnon(newChild.group,newPos);
 		newChild.parent=this;
 		LinkedList<PrefsServerItem> kids =
 			new LinkedList<PrefsServerItem>(Arrays.asList(children));
@@ -117,14 +130,15 @@ class PrefsServerItem implements TreeBox.Item
 		if(isRoot())
 			return "Global settings";
 		else
-			return pg.get("host",pg.get("network","<unknown>"));
+			return group.get("host",group.get("network","<unknown>"));
 	}
 
 	@Override
 	public Image getIcon()
 	{
-		// TODO Maybe put an icon there
-		return null;
+		return context.getSingle(UI.class).getTheme().getImageProperty("serverTree",
+			isNetwork() ? "network" : (isRedirect() ? "redirect" : "server"), true,
+				null, null);
 	}
 
 	@Override

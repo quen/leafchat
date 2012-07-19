@@ -14,7 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with leafChat. If not, see <http://www.gnu.org/licenses/>.
 
-Copyright 2011 Samuel Marshall.
+Copyright 2012 Samuel Marshall.
 */
 package com.leafdigital.ircui;
 
@@ -441,7 +441,8 @@ public class ConnectTool implements SimpleTool, TreeBox.MultiSelectionHandler
 			else
 			{
 				// Connect to server/net from preferences
-				addSelectedServer(connectTo,null,new PrefsServerItem(directServer,null));
+				addSelectedServer(connectTo, null,
+					new PrefsServerItem(directServer, null, context));
 			}
 		}
 		else

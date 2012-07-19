@@ -14,7 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with leafChat. If not, see <http://www.gnu.org/licenses/>.
 
-Copyright 2011 Samuel Marshall.
+Copyright 2012 Samuel Marshall.
 */
 package com.leafdigital.ui;
 
@@ -180,8 +180,11 @@ public class TreeBoxImp extends JScrollPane implements TreeSelectionListener
 			{
 				TreeBox.Item ti=(TreeBox.Item)o;
 				setText(ti.getText());
-				if(ti.getIcon()!=null)
-					setIcon(new ImageIcon(ti.getIcon()));
+				Image icon = ti.getIcon();
+				if(icon != null)
+				{
+					setIcon(new ImageIcon(icon));
+				}
 			}
 
 			return this;
