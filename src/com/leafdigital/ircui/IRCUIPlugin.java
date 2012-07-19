@@ -74,6 +74,7 @@ public class IRCUIPlugin implements Plugin,IRCUI,DefaultMessageDisplay
 
 		context.requestMessages(IRCMsg.class,this,Msg.PRIORITY_LATE);
 		context.requestMessages(ServerConnectionFinishedMsg.class,this);
+		context.requestMessages(ServerConnectedMsg.class, this);
 		context.requestMessages(WatchMsg.class,this,Msg.PRIORITY_LATE);
 		context.requestMessages(ServerRearrangeMsg.class,this,Msg.PRIORITY_FIRST);
 		context.requestMessages(SystemStateMsg.class,this);
@@ -210,14 +211,20 @@ public class IRCUIPlugin implements Plugin,IRCUI,DefaultMessageDisplay
 	}
 
 	/**
-	 * Message: Connection finished. Used to join channels requested by
-	 * {@link #connectAndJoin(PreferencesGroup, String, String)}.
+	 * Message: Connected. Used to turn off auto-join if needed.
 	 * @param msg Message
-	 * @throws GeneralException
 	 */
-	public void msg(ServerConnectionFinishedMsg msg) throws GeneralException
+	public void msg(ServerConnectedMsg msg)
 	{
-		String join=null,joinKey=null;
+		JoinRequest request = getMatchingJoinRequest(msg.getServer(), false);
+		if(request != null)
+		{
+			msg.getServer().suppressAutoJoin();
+		}
+	}
+
+	private JoinRequest getMatchingJoinRequest(Server server, boolean remove)
+	{
 		synchronized(this)
 		{
 			if(joinRequests!=null)
@@ -233,32 +240,47 @@ public class IRCUIPlugin implements Plugin,IRCUI,DefaultMessageDisplay
 					if(request.server != null)
 					{
 						// Join request specified relating to a preferences item
-						PreferencesGroup pg = msg.getServer().getPreferences();
+						PreferencesGroup pg = server.getPreferences();
 						if(pg==request.server || pg.getAnonParent()==request.server)
 						{
-							join = request.name;
-							joinKey = request.key;
-							i.remove();
-							break;
+							if(remove)
+							{
+								i.remove();
+							}
+							return request;
 					  }
 					}
 					else
 					{
 						// Join request specified by hostname
-						if(msg.getServer().getConnectedHost().equals(request.host))
+						if(server.getConnectedHost().equals(request.host))
 						{
-							join = request.name;
-							joinKey = request.key;
-							i.remove();
-							break;
+							if(remove)
+							{
+								i.remove();
+							}
+							return request;
 						}
 					}
 				}
 			}
 		}
-		if(join!=null)
+		return null;
+	}
+
+	/**
+	 * Message: Connection finished. Used to join channels requested by
+	 * {@link #connectAndJoin(PreferencesGroup, String, String)}.
+	 * @param msg Message
+	 * @throws GeneralException
+	 */
+	public void msg(ServerConnectionFinishedMsg msg) throws GeneralException
+	{
+		JoinRequest request = getMatchingJoinRequest(msg.getServer(), true);
+		if(request != null)
 		{
-			msg.getServer().sendLine(IRCMsg.constructBytes("JOIN "+join+(joinKey.length()>0 ? " "+joinKey:"")));
+			msg.getServer().sendLine(IRCMsg.constructBytes("JOIN " +
+				request.name + (request.key.length()>0 ? " " + request.key : "")));
 		}
 	}
 

@@ -317,4 +317,11 @@ public interface Server
 	 * @return True if currently marked away
 	 */
 	public boolean isAway();
+
+	/**
+	 * Prevents autojoin for the server. Should be called before the
+	 * {@link ServerConnectionFinishedMsg} is sent, e.g. while handling
+	 * {@link ServerConnectedMsg}.
+	 */
+	public void suppressAutoJoin();
 }

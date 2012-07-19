@@ -58,6 +58,7 @@ public class ServerConnection implements Server, IRCPrefs
 	private boolean quitRequested=false;
 	private boolean away=false;
 	private boolean deferConnectionFinished=false;
+	private boolean suppressAutoJoin = false;
 
 	private Map<String, Object> properties=new HashMap<String, Object>();
 
@@ -1270,6 +1271,10 @@ public class ServerConnection implements Server, IRCPrefs
 
 	private void autojoin() throws GeneralException
 	{
+		if(suppressAutoJoin)
+		{
+			return;
+		}
 		Preferences p=connections.getPluginContext().getSingle(Preferences.class);
 
 		PreferencesGroup serverPrefs=getPreferences(),networkPrefs=serverPrefs.getAnonParent();
@@ -1293,6 +1298,12 @@ public class ServerConnection implements Server, IRCPrefs
 				}
 			}
 		}
+	}
+
+	@Override
+	public void suppressAutoJoin()
+	{
+		suppressAutoJoin = true;
 	}
 
 	/**
