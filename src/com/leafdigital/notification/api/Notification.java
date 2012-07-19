@@ -34,4 +34,10 @@ public interface Notification extends Singleton
 	 * @param message Text for popup (empty string if none)
 	 */
 	public void notify(String type,String title,String message);
+
+	/**
+	 * Checks whether the tray icon (owned by this plugin) exists or not.
+	 * @return True if there is a tray icon
+	 */
+	public boolean hasTrayIcon();
 }

@@ -53,7 +53,7 @@
  as full numbers. In other words, 1.10 (major="1" minor="10") is newer than 
  1.2 (major="1" minor="2").
 -->
-<version major="2" minor="3" sub="0"/>
+<version major="2" minor="5" sub="0"/>
  
 
 <!-- 
@@ -131,6 +131,10 @@
   <api>
     <package>com.leafdigital.prefsui.api</package>
     <version>1</version>
+  </api>
+  <api>
+    <package>com.leafdigital.notification.api</package>
+    <version>2</version>
   </api>
  <!-- You could include additional <api> sections here -->
 </dependencies>

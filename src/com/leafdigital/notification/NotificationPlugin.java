@@ -90,6 +90,12 @@ public class NotificationPlugin implements Plugin,Notification
 		return isUsingSystemTray;
 	}
 
+	@Override
+	public boolean hasTrayIcon()
+	{
+		return trayIcon != null;
+	}
+
 	void updateTrayIcon()
 	{
 		if(!isUsingSystemTray) return;

@@ -18,8 +18,7 @@ Copyright 2011 Samuel Marshall.
 */
 package com.leafdigital.uiprefs;
 
-import util.PlatformUtils;
-
+import com.leafdigital.notification.api.Notification;
 import com.leafdigital.prefs.api.*;
 import com.leafdigital.ui.api.*;
 
@@ -65,7 +64,8 @@ public class InterfaceStylePage
 			break;
 		}
 
-		if(PlatformUtils.isMac())
+		Notification notification = context.getSingle(Notification.class);
+		if(!notification.hasTrayIcon())
 		{
 			trayMinimiseUI.setVisible(false);
 		}
