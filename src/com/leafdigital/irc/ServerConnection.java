@@ -91,12 +91,19 @@ public class ServerConnection implements Server, IRCPrefs
 	}
 
 	@Override
-	public void beginConnect(String sHost,int iPort,Server.ConnectionProgress cp)
+	public void beginConnect(String host,int port,Server.ConnectionProgress cp)
 	{
-		this.host=sHost;
-		this.port=iPort;
-		String secureString =
-			getPreferences().get(PREF_SECUREMODE, PREFDEFAULT_SECUREMODE);
+		this.host = host;
+		this.port = port;
+		if(!getPreferences().exists(PREF_SECUREMODE))
+		{
+			// When secure mode is not set, autodetect unless using a standard port
+			if(port == 6667 || port == 7000)
+			{
+				getPreferences().set(PREF_SECUREMODE, PREF_SECUREMODE_NONE);
+			}
+		}
+		String secureString = getPreferences().get(PREF_SECUREMODE);
 		if(secureString.equals(PREF_SECUREMODE_NONE))
 		{
 			secureMode = Network.SECURE_NONE;
