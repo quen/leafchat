@@ -79,6 +79,8 @@ public class PrefsServerPage implements TreeBox.DragSingleSelectionHandler,IRCPr
 	private boolean networkNameChanged=false;
 	/** UI: Add: Tabs */
 	public TabPanel addTabsUI;
+	/** UI: Choice panel for real server or redirector */
+	public ChoicePanel categoryUI;
 
 	private PluginContext context;
 
@@ -198,6 +200,15 @@ public class PrefsServerPage implements TreeBox.DragSingleSelectionHandler,IRCPr
 			selectedGroup=pi==null ? null : pi.getGroup();
 			selectedItem=pi;
 
+			if (selectedGroup != null &&
+				selectedGroup.getAnonHierarchical(PREF_REDIRECTOR, "no").equals("yes"))
+			{
+				categoryUI.display("redirector");
+			}
+			else
+			{
+				categoryUI.display("realserver");
+			}
 			Table tNick=(Table)pThis.getWidget("nicknames");
 			EditBox ebUser=(EditBox)pThis.getWidget("serveruser");
 			EditBox ebRealName=(EditBox)pThis.getWidget("serverrealname");

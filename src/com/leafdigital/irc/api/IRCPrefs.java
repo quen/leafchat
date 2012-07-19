@@ -87,6 +87,8 @@ public interface IRCPrefs
 	public static final String PREF_REPORTED="reported";
 	/** True if added by hand */
 	public static final String PREF_HANDADDED="handadded";
+	/** True if entry is for a redirector server */
+	public static final String PREF_REDIRECTOR = "redirector";
 	/** Host */
 	public static final String PREF_HOST="host";
 	/** Remember if user refused network auto-add */

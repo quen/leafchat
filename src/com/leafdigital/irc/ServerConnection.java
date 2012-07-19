@@ -648,6 +648,8 @@ public class ServerConnection implements Server, IRCPrefs
 
 		PreferencesGroup thisGroup=null;
 
+		PreferencesGroup fromRedirector = null;
+
 		// Find preferences group for server
 		PreferencesGroup existingGroup = pg.findAnonGroup(PREF_HOST, reportedHost, true, true);
 		if(existingGroup != null) // Existing group
@@ -666,11 +668,17 @@ public class ServerConnection implements Server, IRCPrefs
 				if(previousGroup != null)
 				{
 					// Discard those settings, if we've never really connected (reported
-					// connection) to there and they weren't added by hand
+					// connection) to there and they weren't added by hand and it's not
+					// a redirector server.
 					if(previousGroup.get(PREF_REPORTED, "no").equals("no") &&
-						previousGroup.get(PREF_HANDADDED, "no").equals("no"))
+						previousGroup.get(PREF_HANDADDED, "no").equals("no") &&
+						previousGroup.get(PREF_REDIRECTOR, "no").equals("no"))
 					{
 						previousGroup.remove();
+					}
+					else if(previousGroup.get(PREF_REDIRECTOR, "no").equals("yes"))
+					{
+						fromRedirector = previousGroup;
 					}
 				}
 			}
@@ -681,14 +689,51 @@ public class ServerConnection implements Server, IRCPrefs
 			if(!reportedHost.equalsIgnoreCase(host))
 			{
 				PreferencesGroup previousGroup = pg.findAnonGroup(PREF_HOST, host, true, true);
+
+				// Check if it was a redirector address (like irc.dal.net)
+				if(previousGroup == null || (previousGroup.get(PREF_REPORTED, "no").equals("no") &&
+					previousGroup.get(PREF_REDIRECTOR, "no").equals("no")))
+				{
+					boolean redirector = false;
+					try
+					{
+						// Get address list. There must be multiple entries.
+						InetAddress[] addresses1 = InetAddress.getAllByName(host);
+						if(addresses1.length > 1)
+						{
+							redirector = true;
+						}
+					}
+					catch(UnknownHostException e)
+					{
+						// This can't really happen, we already looked it up to connect.
+					}
+					if(redirector)
+					{
+						if(previousGroup == null)
+						{
+							// Make a new entry for the redirector
+							previousGroup = pg.addAnon();
+							previousGroup.set(PREF_HOST, host);
+						}
+						// Mark it as redirector
+						previousGroup.set(PREF_REDIRECTOR, "yes");
+					}
+				}
+
 				if(previousGroup != null)
 				{
 					// Move those settings to this, if we've never really connected (reported
-					// connection) to there
-					if(previousGroup.get(PREF_REPORTED,"no").equals("no"))
+					// connection) to there and it's not a redirector server
+					if(previousGroup.get(PREF_REPORTED, "no").equals("no") &&
+						previousGroup.get(PREF_REDIRECTOR, "no").equals("no"))
 					{
 						previousGroup.set(PREF_HOST, reportedHost);
 						thisGroup = previousGroup;
+					}
+					else if(previousGroup.get(PREF_REDIRECTOR, "no").equals("yes"))
+					{
+						fromRedirector = previousGroup;
 					}
 				}
 			}
@@ -756,13 +801,31 @@ public class ServerConnection implements Server, IRCPrefs
 						// Consider all existing servers to see if there's one with that suffix that
 						// doesn't have refusednetwork=yes. If so, offer add for those servers to
 						// a new network.
-						PreferencesGroup pgOther = findMatchingServer(pg,sSuffix,thisGroup);
+						PreferencesGroup pgOther;
+						if(fromRedirector != null)
+						{
+							pgOther = fromRedirector;
+						}
+						else
+						{
+							pgOther = findMatchingServer(pg,sSuffix,thisGroup);
+						}
 						if(pgOther!=null)
 						{
 							String sNetwork=sSuffix.substring(1);
-							// Offer combine with those servers to make network
-							switch(connections.informRearrange(new ServerRearrangeMsg(
-								this,reportedHost,sNetwork,pgOther.get("host"))))
+							// Offer combine with those servers to make network; or if it came
+							// from a redirector, do that automatically
+							int check;
+							if(fromRedirector != null)
+							{
+								check = ServerRearrangeMsg.CONFIRM;
+							}
+							else
+							{
+								check = connections.informRearrange(new ServerRearrangeMsg(
+									this,reportedHost,sNetwork,pgOther.get("host")));
+							}
+							switch(check)
 							{
 							case ServerRearrangeMsg.CONFIRM:
 								// Turn other server into network
@@ -773,9 +836,16 @@ public class ServerConnection implements Server, IRCPrefs
 								PreferencesGroup pgNewOther=pgOther.addAnon();
 								pgNewOther.set(PREF_HOST,pgOther.get(PREF_HOST));
 								if(pgOther.exists(PREF_REPORTED))
-									pgNewOther.set(PREF_REPORTED,pgOther.get(PREF_REPORTED));
+								{
+									pgNewOther.set(PREF_REPORTED, pgOther.get(PREF_REPORTED));
+								}
+								if(pgOther.exists(PREF_REDIRECTOR))
+								{
+									pgNewOther.set(PREF_REDIRECTOR, pgOther.get(PREF_REDIRECTOR));
+								}
 								pgOther.unset(PREF_HOST);
 								pgOther.unset(PREF_REPORTED);
+								pgOther.unset(PREF_REDIRECTOR);
 
 								// Add this one to the new network
 								pgOther.addAnon(thisGroup,PreferencesGroup.ANON_LAST);

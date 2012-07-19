@@ -1,115 +1,126 @@
 <Page Title="Settings">
-  <BorderPanel Spacing="12" Border="4">
-    <west>
-    		<BorderPanel Spacing="0">
-    			<central>
-		      <TreeBox Width="200" id="servertree"/>
-		    </central>
-		    <south>
-		      <HorizontalPanel Spacing="4">
-		        <Button id="add" Label="Add..." OnAction="actionAdd"/>
-		        <Button id="delete" Label="Delete..." OnAction="actionDelete"/>
-		      </HorizontalPanel>
-		    </south>
-		  </BorderPanel>
-    </west>
-    <central>
-      <VerticalPanel Spacing="4">
-        <BorderPanel Spacing="8">
-          <west><Label Text="Port range" WidthGroup="width_serverprefs" BaseGroup="a"/></west>
-          <central>
-          		<VerticalPanel Spacing="2">
-		  	        <EditBox id="portRange" OnChange="changePortRange" BaseGroup="a"/>				           
-		          <Label Small="y" MacIndent="y" Text="A random port from this range will be chosen."/>
-		        </VerticalPanel>
-          </central>
-        </BorderPanel>
-        <BorderPanel Spacing="8" id="securitySection">
-          <west><Label Text="Security" WidthGroup="width_serverprefs" BaseGroup="f"/></west>
-          <central>
-  	        <Dropdown id="security" OnChange="changeSecurity" BaseGroup="f"/>				           
-          </central>
-        </BorderPanel>
-        <BorderPanel Spacing="8">
-          <west><Label Text="Password" WidthGroup="width_serverprefs" BaseGroup="b"/></west>
-          <central>
-          		<VerticalPanel Spacing="2">
-		          <EditBox id="password" OnChange="changePassword" BaseGroup="b"/>				
-		          <Label Small="y" MacIndent="y" Text="Most servers do not require a password."/>
-		        </VerticalPanel>
-          </central>
-        </BorderPanel>
-        <BorderPanel Spacing="8">
-          <west><Label Text="Nicknames" WidthGroup="width_serverprefs"/></west>
-          <central>
-         		<VerticalPanel Spacing="0">
-		          <Table id="nicknames" OnChange="nicknamesChange" OnEditing="nicknamesEditing" OnSelect="nicknamesSelect" Width="200" Rows="4" MacIndent="y">
-		            <column name="Nickname" type="string" editable="y" width="100"/>
-		            <column name="Password" type="string" editable="y"/>
-		            <column name="Default" type="boolean" editable="y" width="0"/>
-		          </Table>
-		          <Label id="passwordGlobalWarning" Small="y" MacIndent="y" Text="You cannot enter passwords in global settings, only for a network or server."/>         			
-        	      <HorizontalPanel Spacing="4">
-        	      	<Button id="nicknamesdelete" Label="Delete nickname" OnAction="nicknamesDelete" Enabled="n"/>
-        	      </HorizontalPanel>
-        		 	</VerticalPanel>
-        		</central>
-        </BorderPanel>
-        	<BorderPanel Spacing="8">
-          	<west>
-          		<Label Text="Auto-identify" WidthGroup="width_serverprefs" BaseGroup="c"/>
-          	</west>
-          	<central>
-          	  <BorderPanel>
-          	    <central>
-          	      <BorderPanel Spacing="4">
-          	        <west>
-           		        <CheckBox id="autoIdentify" OnChange="changeAutoIdentify" Label="Command:" BaseGroup="c"/>
-           		      </west>
-           		      <central>
-	           	        <EditBox id="identifyCommand" OnChange="changeIdentifyCommand" BaseGroup="c"/>
-	           	      </central>
-	           	    </BorderPanel>	           	      
-	           	  </central>
-	           	  <south>
-	           	    <Label Small="y" MacIndent="y" Text="${password} and ${nick} are filled automatically."/>
-	           	  </south>
-	           	</BorderPanel>				   
-          	</central>
-        	</BorderPanel>
-        	<Spacer Height="0"/>
-        	<BorderPanel Spacing="8">
-        		<west>
-	          <Label Text="Appearance" WidthGroup="width_serverprefs" BaseGroup="d"/>
-		      </west>
-		      <central>
-		      		<VerticalPanel Spacing="2">
-			      	  <BorderPanel Spacing="4">
-			       	 	<west>
-			       	 	  <HorizontalPanel Spacing="4">
-			        		  <VerticalPanel><EditBox id="serveruser" OnChange="changeUser" Width="50" BaseGroup="d"/></VerticalPanel>     
-					          <Label Text="@ &lt;key>host&lt;/key> *" BaseGroup="d"/>
-					        </HorizontalPanel>
-					      </west>
-					      <central>
-					      		<VerticalPanel>
-					          <EditBox id="serverrealname" Width="150" OnChange="changeRealName" BaseGroup="d"/>				   
-				          </VerticalPanel>
-				        </central>
-				      </BorderPanel>
-		          <Label Small="y" MacIndent="y" Text="This information appears in your /whois."/>
-				    </VerticalPanel>
-		      </central>
-        	</BorderPanel>
-        <BorderPanel Spacing="8">
-          <west><Label Text="Quit message" WidthGroup="width_serverprefs" BaseGroup="e"/></west>
-          <central>
-          		<VerticalPanel>
-		          <EditBox id="serverquitmessage" OnChange="changeQuitMessage" BaseGroup="e"/>				    
-		        </VerticalPanel>
-          </central>
-        </BorderPanel>
-      </VerticalPanel>
-    </central>
-  </BorderPanel>		    
+	<BorderPanel Spacing="12" Border="4">
+		<west>
+			<BorderPanel Spacing="0">
+				<central>
+					<TreeBox Width="200" id="servertree"/>
+				</central>
+				<south>
+					<HorizontalPanel Spacing="4">
+						<Button id="add" Label="Add..." OnAction="actionAdd"/>
+						<Button id="delete" Label="Delete..." OnAction="actionDelete"/>
+					</HorizontalPanel>
+				</south>
+			</BorderPanel>
+		</west>
+		<central>
+			<VerticalPanel Spacing="4">
+				<BorderPanel Spacing="8">
+					<west><Label Text="Port range" WidthGroup="width_serverprefs" BaseGroup="a"/></west>
+					<central>
+							<VerticalPanel Spacing="2">
+								<EditBox id="portRange" OnChange="changePortRange" BaseGroup="a"/>
+							<Label Small="y" MacIndent="y" Text="A random port from this range will be chosen."/>
+						</VerticalPanel>
+					</central>
+				</BorderPanel>
+				<ChoicePanel id="category">
+					<Page id="realserver">
+						<VerticalPanel Spacing="8">
+							<BorderPanel Spacing="8" id="securitySection">
+								<west><Label Text="Security" WidthGroup="width_serverprefs" BaseGroup="f"/></west>
+								<central>
+									<Dropdown id="security" OnChange="changeSecurity" BaseGroup="f"/>
+								</central>
+							</BorderPanel>
+							<BorderPanel Spacing="8">
+								<west><Label Text="Password" WidthGroup="width_serverprefs" BaseGroup="b"/></west>
+								<central>
+										<VerticalPanel Spacing="2">
+										<EditBox id="password" OnChange="changePassword" BaseGroup="b"/>
+										<Label Small="y" MacIndent="y" Text="Most servers do not require a password."/>
+									</VerticalPanel>
+								</central>
+							</BorderPanel>
+							<BorderPanel Spacing="8">
+								<west><Label Text="Nicknames" WidthGroup="width_serverprefs"/></west>
+								<central>
+									<VerticalPanel Spacing="0">
+										<Table id="nicknames" OnChange="nicknamesChange" OnEditing="nicknamesEditing" OnSelect="nicknamesSelect" Width="200" Rows="4" MacIndent="y">
+											<column name="Nickname" type="string" editable="y" width="100"/>
+											<column name="Password" type="string" editable="y"/>
+											<column name="Default" type="boolean" editable="y" width="0"/>
+										</Table>
+										<Label id="passwordGlobalWarning" Small="y" MacIndent="y" Text="You cannot enter passwords in global settings, only for a network or server."/>
+											<HorizontalPanel Spacing="4">
+												<Button id="nicknamesdelete" Label="Delete nickname" OnAction="nicknamesDelete" Enabled="n"/>
+											</HorizontalPanel>
+										</VerticalPanel>
+									</central>
+								</BorderPanel>
+								<BorderPanel Spacing="8">
+									<west>
+										<Label Text="Auto-identify" WidthGroup="width_serverprefs" BaseGroup="c"/>
+									</west>
+									<central>
+										<BorderPanel>
+											<central>
+												<BorderPanel Spacing="4">
+													<west>
+														<CheckBox id="autoIdentify" OnChange="changeAutoIdentify" Label="Command:" BaseGroup="c"/>
+													</west>
+													<central>
+														<EditBox id="identifyCommand" OnChange="changeIdentifyCommand" BaseGroup="c"/>
+													</central>
+												</BorderPanel>
+											</central>
+											<south>
+												<Label Small="y" MacIndent="y" Text="${password} and ${nick} are filled automatically."/>
+											</south>
+										</BorderPanel>
+									</central>
+								</BorderPanel>
+								<Spacer Height="0"/>
+								<BorderPanel Spacing="8">
+									<west>
+										<Label Text="Appearance" WidthGroup="width_serverprefs" BaseGroup="d"/>
+									</west>
+									<central>
+										<VerticalPanel Spacing="2">
+											<BorderPanel Spacing="4">
+											<west>
+												<HorizontalPanel Spacing="4">
+													<VerticalPanel><EditBox id="serveruser" OnChange="changeUser" Width="50" BaseGroup="d"/></VerticalPanel>
+													<Label Text="@ &lt;key>host&lt;/key> *" BaseGroup="d"/>
+												</HorizontalPanel>
+											</west>
+											<central>
+												<VerticalPanel>
+													<EditBox id="serverrealname" Width="150" OnChange="changeRealName" BaseGroup="d"/>
+												</VerticalPanel>
+											</central>
+										</BorderPanel>
+										<Label Small="y" MacIndent="y" Text="This information appears in your /whois."/>
+									</VerticalPanel>
+								</central>
+							</BorderPanel>
+							<BorderPanel Spacing="8">
+								<west><Label Text="Quit message" WidthGroup="width_serverprefs" BaseGroup="e"/></west>
+								<central>
+										<VerticalPanel>
+										<EditBox id="serverquitmessage" OnChange="changeQuitMessage" BaseGroup="e"/>
+									</VerticalPanel>
+								</central>
+							</BorderPanel>
+						</VerticalPanel>
+					</Page>
+					<Page id="redirector">
+						<VerticalPanel Spacing="8">
+							<Label Text="This address redirects to a random server on the network."/>
+						</VerticalPanel>
+					</Page>
+				</ChoicePanel>
+			</VerticalPanel>
+		</central>
+	</BorderPanel>
 </Page>
