@@ -35,9 +35,9 @@
 	  Version numbers used in various different places (these should be
 	  consistent).
 	  -->
-	<property name="numericversion" value="3.5"/>
-	<property name="stringversion" value="3.5a"/>
-	<property name="fileversion" value="35a"/>
+	<property name="numericversion" value="2.5"/>
+	<property name="stringversion" value="2.5a"/>
+	<property name="fileversion" value="25a"/>
 	<property name="fullrelease" value="n"/>
 
 	<!--
