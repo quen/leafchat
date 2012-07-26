@@ -14,7 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with leafChat. If not, see <http://www.gnu.org/licenses/>.
 
-Copyright 2011 Samuel Marshall.
+Copyright 2012 Samuel Marshall.
 */
 package com.leafdigital.ircui;
 
@@ -23,12 +23,14 @@ import org.w3c.dom.Element;
 import com.leafdigital.idle.api.Idle;
 import com.leafdigital.irc.api.*;
 import com.leafdigital.ircui.api.GeneralChatWindow;
+import com.leafdigital.ui.api.UIHandler;
 
 import leafchat.core.api.*;
 
 /**
  * Plugin chat window; a chat window created by another plugin.
  */
+@UIHandler("pluginchatwindow")
 public class PluginChatWindow extends ChatWindow implements GeneralChatWindow
 {
 	private Handler h;
