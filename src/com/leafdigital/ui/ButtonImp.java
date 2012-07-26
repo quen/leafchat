@@ -14,7 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with leafChat. If not, see <http://www.gnu.org/licenses/>.
 
-Copyright 2011 Samuel Marshall.
+Copyright 2012 Samuel Marshall.
 */
 package com.leafdigital.ui;
 
@@ -194,7 +194,7 @@ public class ButtonImp extends JComponent implements ActionListener,HierarchyLis
 	{
 		// Only send event if button is showing. It's just possible that queued
 		// events happen after button was hidden (I think) - see #17
-		if(onAction!=null && isShowing())
+		if(onAction!=null && isShowing() && isEnabled())
 		{
 			getInterface().getOwner().getCallbackHandler().callHandleErrors(onAction);
 		}

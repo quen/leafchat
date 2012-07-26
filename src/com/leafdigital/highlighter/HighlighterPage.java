@@ -14,7 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with leafChat. If not, see <http://www.gnu.org/licenses/>.
 
-Copyright 2011 Samuel Marshall.
+Copyright 2012 Samuel Marshall.
 */
 package com.leafdigital.highlighter;
 
@@ -292,8 +292,10 @@ public class HighlighterPage
 		Preferences prefs = context.getSingle(Preferences.class);
 		PreferencesGroup group = prefs.getGroup(context.getPlugin());
 		Integer integer = (Integer)wordsUI.getSelectedData();
-		PreferencesGroup anon =
-			group.getAnon()[integer.intValue()];
+		// Note: One of the two below lines was causing NPE at one point. I split
+		// one line of code into two so we can narrow down the problem.
+		int num = integer.intValue();
+		PreferencesGroup anon = group.getAnon()[num];
 		String word = wordUI.getValue();
 		anon.set(HighlighterPlugin.PREF_WORD, word);
 		wordsUI.removeData(integer);
