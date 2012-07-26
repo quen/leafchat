@@ -14,7 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with leafChat. If not, see <http://www.gnu.org/licenses/>.
 
-Copyright 2011 Samuel Marshall.
+Copyright 2012 Samuel Marshall.
 */
 package com.leafdigital.ui;
 
@@ -985,10 +985,11 @@ public class EditBoxImp extends JComponent implements ActionListener,FocusListen
 			{
 				// Can't actually put \n into field and have it keep it, so here's
 				// a workaround...
+				String before = getText();
 				String newLine="--7275lkrbdyh98534--";
 				replaceSelection(text.replaceAll("\\n",newLine));
 				String multiLine=getText().replaceAll(newLine,"\n");
-				setText("");
+				setText(before);
 				getInterface().getOwner().getCallbackHandler().callHandleErrors(onMultiLine,new Object[] {multiLine});
 			}
 			else // Just do first line

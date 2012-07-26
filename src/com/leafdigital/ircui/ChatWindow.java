@@ -14,7 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with leafChat. If not, see <http://www.gnu.org/licenses/>.
 
-Copyright 2011 Samuel Marshall.
+Copyright 2012 Samuel Marshall.
 */
 package com.leafdigital.ircui;
 
@@ -693,6 +693,7 @@ public abstract class ChatWindow implements MessageDisplay,TextView.MenuHandler
 		private void update(String[] initialLines) throws GeneralException
 		{
 			List<String> wrappedLines = new LinkedList<String>();
+			String before = commandUI.getValue();
 			for(int i=0; i<initialLines.length; i++)
 			{
 				// Let the edit box do the splitting
@@ -701,7 +702,7 @@ public abstract class ChatWindow implements MessageDisplay,TextView.MenuHandler
 				for(int j=0;j<addLines.length;j++)
 					wrappedLines.add(addLines[j]);
 			}
-			commandUI.setValue("");
+			commandUI.setValue(before);
 			lines=wrappedLines.toArray(new String[wrappedLines.size()]);
 
 			previewUI.clear();
