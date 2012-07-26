@@ -216,8 +216,26 @@ public class PreferencesImp implements Preferences,MsgOwner
 		try
 		{
 			this.context=context;
-			prefsFile=new File(PlatformUtils.getUserFolder(),"preferences.xml");
-			if(prefsFile.exists())
+			prefsFile = new File(PlatformUtils.getUserFolder(), "preferences.xml");
+			boolean gotPrefs = prefsFile.exists();
+
+			// If leafChat crashed partway through saving prefs, there might be a
+			// .old or .new version
+			if(!gotPrefs)
+			{
+				for(String suffix : new String[] {".new", ".old"})
+				{
+					File otherCopy = new File(prefsFile.getPath() + suffix);
+					if(otherCopy.exists())
+					{
+						renameFileRepeated(otherCopy, prefsFile);
+						gotPrefs = true;
+						break;
+					}
+				}
+			}
+
+			if(gotPrefs)
 			{
 				// Load file
 				Document d=XML.parse(prefsFile);
@@ -230,9 +248,9 @@ public class PreferencesImp implements Preferences,MsgOwner
 				}
 			}
 		}
-		catch(XMLException xe)
+		catch(IOException e)
 		{
-			throw new GeneralException(xe);
+			throw new GeneralException(e);
 		}
 	}
 
@@ -290,60 +308,98 @@ public class PreferencesImp implements Preferences,MsgOwner
 		{
 			try
 			{
-				File saveTemp=new File(prefsFile.getPath()+".new");
-				XML.save(saveTemp,buildPreferencesDoc());
-				if(prefsFile.exists())
+				// Note: There were problems with this code on Windows where in rare
+				// cases it doesn't work. Since it's so important (you could lose
+				// preferences) I have added a lot of defensive code.
+
+				// Save new preferences in .new file
+				File saveTemp = new File(prefsFile.getPath() + ".new");
+				XML.save(saveTemp, buildPreferencesDoc());
+
+				// Check if we already have a file
+				boolean gotOldFile = prefsFile.exists();
+				File oldTemp = null;
+				if(gotOldFile)
 				{
-					// On Windows, this call sometimes fails. That might be because it
-					// wasn't closed for some reason (I've added defensive code for that)
-					// or possibly due to timing issues, so I'm adding retries for up
-					// to 2 seconds.
-					int retryDelete = 0;
-				  while(!prefsFile.delete())
-				  {
-				  	retryDelete++;
-				  	if(retryDelete >= 20)
-				  	{
-				  		throw new IOException("Unable to delete old preferences file"
-				  			+ prefsFile);
-				  	}
-						try
-						{
-							Thread.sleep(100);
-						}
-						catch(InterruptedException ie)
-						{
-						}
-				  }
+					// Delete the old '.old' copy if present
+					oldTemp = new File(prefsFile.getPath() + ".old");
+					if(oldTemp.exists())
+					{
+						deleteFileRepeated(oldTemp);
+					}
+
+					// For safety, rename away the old file first instead of deleting it
+					renameFileRepeated(prefsFile, oldTemp);
 				}
 
-				// On Windows, the rename sometimes fails; possibly this is because
-				// the old deleted file hasn't really been deleted yet. Let's retry
-				// a few times (2 seconds) if it fails
-				int retryRename = 0;
-				while(!saveTemp.renameTo(prefsFile))
+				// Rename new file into place
+				renameFileRepeated(saveTemp, prefsFile);
+
+				// Delete temp old file
+				if(gotOldFile)
 				{
-					retryRename++;
-					if(retryRename >= 20)
-					{
-						throw new IOException("Unable to rename new preferences file "
-							+ saveTemp + " to correct name " + prefsFile);
-					}
-					try
-					{
-						Thread.sleep(100);
-					}
-					catch(InterruptedException ie)
-					{
-					}
+					deleteFileRepeated(oldTemp);
 				}
+
 				context.getSingle(SystemLog.class).log(
 				  context.getPlugin(),"Preferences saved");
-				dirtyTime=0;
+				dirtyTime = 0;
 			}
 			catch(Exception e)
 			{
-				ErrorMsg.report("Error while saving preferences",e);
+				ErrorMsg.report("Error while saving preferences", e);
+			}
+		}
+	}
+
+	/**
+	 * Renames a file, making repeated attempts if necessary.
+	 * @param from Current file
+	 * @param to New file
+	 * @throws IOException If rename fails 20 times
+	 */
+	private static void renameFileRepeated(File from, File to) throws IOException
+	{
+		int retry = 0;
+		while(!from.renameTo(to))
+		{
+			retry++;
+			if(retry >= 20)
+			{
+				throw new IOException("Unable to rename file " + from +
+					" to " + from);
+			}
+			try
+			{
+				Thread.sleep(100);
+			}
+			catch(InterruptedException ie)
+			{
+			}
+		}
+	}
+
+	/**
+	 * Deletes a file, making repeated attempts if necessary.
+	 * @param file File to delete
+	 * @throws IOException If delete fails 20 times
+	 */
+	private static void deleteFileRepeated(File file) throws IOException
+	{
+		int retry = 0;
+		while(!file.delete())
+		{
+			retry++;
+			if(retry >= 20)
+			{
+				throw new IOException("Unable to delete file " + file);
+			}
+			try
+			{
+				Thread.sleep(100);
+			}
+			catch(InterruptedException ie)
+			{
 			}
 		}
 	}
