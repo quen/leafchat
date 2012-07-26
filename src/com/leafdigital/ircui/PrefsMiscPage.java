@@ -14,7 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with leafChat. If not, see <http://www.gnu.org/licenses/>.
 
-Copyright 2011 Samuel Marshall.
+Copyright 2012 Samuel Marshall.
 */
 package com.leafdigital.ircui;
 
@@ -36,22 +36,26 @@ public class PrefsMiscPage
 	public EditBox extraCommandUI;
 	/** Checkbox: enable frequent pings if there are disconnect problems. */
 	public CheckBox frequentPingsUI;
+	/** Checkbox: automatically reconnect to server on disconnect. */
+	public CheckBox autoReconnectUI;
 
 	private Preferences prefs;
 	private PreferencesGroup group;
 
 	PrefsMiscPage(PluginContext context)
 	{
-		UI ui=context.getSingle(UI.class);
+		UI ui = context.getSingle(UI.class);
 		p = ui.createPage("prefs-misc", this);
 
-		prefs=context.getSingle(Preferences.class);
-		group=prefs.getGroup(prefs.getPluginOwner(IRCPrefs.IRCPLUGIN_CLASS));
+		prefs = context.getSingle(Preferences.class);
+		group = prefs.getGroup(prefs.getPluginOwner(IRCPrefs.IRCPLUGIN_CLASS));
 
 		extraCommandUI.setValue(
-			group.get(IRCPrefs.PREF_EXTRACOMMANDCHAR,IRCPrefs.PREFDEFAULT_EXTRACOMMANDCHAR));
+			group.get(IRCPrefs.PREF_EXTRACOMMANDCHAR, IRCPrefs.PREFDEFAULT_EXTRACOMMANDCHAR));
 		frequentPingsUI.setChecked(prefs.toBoolean(
-			group.get(IRCPrefs.PREF_FREQUENTPINGS,IRCPrefs.PREFDEFAULT_FREQUENTPINGS)));
+			group.get(IRCPrefs.PREF_FREQUENTPINGS, IRCPrefs.PREFDEFAULT_FREQUENTPINGS)));
+		autoReconnectUI.setChecked(prefs.toBoolean(
+			group.get(IRCPrefs.PREF_AUTORECONNECT, IRCPrefs.PREFDEFAULT_AUTORECONNECT)));
 	}
 
 	Page getPage()
@@ -80,5 +84,15 @@ public class PrefsMiscPage
 	{
 		group.set(IRCPrefs.PREF_FREQUENTPINGS,prefs.fromBoolean(frequentPingsUI.isChecked()),
 			IRCPrefs.PREFDEFAULT_FREQUENTPINGS);
+	}
+
+	/**
+	 * Action: User changes auto-reconnect option.
+	 */
+	@UIAction
+	public void changeAutoReconnect()
+	{
+		group.set(IRCPrefs.PREF_AUTORECONNECT, prefs.fromBoolean(autoReconnectUI.isChecked()),
+			IRCPrefs.PREFDEFAULT_AUTORECONNECT);
 	}
 }

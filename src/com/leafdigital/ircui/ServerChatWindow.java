@@ -14,7 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with leafChat. If not, see <http://www.gnu.org/licenses/>.
 
-Copyright 2011 Samuel Marshall.
+Copyright 2012 Samuel Marshall.
 */
 package com.leafdigital.ircui;
 
@@ -224,13 +224,23 @@ public abstract class ServerChatWindow extends ChatWindow
 	 */
 	public void msg(ServerDisconnectedMsg msg) throws GeneralException
 	{
-		if(s==null)
+		if(s == null)
 		{
 			return;
 		}
-		oldServerHost=s.getReportedOrConnectedHost();
-		oldServerPort=s.getConnectedPort();
-		addLine("[Disconnected] (<internalaction>"+INTERNALACTION_RECONNECT+"</internalaction>)");
+		oldServerHost = s.getReportedOrConnectedHost();
+		oldServerPort = s.getConnectedPort();
+
+		boolean auto = ((IRCUIPlugin)getPluginContext().getPlugin()).considerAutoReconnect(msg);
+		if(auto)
+		{
+			addLine("[Disconnected] (<key>reconnecting automatically</key>)");
+		}
+		else
+		{
+			addLine("[Disconnected] (<internalaction>"+INTERNALACTION_RECONNECT+"</internalaction>)");
+		}
+		msg.markHandled();
 		initServer(null,false);
 	}
 

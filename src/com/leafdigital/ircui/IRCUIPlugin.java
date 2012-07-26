@@ -26,7 +26,7 @@ import com.leafdigital.irc.api.*;
 import com.leafdigital.ircui.api.*;
 import com.leafdigital.ircui.api.GeneralChatWindow.Handler;
 import com.leafdigital.notification.api.*;
-import com.leafdigital.prefs.api.PreferencesGroup;
+import com.leafdigital.prefs.api.*;
 import com.leafdigital.prefsui.api.PreferencesUI;
 import com.leafdigital.ui.api.*;
 
@@ -47,12 +47,32 @@ public class IRCUIPlugin implements Plugin,IRCUI,DefaultMessageDisplay
 	  PREF_CLOSESPAREWINDOWS="close-spare-windows",
 	  PREFDEFAULT_CLOSESPAREWINDOWS="t";
 
+	/** Will not autoreconnect again to same server within 2 minutes */
+	private final static long AUTO_RECONNECT_FREQUENCY = 120 * 1000;
+
 	private PluginContext context;
 	private ConnectTool ct;
 	private JoinTool jt;
 	private EntryTool et;
 	private ActionListOwner alo;
 	private KnownUsers ku;
+
+	private static class ReconnectInfo
+	{
+		String host;
+		int port;
+		long time;
+
+		private ReconnectInfo(String host, int port)
+		{
+			this.host = host;
+			this.port = port;
+			this.time = System.currentTimeMillis();
+		}
+	}
+
+	private HashMap<ServerDisconnectedMsg, ReconnectInfo> autoReconnects =
+		new HashMap<ServerDisconnectedMsg, ReconnectInfo>();
 
 	@Override
 	public void init(PluginContext context, PluginLoadReporter plr) throws GeneralException
@@ -78,6 +98,7 @@ public class IRCUIPlugin implements Plugin,IRCUI,DefaultMessageDisplay
 		context.requestMessages(WatchMsg.class,this,Msg.PRIORITY_LATE);
 		context.requestMessages(ServerRearrangeMsg.class,this,Msg.PRIORITY_FIRST);
 		context.requestMessages(SystemStateMsg.class,this);
+		context.requestMessages(MinuteMsg.class, this);
 
 		context.registerSingleton(IRCUI.class,this);
 
@@ -720,5 +741,92 @@ public class IRCUIPlugin implements Plugin,IRCUI,DefaultMessageDisplay
 	KnownUsers getKnownUsers()
 	{
 		return ku;
+	}
+
+	/**
+	 * Minute message: used to clear out old reconnect info to make sure it
+	 * doesn't cause a memory leak.
+	 * @param msg Message
+	 */
+	public void msg(MinuteMsg msg)
+	{
+		long threshold = System.currentTimeMillis() - AUTO_RECONNECT_FREQUENCY;
+		for(Iterator<ReconnectInfo> i = autoReconnects.values().iterator(); i.hasNext(); )
+		{
+			ReconnectInfo info = i.next();
+			if(info.time < threshold)
+			{
+				i.remove();
+			}
+		}
+	}
+
+	/**
+	 * Called when a ServerDisconnectedMsg is received. As this is passed on by
+	 * ServerChatWindow, it may be called multiple times for a single disconnected
+	 * message; the actual reconnect should only happen once. However, the
+	 * return value will still be true if a reconnect is occuring for this
+	 * message, even if it was already triggered.
+	 * @param msg Message
+	 * @return True if autoreconnect is happening for this disconnect event
+	 * @throws GeneralException Any error during reconnect
+	 */
+	public boolean considerAutoReconnect(ServerDisconnectedMsg msg) throws GeneralException
+	{
+		// Check auto-reconnect is turned on
+		Preferences prefs = context.getSingle(Preferences.class);
+		PreferencesGroup group = prefs.getGroup(prefs.getPluginOwner(
+			IRCPrefs.IRCPLUGIN_CLASS));
+		if(!prefs.toBoolean(group.get(
+			IRCPrefs.PREF_AUTORECONNECT, IRCPrefs.PREFDEFAULT_AUTORECONNECT)))
+		{
+			return false;
+		}
+
+		// Did we already do a reconnect for this message?
+		if(autoReconnects.containsKey(msg))
+		{
+			return true;
+		}
+
+		// See if we already have a connection to the same network
+		String network = msg.getServer().getPreferences().getAnonHierarchical(
+			IRCPrefs.PREF_NETWORK, null);
+		if(network != null)
+		{
+			Connections c = context.getSingle(Connections.class);
+			for(Server connected : c.getConnected())
+			{
+				String other = connected.getPreferences().getAnonHierarchical(
+					IRCPrefs.PREF_NETWORK, null);
+				if(network.equals(other))
+				{
+					return false;
+				}
+			}
+		}
+
+		// Get server and port
+		String host = msg.getServer().getConnectedHost();
+		int port = msg.getServer().getConnectedPort();
+		for(ReconnectInfo info : autoReconnects.values())
+		{
+			if(info.host.equals(host) && info.port == port)
+			{
+				return false;
+			}
+		}
+
+		// If somebody marks the message handled, don't do anything
+		if(msg.isHandled())
+		{
+			return false;
+		}
+
+		// Trigger reconnect, mark handled, and add to list
+		autoReconnects.put(msg, new ReconnectInfo(host, port));
+		reconnect(host, port);
+		msg.markHandled();
+		return true;
 	}
 }

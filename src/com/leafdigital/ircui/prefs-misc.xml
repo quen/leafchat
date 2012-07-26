@@ -1,13 +1,17 @@
 <Page Title="Miscellaneous">
 	<VerticalPanel Spacing="8">
-	  <VerticalPanel>
+		<VerticalPanel>
 			<HorizontalPanel Spacing="8">
 				<Label MacIndent="y" Text="Command character" WidthGroup="width-labels" BaseGroup="a"/>
 				<EditBox id="extraCommand" Width="30" Require="[^A-Za-z0-9]?" BaseGroup="a" OnChange="changeExtraCommand"/>
 			</HorizontalPanel>
 			<Label MacIndent="y" Small="y" Text="If specified, this symbol works as well as / to mark the start of IRC commands. (Useful for some keyboard layouts.)"/>
 		</VerticalPanel>
-	  <VerticalPanel>
+		<VerticalPanel>
+			<CheckBox id="autoReconnect" Label="Reconnect when disconnected" OnChange="changeAutoReconnect"/>
+			<Label MacIndent="y" Small="y" Text="Automatically reconnect immediately when disconnected from the server, unless you already have a connection to the same network."/>
+		</VerticalPanel>
+		<VerticalPanel>
 			<CheckBox id="frequentPings" Label="Frequent pings" OnChange="changeFrequentPings"/>
 			<Label MacIndent="y" Small="y" Text="If you frequently find yourself disconnected from the IRC server when others are not, try this option; it ensures there is communication with the IRC server at least every 30 seconds."/>
 		</VerticalPanel>

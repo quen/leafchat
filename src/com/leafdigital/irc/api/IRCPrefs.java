@@ -187,6 +187,11 @@ public interface IRCPrefs
 	/** Default frequent ping */
 	public static final String PREFDEFAULT_FREQUENTPINGS="f";
 
+	/** Auto-reconnect */
+	public static final String PREF_AUTORECONNECT = "auto-reconnect";
+	/** Default auto-reconnect */
+	public static final String PREFDEFAULT_AUTORECONNECT = "t";
+
 	/** Whether away message applies across all servers */
 	public static final String PREF_AWAYMULTISERVER="away-multi-server";
 	/** Default away multi-server */
