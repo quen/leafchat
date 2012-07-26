@@ -103,7 +103,7 @@ public class ServerConnection implements Server, IRCPrefs
 				getPreferences().set(PREF_SECUREMODE, PREF_SECUREMODE_NONE);
 			}
 		}
-		String secureString = getPreferences().get(PREF_SECUREMODE);
+		String secureString = getPreferences().get(PREF_SECUREMODE, PREF_SECUREMODE_OPTIONAL);
 		if(secureString.equals(PREF_SECUREMODE_NONE))
 		{
 			secureMode = Network.SECURE_NONE;
