@@ -680,7 +680,7 @@ public abstract class ServerChatWindow extends ChatWindow
 					out.append("<server>" + esc(server) + "</server>");
 					if(info.length() > 0)
 					{
-						out.append(" " + info);
+						out.append(" " + esc(info));
 					}
 					out.append("</line>");
 					return out.toString();
