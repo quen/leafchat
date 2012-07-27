@@ -23,7 +23,7 @@ import org.w3c.dom.Element;
 import com.leafdigital.idle.api.Idle;
 import com.leafdigital.irc.api.*;
 import com.leafdigital.ircui.api.GeneralChatWindow;
-import com.leafdigital.ui.api.UIHandler;
+import com.leafdigital.ui.api.*;
 
 import leafchat.core.api.*;
 
@@ -138,6 +138,7 @@ public class PluginChatWindow extends ChatWindow implements GeneralChatWindow
 	}
 
 	@Override
+	@UIAction
 	public void windowClosed() throws GeneralException
 	{
 		super.windowClosed();
