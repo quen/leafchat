@@ -14,7 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with leafChat. If not, see <http://www.gnu.org/licenses/>.
 
-Copyright 2011 Samuel Marshall.
+Copyright 2012 Samuel Marshall.
 */
 package com.leafdigital.audio.api;
 
@@ -32,23 +32,26 @@ public interface Audio extends Singleton
 	 * be in .ogg format.
 	 * @param oggName File to play (name only, e.g. "frogs" if you want to play
 	 *   "frogs.ogg" in one of those folders)
+	 * @throws AudioSetupException Current system doesn't support audio playback
 	 * @throws GeneralException Any error
 	 */
-	public void play(String oggName) throws GeneralException;
+	public void play(String oggName) throws AudioSetupException, GeneralException;
 
 	/**
 	 * Plays the given audio file, which must be in .ogg format.
 	 * @param ogg File to play
+	 * @throws AudioSetupException Current system doesn't support audio playback
 	 * @throws GeneralException Any error
 	 */
-	public void play(File ogg) throws GeneralException;
+	public void play(File ogg) throws AudioSetupException, GeneralException;
 
 	/**
 	 * Plays audio from the given InputStream, which must be in .ogg format.
 	 * @param oggStream Stream to play
+	 * @throws AudioSetupException Current system doesn't support audio playback
 	 * @throws GeneralException Any error
 	 */
-	public void play(InputStream oggStream) throws GeneralException;
+	public void play(InputStream oggStream) throws AudioSetupException, GeneralException;
 
 	/**
 	 * Obtains a list of all available sounds in system/user folders.

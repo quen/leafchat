@@ -1,49 +1,61 @@
 <Page Title="Sounds" OnSet="onSet">
-	<BorderPanel Spacing="8">
-		<north>
-			<VerticalPanel>
-	  	  <Label Text="Configure available audio files."/>
-		    <Label Small="y" Text="Sounds in .ogg format can be used with the highlighter and the /sound command."/>
-		  </VerticalPanel>
-		</north>
-		<central>
-		  <BorderPanel Spacing="12">
-		  	<west>
-		  		<BorderPanel Spacing="4">
-		  			<north>
-			  			<Label Text="Built-in sounds"/>
-		  			</north>
-		  			<central>
-				  		<ListBox id="system" OnChange="selectLists" OnAction="actionSystemPlay" Sort="y" Width="150"/> 
-		  			</central>
-		  			<southwest>
-							<Button id="systemPlay" Label="Play" OnAction="actionSystemPlay"/>
-		  			</southwest>
-		  		</BorderPanel>
-		  	</west>
-		  	<central>
-		  		<BorderPanel Spacing="4">
-		  			<north>
-			  			<Label Text="Your sounds"/>
-		  			</north>
-		  			<central>
-				  		<ListBox id="user" OnChange="selectLists" OnAction="actionUserPlay" Sort="y"/> 
-		  			</central>
-		  			<south>
-		  				<VerticalPanel Spacing="4">
-			  				<HorizontalPanel Spacing="4">
-									<Button id="userPlay" Label="Play" OnAction="actionUserPlay"/>
-			  				</HorizontalPanel>
-				  			<Label MacIndent="button" id="folder" Small="y" Text="These sounds are stored in the folder %%FOLDER%%. To add sounds, drag .ogg files into that folder then click Refresh."/>
-			  				<HorizontalPanel Spacing="4">
-									<Button id="open" Label="Open folder" OnAction="actionOpen"/>
-									<Button Label="Refresh" OnAction="actionRefresh"/>
-			  				</HorizontalPanel>
-				  		</VerticalPanel>
-		  			</south>
-		  		</BorderPanel>
-		  	</central>
-		 	</BorderPanel>
-		</central>
-	</BorderPanel>
+	<ChoicePanel id="choice">
+		<Page id="working">
+			<BorderPanel Spacing="8">
+				<north>
+					<VerticalPanel>
+						<Label Text="Configure available audio files."/>
+						<Label Small="y" Text="Sounds in .ogg format can be used with the highlighter and the /sound command."/>
+					</VerticalPanel>
+				</north>
+				<central>
+					<BorderPanel Spacing="12">
+						<west>
+							<BorderPanel Spacing="4">
+								<north>
+									<Label Text="Built-in sounds"/>
+								</north>
+								<central>
+									<ListBox id="system" OnChange="selectLists" OnAction="actionSystemPlay" Sort="y" Width="150"/> 
+								</central>
+								<southwest>
+									<Button id="systemPlay" Label="Play" OnAction="actionSystemPlay"/>
+								</southwest>
+							</BorderPanel>
+						</west>
+						<central>
+							<BorderPanel Spacing="4">
+								<north>
+									<Label Text="Your sounds"/>
+								</north>
+								<central>
+									<ListBox id="user" OnChange="selectLists" OnAction="actionUserPlay" Sort="y"/> 
+								</central>
+								<south>
+									<VerticalPanel Spacing="4">
+										<HorizontalPanel Spacing="4">
+											<Button id="userPlay" Label="Play" OnAction="actionUserPlay"/>
+										</HorizontalPanel>
+										<Label MacIndent="button" id="folder" Small="y" Text="These sounds are stored in the folder %%FOLDER%%. To add sounds, drag .ogg files into that folder then click Refresh."/>
+										<HorizontalPanel Spacing="4">
+											<Button id="open" Label="Open folder" OnAction="actionOpen"/>
+											<Button Label="Refresh" OnAction="actionRefresh"/>
+										</HorizontalPanel>
+									</VerticalPanel>
+								</south>
+							</BorderPanel>
+						</central>
+				 	</BorderPanel>
+				</central>
+			</BorderPanel>
+		</Page>
+		<Page id="borked">
+			<VerticalPanel Spacing="8">
+				<Label MacIndent="y" Text="leafChat &lt;irc-b&gt;cannot currently play sounds&lt;/irc-b&gt; on this system. Check your sound is working (for example, if you use USB speakers, make sure they're connected)."/>
+				<HorizontalPanel>
+					<Button Label="Try again" OnAction="actionTryPlayback"/>"
+				</HorizontalPanel>
+			</VerticalPanel>
+		</Page>
+	</ChoicePanel>
 </Page>

@@ -29,7 +29,7 @@ import org.tritonus.sampled.file.jorbis.JorbisAudioFileReader;
 import util.*;
 import util.xml.XML;
 
-import com.leafdigital.audio.api.Audio;
+import com.leafdigital.audio.api.*;
 import com.leafdigital.irc.api.*;
 import com.leafdigital.prefsui.api.PreferencesUI;
 
@@ -66,7 +66,7 @@ public class AudioPlugin implements Plugin, Audio
 	@Override
 	public String toString()
 	{
-	  // Used to display in system log etc.
+		// Used to display in system log etc.
 		return "Audio plugin";
 	}
 
@@ -95,8 +95,8 @@ public class AudioPlugin implements Plugin, Audio
 	 * @param msg Message
 	 * @throws GeneralException Any error
 	 */
-  public void msg(UserCommandMsg msg) throws GeneralException
-  {
+	public void msg(UserCommandMsg msg) throws GeneralException
+	{
 		if(msg.isHandled())
 		{
 			return;
@@ -107,7 +107,7 @@ public class AudioPlugin implements Plugin, Audio
 		{
 			sound(msg);
 		}
-  }
+	}
 
 	/**
 	 * Message: Listing available commands.
@@ -119,11 +119,11 @@ public class AudioPlugin implements Plugin, Audio
 			"/sound <name>", "<key>Scripting:</key> Plays the named system sound (see Options/Sounds for list)");
 	}
 
-  private void sound(UserCommandMsg msg) throws GeneralException
-  {
-  	msg.markHandled();
+	private void sound(UserCommandMsg msg) throws GeneralException
+	{
+		msg.markHandled();
 
-  	// Get sound name
+		// Get sound name
 		String sound = msg.getParams().trim();
 		if(sound.length() == 0)
 		{
@@ -167,16 +167,24 @@ public class AudioPlugin implements Plugin, Audio
 			}
 		}
 
-		play(file);
-  }
+		try
+		{
+			play(file);
+		}
+		catch(AudioSetupException e)
+		{
+			msg.getMessageDisplay().showError(
+				"Sounds cannot be played on this system at the moment (see Options/Sounds).");
+		}
+	}
 
-  /**
-   * Gets file in either system or user folder.
-   * @param name Name of file not including extension
-   * @return File or null if not found
-   */
-  private File findFile(String name)
-  {
+	/**
+	 * Gets file in either system or user folder.
+	 * @param name Name of file not including extension
+	 * @return File or null if not found
+	 */
+	private File findFile(String name)
+	{
 		File possible = new File(getSoundsFolder(false), name + ".ogg");
 		if(possible.exists())
 		{
@@ -188,7 +196,7 @@ public class AudioPlugin implements Plugin, Audio
 			return possible;
 		}
 		return null;
-  }
+	}
 
 	/**
 	 * @param system If true, returns system sounds folder, otherwise user folder
@@ -212,7 +220,7 @@ public class AudioPlugin implements Plugin, Audio
 	}
 
 	@Override
-	public void play(String oggName) throws GeneralException
+	public void play(String oggName) throws AudioSetupException, GeneralException
 	{
 		File file = findFile(oggName);
 		if(file == null)
@@ -223,7 +231,7 @@ public class AudioPlugin implements Plugin, Audio
 	}
 
 	@Override
-	public void play(File ogg) throws GeneralException
+	public void play(File ogg) throws AudioSetupException, GeneralException
 	{
 		try
 		{
@@ -236,7 +244,7 @@ public class AudioPlugin implements Plugin, Audio
 	}
 
 	@Override
-	public void play(InputStream oggStream) throws GeneralException
+	public void play(InputStream oggStream) throws AudioSetupException, GeneralException
 	{
 		try
 		{
@@ -262,8 +270,23 @@ public class AudioPlugin implements Plugin, Audio
 			// Get source data line, open and start it
 			DataLine.Info lineInfo = new DataLine.Info(
 				SourceDataLine.class, targetFormat, 8192);
-			SourceDataLine line = (SourceDataLine)AudioSystem.getLine(lineInfo);
-			line.open(targetFormat, 8192);
+			SourceDataLine line;
+
+			// The following two exceptions occur if the user's system doesn't have
+			// sound playback capability for some reason
+			try
+			{
+				line = (SourceDataLine)AudioSystem.getLine(lineInfo);
+				line.open(targetFormat, 8192);
+			}
+			catch(IllegalArgumentException e)
+			{
+				throw new AudioSetupException(e);
+			}
+			catch(LineUnavailableException e)
+			{
+				throw new AudioSetupException(e);
+			}
 			line.start();
 
 			// Now start a thread for playback
@@ -280,10 +303,6 @@ public class AudioPlugin implements Plugin, Audio
 		catch(UnsupportedAudioFileException e)
 		{
 			throw new GeneralException("Audio format not supported", e);
-		}
-		catch(LineUnavailableException e)
-		{
-			throw new GeneralException("Audio playback line not available", e);
 		}
 	}
 

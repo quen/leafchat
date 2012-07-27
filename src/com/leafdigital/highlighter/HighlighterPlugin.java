@@ -14,7 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with leafChat. If not, see <http://www.gnu.org/licenses/>.
 
-Copyright 2011 Samuel Marshall.
+Copyright 2012 Samuel Marshall.
 */
 package com.leafdigital.highlighter;
 
@@ -25,7 +25,7 @@ import org.w3c.dom.*;
 
 import util.xml.*;
 
-import com.leafdigital.audio.api.Audio;
+import com.leafdigital.audio.api.*;
 import com.leafdigital.highlighter.api.Highlighter;
 import com.leafdigital.prefs.api.*;
 import com.leafdigital.prefsui.api.PreferencesUI;
@@ -159,6 +159,10 @@ public class HighlighterPlugin implements Plugin, Highlighter
 					try
 					{
 						audio.play(sound);
+					}
+					catch(AudioSetupException e)
+					{
+						// Ignore errors if the user's computer can't play sounds
 					}
 					catch(GeneralException e)
 					{

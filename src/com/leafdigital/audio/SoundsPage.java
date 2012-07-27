@@ -14,7 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with leafChat. If not, see <http://www.gnu.org/licenses/>.
 
-Copyright 2011 Samuel Marshall.
+Copyright 2012 Samuel Marshall.
 */
 package com.leafdigital.audio;
 
@@ -23,6 +23,7 @@ import java.io.*;
 import util.*;
 import util.xml.*;
 
+import com.leafdigital.audio.api.AudioSetupException;
 import com.leafdigital.ui.api.*;
 
 import leafchat.core.api.*;
@@ -62,6 +63,10 @@ public class SoundsPage
 	 * UI: folder open button.
 	 */
 	public Button openUI;
+	/**
+	 * UI: choice panel to switch between working/borked display pages.
+	 */
+	public ChoicePanel choiceUI;
 
 	SoundsPage(PluginContext context)
 	{
@@ -97,8 +102,29 @@ public class SoundsPage
 			openUI.setVisible(false);
 		}
 
+		actionTryPlayback();
 		fillLists();
 		selectLists();
+	}
+
+	/**
+	 * Action: Test playback.
+	 * @throws GeneralException
+	 */
+	@UIAction
+	public void actionTryPlayback() throws GeneralException
+	{
+		// Find out if we can play sounds
+		AudioPlugin plugin = (AudioPlugin)context.getPlugin();
+		try
+		{
+			plugin.play(getClass().getResourceAsStream("silence.ogg"));
+			choiceUI.display("working");
+		}
+		catch(AudioSetupException e)
+		{
+			choiceUI.display("borked");
+		}
 	}
 
 	private void fillLists()

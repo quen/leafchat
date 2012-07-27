@@ -128,6 +128,10 @@
     <package>com.leafdigital.prefsui.api</package>
     <version>1</version>
   </api>
+  <api>
+    <package>com.leafdigital.audio.api</package>
+    <version>2</version>
+  </api>
  <!-- You could include additional <api> sections here -->
 </dependencies>
 
