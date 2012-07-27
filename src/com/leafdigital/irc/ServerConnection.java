@@ -835,21 +835,30 @@ public class ServerConnection implements Server, IRCPrefs
 							switch(check)
 							{
 							case ServerRearrangeMsg.CONFIRM:
+								// Make new server to remember other one
+								PreferencesGroup newOther = other.addAnon();
+								try
+								{
+									newOther.set(PREF_HOST, other.get(PREF_HOST));
+									if(other.exists(PREF_REPORTED))
+									{
+										newOther.set(PREF_REPORTED, other.get(PREF_REPORTED));
+									}
+									if(other.exists(PREF_REDIRECTOR))
+									{
+										newOther.set(PREF_REDIRECTOR, other.get(PREF_REDIRECTOR));
+									}
+								}
+								catch(BugException e)
+								{
+									// If any of this fails, remove the newly added entry
+									newOther.remove();
+									throw e;
+								}
+
 								// Turn other server into network
 								other.set(PREF_NETWORK, network);
 								other.set(PREF_NETWORKSUFFIX, suffix);
-
-								// Make new server to remember other one
-								PreferencesGroup newOther = other.addAnon();
-								newOther.set(PREF_HOST, other.get(PREF_HOST));
-								if(other.exists(PREF_REPORTED))
-								{
-									newOther.set(PREF_REPORTED, other.get(PREF_REPORTED));
-								}
-								if(other.exists(PREF_REDIRECTOR))
-								{
-									newOther.set(PREF_REDIRECTOR, other.get(PREF_REDIRECTOR));
-								}
 								other.unset(PREF_HOST);
 								other.unset(PREF_REPORTED);
 								other.unset(PREF_REDIRECTOR);
