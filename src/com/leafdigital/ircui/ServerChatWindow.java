@@ -631,7 +631,7 @@ public abstract class ServerChatWindow extends ChatWindow
 				if(param!=startParam) params.append(' ');
 				params.append(nim.getParamISO(param));
 			}
-			return "<line>"+esc(params.toString()).replaceAll("([0-9]+)","<key>$1</key>")+"</line>";
+			return "<line>"+esc(params.toString()).replaceAll("(\\b[0-9]+\\b)","<key>$1</key>")+"</line>";
 		}
 	}
 
