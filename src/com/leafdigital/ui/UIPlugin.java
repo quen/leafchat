@@ -217,42 +217,52 @@ public class UIPlugin implements Plugin
 			String
 				currentException = sw.toString(),
 				currentMessage = msg.getMessage();
-		  Matcher m = Pattern.compile(
-		  	"^.*?UserScript(.*?)[$.(].*",Pattern.DOTALL).matcher(currentException);
-		  boolean special = false;
-		  if(m.matches())
-		  {
-		  	reportInfoUI.setText("<para>The error was caused by a user script, <key>" +
-		  		XML.esc(m.group(1))+"</key>, and will not be reported automatically. If " +
-		  		"you think the error is a system bug and not your script's fault, " +
-		  		"click the checkbox below to send it in.</para>");
-		  	reportUI.setChecked(false);
-		  	special = true;
-		  }
-		  m = Pattern.compile(
-		  	"^.*the theme (.*?)\\.leafChatTheme.*$",Pattern.DOTALL).matcher(currentMessage);
-		  if(!special && m.matches())
-		  {
-		  	reportInfoUI.setText("<para>The error was caused by a user theme, <key>"+
-		  		XML.esc(m.group(1))+"</key>.leafChatTheme, and will not be reported " +
-		  		"automatically. If you think the error is a system bug and not your theme's fault, " +
-		  		"click the checkbox below to send it in.</para>");
-		  	reportUI.setChecked(false);
-		  	special = true;
-		  }
-		  long freeSpace = IOUtils.getFreeSpace(PlatformUtils.getUserFolder());
-		  if(!special && (currentException.indexOf("not enough space on the disk")!=-1
-		  	|| currentException.indexOf("No space left on device")!=-1)
-		  	|| (freeSpace != IOUtils.UNKNOWN && freeSpace < 65536L)	)
-		  {
-		  	reportInfoUI.setText("<para><strong>You have no remaining disk " +
-	  			"space</strong>. To recover, free up space first, then quit " +
-	  			"leafChat and restart it.</para>");
-		  	reportUI.setChecked(false);
-		  	special = true;
-		  }
+			Matcher m = Pattern.compile(
+				"^.*?UserScript(.*?)[$.(].*",Pattern.DOTALL).matcher(currentException);
+			boolean special = false;
+			if(m.matches())
+			{
+				reportInfoUI.setText("<para>The error was caused by a user script, <key>" +
+					XML.esc(m.group(1))+"</key>, and will not be reported automatically. If " +
+					"you think the error is a system bug and not your script's fault, " +
+					"click the checkbox below to send it in.</para>");
+				reportUI.setChecked(false);
+				currentException = "SPECIAL_USER_SCRIPT_ERROR\n" + currentException;
+				special = true;
+			}
+			m = Pattern.compile(
+				"^.*the theme (.*?)\\.leafChatTheme.*$",Pattern.DOTALL).matcher(currentMessage);
+			if(!special && m.matches())
+			{
+				reportInfoUI.setText("<para>The error was caused by a user theme, <key>"+
+					XML.esc(m.group(1))+"</key>.leafChatTheme, and will not be reported " +
+					"automatically. If you think the error is a system bug and not your theme's fault, " +
+					"click the checkbox below to send it in.</para>");
+				reportUI.setChecked(false);
+				currentException = "SPECIAL_USER_THEME_ERROR\n" + currentException;
+				special = true;
+			}
+			if(!special && currentException.contains("java.lang.OutOfMemoryError"))
+			{
+				reportInfoUI.setText("<para>The error was caused because leafChat ran " +
+					"out of memory (Java heap space).</para>");
+				currentException = "SPECIAL_OUT_OF_MEMORY\n" + currentException;
+				special = true;
+			}
+			long freeSpace = IOUtils.getFreeSpace(PlatformUtils.getUserFolder());
+			if(!special && (currentException.indexOf("not enough space on the disk")!=-1
+				|| currentException.indexOf("No space left on device")!=-1)
+				|| (freeSpace != IOUtils.UNKNOWN && freeSpace < 65536L)	)
+			{
+				reportInfoUI.setText("<para><strong>You have no remaining disk " +
+					"space</strong>. To recover, free up space first, then quit " +
+					"leafChat and restart it.</para>");
+				reportUI.setChecked(false);
+				reportUI.setEnabled(false);
+				special = true;
+			}
 
-		  reporter = new ErrorReportThread(currentMessage, currentException);
+			reporter = new ErrorReportThread(currentMessage, currentException);
 			String trace = currentException;
 			StringBuffer out = new StringBuffer("<exception><line>");
 			while(true)
