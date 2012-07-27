@@ -14,7 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with leafChat. If not, see <http://www.gnu.org/licenses/>.
 
-Copyright 2011 Samuel Marshall.
+Copyright 2012 Samuel Marshall.
 */
 package com.leafdigital.irc;
 
@@ -68,7 +68,7 @@ public class ConnectionsSingleton implements Connections,MsgOwner
 	void closeAll()
 	{
 		ServerConnection[] serverArray;
-		synchronized(servers)
+		synchronized(this)
 		{
 			serverArray = servers.toArray(new ServerConnection[servers.size()]);
 		}
@@ -217,7 +217,7 @@ public class ConnectionsSingleton implements Connections,MsgOwner
 	}
 
 	@Override
-	public Server getNumbered(int index) throws ArrayIndexOutOfBoundsException
+	public synchronized Server getNumbered(int index) throws ArrayIndexOutOfBoundsException
 	{
 		if(index-1 < servers.size() && index-1 > 0)
 			return servers.get(index-1);
@@ -226,7 +226,7 @@ public class ConnectionsSingleton implements Connections,MsgOwner
 	}
 
 	@Override
-	public Server[] getConnected()
+	public synchronized Server[] getConnected()
 	{
 		return servers.toArray(new Server[servers.size()]);
 	}
