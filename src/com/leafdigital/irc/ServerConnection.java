@@ -791,35 +791,35 @@ public class ServerConnection implements Server, IRCPrefs
 					// Determine suffix: if last segment of hostname is >2 characters,
 					// use last 2 segments (e.g. .dal.net). If it's 2 characters, use last
 					// 3 (e.g. mynet.co.uk).
-					String[] asSegs=reportedHost.split("\\.");
-					if(asSegs.length>=3)
+					String[] segments = reportedHost.split("\\.");
+					if(segments.length >= 3)
 					{
-						String sSuffix;
-						if(asSegs[asSegs.length-1].length()>=3)
+						String suffix;
+						if(segments[segments.length-1].length() >= 3)
 						{
-							sSuffix="."+asSegs[asSegs.length-2]+"."+asSegs[asSegs.length-1];
+							suffix = "." + segments[segments.length - 2] + "." + segments[segments.length - 1];
 						}
 						else
 						{
-							sSuffix="."+asSegs[asSegs.length-3]+"."+asSegs[asSegs.length-2]+
-								"."+asSegs[asSegs.length-1];
+							suffix = "." + segments[segments.length - 3] + "." + segments[segments.length - 2] +
+								"." + segments[segments.length - 1];
 						}
 
 						// Consider all existing servers to see if there's one with that suffix that
 						// doesn't have refusednetwork=yes. If so, offer add for those servers to
 						// a new network.
-						PreferencesGroup pgOther;
+						PreferencesGroup other;
 						if(fromRedirector != null)
 						{
-							pgOther = fromRedirector;
+							other = fromRedirector;
 						}
 						else
 						{
-							pgOther = findMatchingServer(pg,sSuffix,thisGroup);
+							other = findMatchingServer(pg, suffix, thisGroup);
 						}
-						if(pgOther!=null)
+						if(other != null)
 						{
-							String sNetwork=sSuffix.substring(1);
+							String network = suffix.substring(1);
 							// Offer combine with those servers to make network; or if it came
 							// from a redirector, do that automatically
 							int check;
@@ -830,36 +830,36 @@ public class ServerConnection implements Server, IRCPrefs
 							else
 							{
 								check = connections.informRearrange(new ServerRearrangeMsg(
-									this,reportedHost,sNetwork,pgOther.get("host")));
+									this, reportedHost, network, other.get("host")));
 							}
 							switch(check)
 							{
 							case ServerRearrangeMsg.CONFIRM:
 								// Turn other server into network
-								pgOther.set(PREF_NETWORK,sNetwork);
-								pgOther.set(PREF_NETWORKSUFFIX,sSuffix);
+								other.set(PREF_NETWORK, network);
+								other.set(PREF_NETWORKSUFFIX, suffix);
 
 								// Make new server to remember other one
-								PreferencesGroup pgNewOther=pgOther.addAnon();
-								pgNewOther.set(PREF_HOST,pgOther.get(PREF_HOST));
-								if(pgOther.exists(PREF_REPORTED))
+								PreferencesGroup newOther = other.addAnon();
+								newOther.set(PREF_HOST, other.get(PREF_HOST));
+								if(other.exists(PREF_REPORTED))
 								{
-									pgNewOther.set(PREF_REPORTED, pgOther.get(PREF_REPORTED));
+									newOther.set(PREF_REPORTED, other.get(PREF_REPORTED));
 								}
-								if(pgOther.exists(PREF_REDIRECTOR))
+								if(other.exists(PREF_REDIRECTOR))
 								{
-									pgNewOther.set(PREF_REDIRECTOR, pgOther.get(PREF_REDIRECTOR));
+									newOther.set(PREF_REDIRECTOR, other.get(PREF_REDIRECTOR));
 								}
-								pgOther.unset(PREF_HOST);
-								pgOther.unset(PREF_REPORTED);
-								pgOther.unset(PREF_REDIRECTOR);
+								other.unset(PREF_HOST);
+								other.unset(PREF_REPORTED);
+								other.unset(PREF_REDIRECTOR);
 
 								// Add this one to the new network
-								pgOther.addAnon(thisGroup,PreferencesGroup.ANON_LAST);
+								other.addAnon(thisGroup, PreferencesGroup.ANON_LAST);
 								break;
 
 							case ServerRearrangeMsg.REJECT:
-								thisGroup.set(PREF_REFUSEDNETWORK,"yes");
+								thisGroup.set(PREF_REFUSEDNETWORK, "yes");
 								break;
 
 							default:
@@ -878,30 +878,34 @@ public class ServerConnection implements Server, IRCPrefs
 
 	/**
 	 * Recursively searches for server with the given suffix.
-	 * @param pgParent Parent (start by calling with 'servers' root)
-	 * @param sSuffix Suffix to match (not case-sensitive)
-	 * @param pgExclude Exclude this group from consideration
+	 * @param parent Parent (start by calling with 'servers' root)
+	 * @param suffix Suffix to match (not case-sensitive)
+	 * @param exclude Exclude this group from consideration
 	 * @return Matching server or null if none
 	 */
 	private static PreferencesGroup findMatchingServer(
-		PreferencesGroup pgParent,String sSuffix,PreferencesGroup pgExclude)
+		PreferencesGroup parent,String suffix,PreferencesGroup exclude)
 	{
 		// If it isn't the exclude one, and matches, and isn't in a network, and
 		// hasn't refused the network
-		if(pgParent!=pgExclude
-			&& pgParent.get(PREF_HOST,"").toLowerCase().endsWith(sSuffix.toLowerCase())
-			&& pgParent.getAnonHierarchical(PREF_NETWORK,null)==null
-			&& pgParent.get(PREF_REFUSEDNETWORK,"no").equals("no"))
+		if(parent != exclude &&
+			parent.exists(PREF_HOST) &&
+			parent.get(PREF_HOST).toLowerCase().endsWith(suffix.toLowerCase()) &&
+			parent.getAnonHierarchical(PREF_NETWORK, null) == null &&
+			parent.get(PREF_REFUSEDNETWORK, "no").equals("no"))
 		{
-			return pgParent;
+			return parent;
 		}
 
 		// Try children too
-		PreferencesGroup[] apgChildren=pgParent.getAnon();
-		for(int i=0;i<apgChildren.length;i++)
+		PreferencesGroup[] children = parent.getAnon();
+		for(int i=0; i<children.length; i++)
 		{
-			PreferencesGroup pgFound=findMatchingServer(apgChildren[i],sSuffix,pgExclude);
-			if(pgFound!=null) return pgFound;
+			PreferencesGroup found = findMatchingServer(children[i], suffix, exclude);
+			if(found != null)
+			{
+				return found;
+			}
 		}
 
 		return null;

@@ -973,8 +973,9 @@ public class PrefsServerPage implements TreeBox.DragSingleSelectionHandler,IRCPr
 		if(addTabsUI.getDisplayed().equals("addNetworkPage"))
 		{
 			addAddUI.setEnabled(
-				addNetworkSuffixUI.getFlag()==EditBox.FLAG_NORMAL &&
-				addNetworkNameUI.getValue().length()>0);
+				addNetworkSuffixUI.getFlag() == EditBox.FLAG_NORMAL &&
+				addNetworkSuffixUI.getValue().length() > 0 &&
+				addNetworkNameUI.getValue().length() > 0);
 		}
 		else
 		{
