@@ -14,7 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with leafChat. If not, see <http://www.gnu.org/licenses/>.
 
-Copyright 2011 Samuel Marshall.
+Copyright 2012 Samuel Marshall.
 */
 package com.leafdigital.scripting;
 
@@ -898,9 +898,23 @@ public class Script
 	 */
 	private void deleteJar() throws GeneralException
 	{
-		if(!jar.exists()) return;
-		if(!jar.delete())
-			throw new GeneralException("Failed to delete script file "+jar);
+		if(!jar.exists())
+		{
+			return;
+		}
+		File oldJar = new File(jar.getPath() + ".old");
+		if(oldJar.exists())
+		{
+			if(!oldJar.delete())
+			{
+				throw new GeneralException("Failed to delete old script file " + oldJar);
+			}
+		}
+		if(!jar.renameTo(oldJar))
+		{
+			throw new GeneralException("Failed to rename script file to old file " + oldJar);
+		}
+		oldJar.delete(); // Doesn't actually matter if this one fails
 	}
 
 	/**
