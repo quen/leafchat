@@ -773,6 +773,12 @@ public class IRCUIPlugin implements Plugin,IRCUI,DefaultMessageDisplay
 	 */
 	public boolean considerAutoReconnect(ServerDisconnectedMsg msg) throws GeneralException
 	{
+		// Don't auto-reconnect if quit was requested by user!
+		if(msg.getServer().wasQuitRequested())
+		{
+			return false;
+		}
+
 		// Check auto-reconnect is turned on
 		Preferences prefs = context.getSingle(Preferences.class);
 		PreferencesGroup group = prefs.getGroup(prefs.getPluginOwner(
