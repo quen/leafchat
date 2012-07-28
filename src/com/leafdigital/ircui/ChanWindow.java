@@ -722,7 +722,16 @@ public class ChanWindow extends ServerChatWindow
 		((IRCUIPlugin)getPluginContext().getPlugin()).getKnownUsers().chanQuit(getServer(),chan,msg.getSourceUser());
 
 		// Split detect
-		String message=msg.convertEncoding(msg.getMessage());
+		byte[] messageBytes = msg.getMessage();
+		String message;
+		if(messageBytes != null)
+		{
+			message = msg.convertEncoding(messageBytes);
+		}
+		else
+		{
+			message = "";
+		}
 		Matcher m=SPLIT.matcher(message);
 		if(m.matches())
 		{
