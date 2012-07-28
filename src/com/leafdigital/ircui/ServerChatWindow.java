@@ -131,7 +131,7 @@ public abstract class ServerChatWindow extends ChatWindow
 				UI.BUTTON_YES|UI.BUTTON_CANCEL,"Reconnect",null,null,UI.BUTTON_YES)==
 				UI.BUTTON_YES)
 			{
-				((IRCUIPlugin)getPluginContext().getPlugin()).reconnect(
+				((IRCUIPlugin)getPluginContext().getPlugin()).directConnect(
 					s.getReportedOrConnectedHost(),s.getConnectedPort());
 			}
 		}

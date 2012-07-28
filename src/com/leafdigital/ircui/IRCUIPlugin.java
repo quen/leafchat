@@ -148,7 +148,13 @@ public class IRCUIPlugin implements Plugin,IRCUI,DefaultMessageDisplay
 				NOTIFICATION_DISCONNECTED,"Disconnected: "+msg.getServer().getReportedOrConnectedHost(),"");
 	}
 
-	void reconnect(String host,int port) throws GeneralException
+	/**
+	 * Trigger direct connection to named server. Used for reconnects and /server.
+	 * @param host Hostname
+	 * @param port Port
+	 * @throws GeneralException Any error
+	 */
+	void directConnect(String host, int port) throws GeneralException
 	{
 		ct.directConnect(host,port);
 	}
@@ -831,7 +837,7 @@ public class IRCUIPlugin implements Plugin,IRCUI,DefaultMessageDisplay
 
 		// Trigger reconnect, mark handled, and add to list
 		autoReconnects.put(msg, new ReconnectInfo(host, port));
-		reconnect(host, port);
+		directConnect(host, port);
 		msg.markHandled();
 		return true;
 	}

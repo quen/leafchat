@@ -181,6 +181,6 @@ public class UserCommandListMsg extends Msg
 		out.append("</example><description>");
 		out.append(explanation);
 		out.append("</description></command>");
-		list.add(new CommandDetails(command, freq,out.toString()));
+		list.add(new CommandDetails(command, freq, out.toString()));
 	}
 }
