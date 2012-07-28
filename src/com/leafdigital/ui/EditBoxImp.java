@@ -796,7 +796,13 @@ public class EditBoxImp extends JComponent implements ActionListener,FocusListen
 					{
 						if(widgetOwner.isCreated())
 						{
-							widgetOwner.getCallbackHandler().callHandleErrors(onFocus);
+							// Only send event if component is actually visible now. This
+							// is supposed to account for the situation when the container
+							// is actually closed before this invokeLater happens.
+							if(isShowing())
+							{
+								widgetOwner.getCallbackHandler().callHandleErrors(onFocus);
+							}
 						}
 						else
 						{
