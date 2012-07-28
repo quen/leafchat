@@ -327,11 +327,30 @@ public class Script
 			}
 
 			XML.save(target,d);
+			// If there is an old file, rename it before deleting it in case that
+			// avoids rare problem on Windows where we can't rename to the target
+			// immediately after deleting it. (Speculation based on automatic error
+			// report.)
+			File old = new File(f.getPath() + ".old");
+			if(old.exists())
+			{
+				if(!old.delete())
+				{
+					throw new IOException("Failed to delete old script");
+				}
+			}
 			if(f.exists())
 			{
-				if(!f.delete()) throw new IOException("Failed to delete existing script");
+				if(!f.renameTo(old))
+				{
+					throw new IOException("Failed to rename existing script");
+				}
+				old.delete(); // Not too bothered if this one fails.
 			}
-			if(!target.renameTo(f)) throw new IOException("Couldn't rename to final destination from "+target);
+			if(!target.renameTo(f))
+			{
+				throw new IOException("Couldn't rename to final destination from "+target);
+			}
 			markUnchanged();
 		}
 		catch(IOException e)
