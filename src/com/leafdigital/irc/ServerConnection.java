@@ -283,8 +283,10 @@ public class ServerConnection implements Server, IRCPrefs
 		}
 
 		// Track when quit is requested
-		if(command.equals("QUIT"))
+		if(command.equalsIgnoreCase("QUIT"))
+		{
 			quitRequested=true;
+		}
 
 		// Send
 		buffer.send(line);
