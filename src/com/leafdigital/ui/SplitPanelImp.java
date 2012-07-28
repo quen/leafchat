@@ -14,7 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with leafChat. If not, see <http://www.gnu.org/licenses/>.
 
-Copyright 2011 Samuel Marshall.
+Copyright 2012 Samuel Marshall.
 */
 package com.leafdigital.ui;
 
@@ -283,6 +283,27 @@ public class SplitPanelImp extends JSplitPane
 						BorderFactory.createEmptyBorder(border,border,border,border));
 				}
 			});
+		}
+
+		@Override
+		public Widget[] getWidgets()
+		{
+			if(main == null && split == null)
+			{
+				return new Widget[0];
+			}
+			else if(main == null)
+			{
+				return new Widget[] { split };
+			}
+			else if(split == null)
+			{
+				return new Widget[] { main };
+			}
+			else
+			{
+				return new Widget[] { main, split };
+			}
 		}
 
 		@Override

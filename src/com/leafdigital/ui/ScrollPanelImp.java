@@ -14,7 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with leafChat. If not, see <http://www.gnu.org/licenses/>.
 
-Copyright 2011 Samuel Marshall.
+Copyright 2012 Samuel Marshall.
 */
 package com.leafdigital.ui;
 
@@ -107,6 +107,20 @@ public class ScrollPanelImp extends JScrollPane
 			final InternalWidget iw=(InternalWidget)w;
 			bpi.getInterface().set(BorderPanel.NORTH,iw);
 			if(iw!=null) iw.setParent(this);
+		}
+
+		@Override
+		public Widget[] getWidgets()
+		{
+			Widget child = bpi.getInterface().get(BorderPanel.NORTH);
+			if(child == null)
+			{
+				return new Widget[0];
+			}
+			else
+			{
+				return new Widget[] { child };
+			}
 		}
 
 		@Override

@@ -909,7 +909,7 @@ public class TableImp extends JScrollPane
 			return otm.add();
 		}
 
-		private void stopEditing()
+		void stopEditing()
 		{
 			if(t.isEditing())
 			{

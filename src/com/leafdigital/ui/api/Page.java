@@ -14,7 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with leafChat. If not, see <http://www.gnu.org/licenses/>.
 
-Copyright 2011 Samuel Marshall.
+Copyright 2012 Samuel Marshall.
 */
 package com.leafdigital.ui.api;
 
@@ -26,7 +26,7 @@ import leafchat.core.api.BugException;
  * This interface represents the contents of a single Page within the
  * system.
  */
-public interface Page extends WidgetOwner, Widget
+public interface Page extends WidgetOwner, Widget, WidgetParent
 {
 	/**
 	 * Sets the page's title; may be used in various ways depending on where the

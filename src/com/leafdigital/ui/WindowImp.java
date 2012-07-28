@@ -652,6 +652,11 @@ public class WindowImp
 	 */
 	void informClosed()
 	{
+		// Before actually closing the window, we need to get any tables to stop
+		// editing stuff. Otherwise it gets the 'changed' event after this 'closed'
+		// event, which is silly.
+		recursivelyStopTableEditing(contents.getInterface());
+
 		closed=true;
 		owner.removeWindow(this);
 		if(onClosed!=null)
@@ -659,6 +664,21 @@ public class WindowImp
 			getInterface().getCallbackHandler().callHandleErrors(onClosed);
 		}
 		externalInterface.informClosed();
+	}
+
+	private void recursivelyStopTableEditing(Widget w)
+	{
+		if(w instanceof TableImp.TableInterface)
+		{
+			((TableImp.TableInterface)w).stopEditing();
+		}
+		else if(w instanceof WidgetParent)
+		{
+			for(Widget child : ((WidgetParent)w).getWidgets())
+			{
+				recursivelyStopTableEditing(child);
+			}
+		}
 	}
 
 	/**

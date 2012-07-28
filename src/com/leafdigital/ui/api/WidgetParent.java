@@ -19,26 +19,14 @@ Copyright 2012 Samuel Marshall.
 package com.leafdigital.ui.api;
 
 /**
- * Represents a Panel, a component which can hold other components in various
- * slots. This interface is not available directly; instead, use its subclasses.
+ * Interface for any widget that contains other widgets. Note that this is
+ * the direct parent, unlike WidgetOwner which is more of a top-level owner.
  */
-public abstract interface Panel extends Widget, WidgetParent
+public interface WidgetParent
 {
 	/**
-	 * Sets the outside border around the panel.
-	 * The default is for no border.
-	 * @param border Border in pixels (if in doubt, use 4)
+	 * Gets all widgets contained within this widget.
+	 * @return Array of contained widgets (zero-length if none)
 	 */
-	public void setBorder(int border);
-
-	/**
-	 * Remove a component from the panel.
-	 * @param c Component to remove
-	 */
-	public void remove(Widget c);
-
-	/**
-	 * Remove all components from the panel.
-	 */
-	public void removeAll();
+	public Widget[] getWidgets();
 }

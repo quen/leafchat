@@ -14,7 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with leafChat. If not, see <http://www.gnu.org/licenses/>.
 
-Copyright 2011 Samuel Marshall.
+Copyright 2012 Samuel Marshall.
 */
 package com.leafdigital.ui;
 
@@ -220,6 +220,19 @@ public class GroupPanelImp extends JComponent
 					updateLayout();
 				}
 			});
+		}
+
+		@Override
+		public Widget[] getWidgets()
+		{
+			if(contents == null)
+			{
+				return new Widget[0];
+			}
+			else
+			{
+				return new Widget[] { contents };
+			}
 		}
 
 		@Override

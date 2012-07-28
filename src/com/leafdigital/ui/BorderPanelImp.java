@@ -14,17 +14,20 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with leafChat. If not, see <http://www.gnu.org/licenses/>.
 
-Copyright 2011 Samuel Marshall.
+Copyright 2012 Samuel Marshall.
 */
 package com.leafdigital.ui;
 
 import java.awt.*;
-
+import java.util.*;
+import java.util.List;
 import javax.swing.JComponent;
 
 import com.leafdigital.ui.api.*;
 
 import leafchat.core.api.BugException;
+
+import static com.leafdigital.ui.api.BorderPanel.*;
 
 /**
  * Implements BorderPanel
@@ -49,32 +52,20 @@ public class BorderPanelImp extends JComponent
 	// | |       |       |       |
 	//   +-------+-------+-------+
 
-	/** Local equivalents of grid constants, just to make code shorter */
-	private final static int
-		gN=BorderPanel.NORTH,
-		gNE=BorderPanel.NORTHEAST,
-		gE=BorderPanel.EAST,
-		gSE=BorderPanel.SOUTHEAST,
-		gS=BorderPanel.SOUTH,
-		gSW=BorderPanel.SOUTHWEST,
-		gW=BorderPanel.WEST,
-		gNW=BorderPanel.NORTHWEST,
-		gC=BorderPanel.CENTRAL;
-
 	/** Number of slots in BorderPanel */
-	private final static int SLOTS=9;
+	private final static int SLOTS = 9;
 
 	/** One of the CORNERS_xxx constants */
-	private int iCornerHandling;
+	private int cornerHandling;
 
 	/** Spacing between grid squares */
-	private int iSpacing=0;
+	private int spacing = 0;
 
 	/** Border at edge of grid */
-	private int iBorder=0;
+	private int border = 0;
 
 	/** Keep record of held components */
-	private InternalWidget[] aiw=new InternalWidget[SLOTS];
+	private InternalWidget[] slots = new InternalWidget[SLOTS];
 
 	/** Constructor */
 	BorderPanelImp()
@@ -100,53 +91,62 @@ public class BorderPanelImp extends JComponent
 	@Override
 	public Dimension getPreferredSize()
 	{
-		InternalWidget iw=(InternalWidget)bpInterface;
-	  int width=iw.getPreferredWidth();
-	  return new Dimension(width,iw.getPreferredHeight(width));
+		InternalWidget iw = (InternalWidget)publicInterface;
+		int width = iw.getPreferredWidth();
+		return new Dimension(width, iw.getPreferredHeight(width));
 	}
 
 	/**
-	 * @param iSlot Slot (gN, gNE, etc)
+	 * @param slot Slot (NORTH, NORTHEAST, etc)
 	 * @return Preferred width of component at that slot, or 0 if none
 	 */
-	private int prefW(int iSlot)
+	private int prefW(int slot)
 	{
-		if(aiw[iSlot]==null || !aiw[iSlot].isVisible()) return 0;
-		return aiw[iSlot].getPreferredWidth();
+		if(slots[slot] == null || !slots[slot].isVisible())
+		{
+			return 0;
+		}
+		return slots[slot].getPreferredWidth();
 	}
 
 	/**
-	 * @param iSlot Slot (gN, gNE, etc)
-	 * @param iWidth Available width
+	 * @param slot Slot (NORTH, NORTHEAST, etc)
+	 * @param width Available width
 	 * @return Preferred height of slot's component at that width, or 0
 	 */
-	private int prefH(int iSlot,int iWidth)
+	private int prefH(int slot, int width)
 	{
-		if(aiw[iSlot]==null || !aiw[iSlot].isVisible() || iWidth==0) return 0;
-		return aiw[iSlot].getPreferredHeight(iWidth);
+		if(slots[slot] == null || !slots[slot].isVisible() || width == 0)
+		{
+			return 0;
+		}
+		return slots[slot].getPreferredHeight(width);
 	}
 
 	/**
-	 * @param iSlot Slot (gN, gNE, etc)
+	 * @param slot Slot (NORTH, NORTHEAST, etc)
 	 * @return True if the slot is empty
 	 */
-	private boolean isEmpty(int iSlot)
+	private boolean isEmpty(int slot)
 	{
-		return aiw[iSlot]==null;
+		return slots[slot] == null;
 	}
 
 	/**
-	 * Move a component.
-	 * @param iSlot Slot of component to move
-	 * @param iX X position
-	 * @param iY Y position
-	 * @param iWidth Width
-	 * @param iHeight Height
+	 * Moves a component.
+	 * @param slot Slot of component to move
+	 * @param x X position
+	 * @param y Y position
+	 * @param width Width
+	 * @param height Height
 	 */
-	private void move(int iSlot,int iX,int iY,int iWidth,int iHeight)
+	private void move(int slot, int x, int y, int width, int height)
 	{
-		if(aiw[iSlot]==null) return;
-		aiw[iSlot].getJComponent().setBounds(iX,iY,iWidth,iHeight);
+		if(slots[slot] == null)
+		{
+			return;
+		}
+		slots[slot].getJComponent().setBounds(x, y, width, height);
 	}
 
 	/** Move all components to their correct place in new layout */
@@ -155,124 +155,124 @@ public class BorderPanelImp extends JComponent
 		UISingleton.checkSwing();
 
 		// Get desired width and height, and modify to fit actual space available
-		GridWidths gw=new GridWidths();
-		gw.fitWidth(getWidth()-iBorder*2);
-		GridHeights gh=new GridHeights(gw);
-		gh.fitHeight(getHeight()-iBorder*2);
+		GridWidths gw = new GridWidths();
+		gw.fitWidth(getWidth() - border * 2);
+		GridHeights gh = new GridHeights(gw);
+		gh.fitHeight(getHeight() - border * 2);
 
 		// Calculate positions
 		int
-			iX1=iBorder,
-			iX2=iBorder+gw.iL+gw.iGutterLC,
-			iX3=iBorder+gw.iL+gw.iGutterLC+gw.iC+gw.iGutterCR;
+			x1 = border,
+			x2 = border + gw.l + gw.gutterLC,
+			x3 = border + gw.l + gw.gutterLC + gw.c + gw.gutterCR;
 		int
-		  iY1=iBorder,
-		  iY2=iBorder+gh.iT+gh.iGutterTM,
-		  iY3=iBorder+gh.iT+gh.iGutterTM+gh.iM+gh.iGutterMB;
+			y1 = border,
+			y2 = border + gh.t + gh.gutterTM,
+			y3 = border + gh.t + gh.gutterTM + gh.m + gh.gutterMB;
 
 		// Corner components always go in the same places
-		move(gNW,iX1,iY1,gw.iL,gh.iT);
-		move(gNE,iX3,iY1,gw.iR,gh.iT);
-		move(gSW,iX1,iY3,gw.iL,gh.iB);
-		move(gSE,iX3,iY3,gw.iR,gh.iB);
+		move(NORTHWEST, x1, y1, gw.l, gh.t);
+		move(NORTHEAST, x3, y1, gw.r, gh.t);
+		move(SOUTHWEST, x1, y3, gw.l, gh.b);
+		move(SOUTHEAST, x3, y3, gw.r, gh.b);
 
-		switch(iCornerHandling)
+		switch(cornerHandling)
 		{
 			case BorderPanel.CORNERS_LEAVEBLANK :
 			{
 				// Put all components in their grid squares
-				move(gN,iX2,iY1,gw.iC,gh.iT);
-				move(gE,iX3,iY2,gw.iR,gh.iM);
-				move(gS,iX2,iY3,gw.iC,gh.iB);
-				move(gW,iX1,iY2,gw.iL,gh.iM);
-				move(gC,iX2,iY2,gw.iC,gh.iM);
+				move(NORTH, x2, y1, gw.c, gh.t);
+				move(EAST, x3, y2, gw.r, gh.m);
+				move(SOUTH, x2, y3, gw.c, gh.b);
+				move(WEST, x1, y2, gw.l, gh.m);
+				move(CENTRAL, x2, y2, gw.c, gh.m);
 				break;
 			}
 			case BorderPanel.CORNERS_HORIZONTALFILL:
 			{
 				// E and W don't take up other slots
-				move(gE,iX3,iY2,gw.iR,gh.iM);
-				move(gW,iX1,iY2,gw.iL,gh.iM);
+				move(EAST, x3, y2, gw.r, gh.m);
+				move(WEST, x1, y2, gw.l, gh.m);
 
-				int iNStart=iX2,iNWidth=gw.iC;
-				if(isEmpty(gNW))
+				int nStart = x2, nWidth = gw.c;
+				if(isEmpty(NORTHWEST))
 				{
-					iNStart=iX1;
-					iNWidth+=gw.iL+gw.iGutterLC;
+					nStart = x1;
+					nWidth+= gw.l + gw.gutterLC;
 				}
-				if(isEmpty(gNE))
+				if(isEmpty(NORTHEAST))
 				{
-					iNWidth+=gw.iGutterCR+gw.iR;
+					nWidth += gw.gutterCR + gw.r;
 				}
-				move(gN,iNStart,iY1,iNWidth,gh.iT);
+				move(NORTH, nStart, y1, nWidth, gh.t);
 
-				int iSStart=iX2,iSWidth=gw.iC;
-				if(isEmpty(gSW))
+				int sStart = x2, sWidth = gw.c;
+				if(isEmpty(SOUTHWEST))
 				{
-					iSStart=iX1;
-					iSWidth+=gw.iL+gw.iGutterLC;
+					sStart = x1;
+					sWidth += gw.l + gw.gutterLC;
 				}
-				if(isEmpty(gSE))
+				if(isEmpty(SOUTHEAST))
 				{
-					iSWidth+=gw.iGutterCR+gw.iR;
+					sWidth += gw.gutterCR + gw.r;
 				}
-				move(gS,iSStart,iY3,iSWidth,gh.iB);
+				move(SOUTH, sStart, y3, sWidth, gh.b);
 
-				int iCStart=iX2,iCWidth=gw.iC;
-				if(isEmpty(gW))
+				int cStart = x2, cWidth = gw.c;
+				if(isEmpty(WEST))
 				{
-					iCStart=iX1;
-					iCWidth+=gw.iL+gw.iGutterLC;
+					cStart = x1;
+					cWidth += gw.l + gw.gutterLC;
 				}
-				if(isEmpty(gE))
+				if(isEmpty(EAST))
 				{
-					iCWidth+=gw.iGutterCR+gw.iR;
+					cWidth += gw.gutterCR + gw.r;
 				}
-				move(gC,iCStart,iY2,iCWidth,gh.iM);
+				move(CENTRAL, cStart, y2, cWidth, gh.m);
 
 				break;
 			}
 			case BorderPanel.CORNERS_VERTICALFILL:
 			{
 				// N and S don't take up other slots
-				move(gN,iX2,iY1,gw.iC,gh.iT);
-				move(gS,iX2,iY3,gw.iC,gh.iB);
+				move(NORTH, x2, y1, gw.c, gh.t);
+				move(SOUTH, x2, y3, gw.c, gh.b);
 
-				int iWStart=iY2,iWHeight=gh.iM;
-				if(isEmpty(gNW))
+				int wStart = y2, wHeight = gh.m;
+				if(isEmpty(NORTHWEST))
 				{
-					iWStart=iY1;
-					iWHeight+=gh.iT+gh.iGutterTM;
+					wStart = y1;
+					wHeight += gh.t + gh.gutterTM;
 				}
-				if(isEmpty(gSW))
+				if(isEmpty(SOUTHWEST))
 				{
-					iWHeight+=gh.iGutterMB+gh.iB;
+					wHeight += gh.gutterMB + gh.b;
 				}
-				move(gW,iX1,iWStart,gw.iL,iWHeight);
+				move(WEST, x1, wStart, gw.l, wHeight);
 
-				int iEStart=iY2,iEHeight=gh.iM;
-				if(isEmpty(gNE))
+				int eStart = y2, eHeight = gh.m;
+				if(isEmpty(NORTHEAST))
 				{
-					iEStart=iY1;
-					iEHeight+=gh.iT+gh.iGutterTM;
+					eStart = y1;
+					eHeight += gh.t + gh.gutterTM;
 				}
-				if(isEmpty(gSE))
+				if(isEmpty(SOUTHEAST))
 				{
-					iEHeight+=gh.iGutterMB+gh.iB;
+					eHeight += gh.gutterMB + gh.b;
 				}
-				move(gE,iX3,iEStart,gw.iR,iEHeight);
+				move(EAST, x3, eStart, gw.r, eHeight);
 
-				int iCStart=iY2,iCHeight=gh.iM;
-				if(isEmpty(gN))
+				int cStart = y2, cHeight = gh.m;
+				if(isEmpty(NORTH))
 				{
-					iCStart=iY1;
-					iCHeight+=gh.iT+gh.iGutterTM;
+					cStart = y1;
+					cHeight += gh.t + gh.gutterTM;
 				}
-				if(isEmpty(gS))
+				if(isEmpty(SOUTH))
 				{
-					iCHeight+=gh.iGutterMB+gh.iB;
+					cHeight += gh.gutterMB + gh.b;
 				}
-				move(gC,iX2,iCStart,gw.iC,iCHeight);
+				move(CENTRAL, x2, cStart, gw.c, cHeight);
 
 				break;
 			}
@@ -284,7 +284,7 @@ public class BorderPanelImp extends JComponent
 	/** @return Interface giving limited public access */
 	BorderPanel getInterface()
 	{
-		return bpInterface;
+		return publicInterface;
 	}
 
 	/**
@@ -293,105 +293,125 @@ public class BorderPanelImp extends JComponent
 	 * @param i3 Third number
 	 * @return Maximum of the three parameters
 	 */
-	private static int max(int i1,int i2,int i3)
+	private static int max(int i1, int i2, int i3)
 	{
 		if(i1 > i2)
+		{
 			return (i1 > i3) ? i1 : i3;
+		}
 		else
+		{
 			return (i2 > i3) ? i2 : i3;
+		}
 	}
 
-	/** Class manages the three widths in the grid */
+	/**
+	 * Class manages the three widths in the grid.
+	 */
 	class GridWidths
 	{
-		int iL,iC,iR;
-		int iGutterLC,iGutterCR;
+		int l, c, r;
+		int gutterLC, gutterCR;
 
 		/** @return Total width this represents */
-		int getTotalWidth() { return iL+iGutterLC+iC+iGutterCR+iR; }
+		int getTotalWidth()
+		{
+			return l + gutterLC + c + gutterCR + r;
+		}
 
 		/** Construct with desired widths */
 		GridWidths()
 		{
 			// Calculate L and R; these depend straightforwardly on the things in
 			// those corners
-			iL=max(prefW(gNW),prefW(gW),prefW(gSW));
-			iR=max(prefW(gNE),prefW(gE),prefW(gSE));
+			l = max(prefW(NORTHWEST), prefW(WEST), prefW(SOUTHWEST));
+			r = max(prefW(NORTHEAST), prefW(EAST), prefW(SOUTHEAST));
 
 			// Calculate gutters, depending on whether there's anything in the places
-			iGutterLC=(iL==0) ? 0 : iSpacing;
-			iGutterCR=(iR==0) ? 0 : iSpacing;
+			gutterLC = (l == 0) ? 0 : spacing;
+			gutterCR = (r == 0) ? 0 : spacing;
 
 			// Calculate C, which depends on whether the N component expands or not
-			if(iCornerHandling==BorderPanel.CORNERS_HORIZONTALFILL)
+			if(cornerHandling == BorderPanel.CORNERS_HORIZONTALFILL)
 			{
 				int
-					iTPref=prefW(gN)
-						- (isEmpty(gNW) ? (iL+iGutterLC) : 0)
-						- (isEmpty(gNE) ? (iR+iGutterCR) : 0),
-					iMPref=prefW(gC)
-						- (isEmpty(gW) ? (iL+iGutterLC) : 0)
-						- (isEmpty(gE) ? (iR+iGutterCR) : 0),
-					iBPref=prefW(gS)
-						- (isEmpty(gSW) ? (iL+iGutterLC) : 0)
-						- (isEmpty(gSE) ? (iR+iGutterCR) : 0);
+					iTPref = prefW(NORTH) -
+					(isEmpty(NORTHWEST) ? (l + gutterLC) : 0) -
+						(isEmpty(NORTHEAST) ? (r + gutterCR) : 0),
+					iMPref = prefW(CENTRAL) -
+						(isEmpty(WEST) ? (l + gutterLC) : 0) -
+						(isEmpty(EAST) ? (r + gutterCR) : 0),
+					iBPref = prefW(SOUTH) -
+						(isEmpty(SOUTHWEST) ? (l + gutterLC) : 0) -
+						(isEmpty(SOUTHEAST) ? (r + gutterCR) : 0);
 
-				iC=max(iTPref,iMPref,iBPref);
+				c = max(iTPref, iMPref, iBPref);
 			}
 			else // CORNERS_LEAVEBLANK or .CORNERS_VERTICALFILL
 			{
-				iC=max(prefW(gN),prefW(gC),prefW(gS));
+				c = max(prefW(NORTH), prefW(CENTRAL), prefW(SOUTH));
 			}
 		}
 
 		/**
 		 * Fit to a different available width.
-		 * @param iAvailableWidth Required width
+		 * @param availableWidth Required width
 		 */
-		void fitWidth(int iAvailableWidth)
+		void fitWidth(int availableWidth)
 		{
-			int iExtraSpace=iAvailableWidth - getTotalWidth();
-			if(iExtraSpace>0)
+			int extraSpace = availableWidth - getTotalWidth();
+			if(extraSpace>0)
 			{
-				iC+=iExtraSpace;
+				c += extraSpace;
 			}
-			else if(iExtraSpace<0)
+			else if(extraSpace < 0)
 			{
-				iC+=iExtraSpace;
-				if(iC<0)
+				c += extraSpace;
+				if(c < 0)
 				{
-					int iOverflow=-iC;
-					iC=0;
-					iL-=iOverflow/2;
-					iR-=(iOverflow+1)/2; // The +1 ensures that we use the complete total
-					if(iL<0)
+					int overflow = -c;
+					c = 0;
+					l -= overflow / 2;
+					r -= (overflow + 1) / 2; // The +1 ensures that we use the complete total
+					if(l < 0)
 					{
-						int iOverflowOverflow=-iL;
-						iL=0;
+						int overflowOverflow = -l;
+						l = 0;
 
-						iR-=iOverflowOverflow;
-						if(iR<0) iR=0;
+						r -= overflowOverflow;
+						if(r < 0)
+						{
+							r = 0;
+						}
 					}
-					else if(iR<0)
+					else if(r < 0)
 					{
-						int iOverflowOverflow=-iR;
-						iR=0;
+						int overflowOverflow = -r;
+						r = 0;
 
-						iL-=iOverflowOverflow;
-						if(iL<0) iL=0;
+						l -= overflowOverflow;
+						if(l < 0)
+						{
+							l = 0;
+						}
 					}
 				}
 			}
 		}
 	}
 
-	/** Manages the three heights in the grid */
+	/**
+	 * Manages the three heights in the grid.
+	 */
 	class GridHeights
 	{
-		int iT,iM,iB;
-		int iGutterTM,iGutterMB;
+		int t, m, b;
+		int gutterTM, gutterMB;
 
-		int getTotalHeight() { return iT+iGutterTM+iM+iGutterMB+iB; }
+		int getTotalHeight()
+		{
+			return t + gutterTM + m + gutterMB + b;
+		}
 
 		/**
 		 * Find the desired grid heights for given widths.
@@ -399,91 +419,97 @@ public class BorderPanelImp extends JComponent
 		 */
 		GridHeights(GridWidths gw)
 		{
-			if(iCornerHandling==BorderPanel.CORNERS_HORIZONTALFILL)
+			if(cornerHandling == BorderPanel.CORNERS_HORIZONTALFILL)
 			{
-				iT=max(
-					prefH(gNW,gw.iL),
-					prefH(gNE,gw.iR),
-					prefH(gN,gw.iC
-						+(isEmpty(gNW) ? (gw.iL+gw.iGutterLC) : 0)
-						+(isEmpty(gNE) ? (gw.iR+gw.iGutterCR) : 0)
+				t = max(
+					prefH(NORTHWEST, gw.l),
+					prefH(NORTHEAST, gw.r),
+					prefH(NORTH, gw.c +
+						(isEmpty(NORTHWEST) ? (gw.l + gw.gutterLC) : 0) +
+						(isEmpty(NORTHEAST) ? (gw.r + gw.gutterCR) : 0)
 						)
 					);
-				iB=max(
-					prefH(gSW,gw.iL),
-					prefH(gSE,gw.iR),
-					prefH(gS,gw.iC
-						+(isEmpty(gSW) ? (gw.iL+gw.iGutterLC) : 0)
-						+(isEmpty(gSE) ? (gw.iR+gw.iGutterCR) : 0)
+				b = max(
+					prefH(SOUTHWEST, gw.l),
+					prefH(SOUTHEAST, gw.r),
+					prefH(SOUTH, gw.c +
+						(isEmpty(SOUTHWEST) ? (gw.l + gw.gutterLC) : 0) +
+						(isEmpty(SOUTHEAST) ? (gw.r + gw.gutterCR) : 0)
 						)
 					);
 			}
 			else // CORNERS_LEAVEBLANK or CORNERS_VERTICALFILL
 			{
-				iT=max(prefH(gNW,gw.iL),prefH(gN,gw.iC),prefH(gNE,gw.iR));
-				iB=max(prefH(gSW,gw.iL),prefH(gS,gw.iC),prefH(gSE,gw.iR));
+				t = max(prefH(NORTHWEST, gw.l), prefH(NORTH, gw.c), prefH(NORTHEAST, gw.r));
+				b = max(prefH(SOUTHWEST, gw.l), prefH(SOUTH, gw.c), prefH(SOUTHEAST, gw.r));
 			}
 
 			// Calculate gutters, depending on whether there's anything in the places
-			iGutterTM=(iT>0) ? iSpacing : 0;
-			iGutterMB=(iB>0) ? iSpacing : 0;
+			gutterTM = (t > 0) ? spacing : 0;
+			gutterMB = (b > 0) ? spacing : 0;
 
-			if(iCornerHandling==BorderPanel.CORNERS_VERTICALFILL)
+			if(cornerHandling == BorderPanel.CORNERS_VERTICALFILL)
 			{
 				int
-					iLPref=prefH(gW,gw.iL)
-						- (isEmpty(gNW) ? (iT+iGutterTM) : 0)
-						- (isEmpty(gSW) ? (iB+iGutterMB) : 0),
-					iCPref=prefH(gC,gw.iC)
-						- (isEmpty(gN) ? (iT+iGutterTM) : 0)
-						- (isEmpty(gS) ? (iB+iGutterMB) : 0),
-					iRPref=prefH(gE,gw.iR)
-						- (isEmpty(gNE) ? (iT+iGutterTM) : 0)
-						- (isEmpty(gSE) ? (iB+iGutterMB) : 0);
+					iLPref = prefH(WEST, gw.l) -
+						(isEmpty(NORTHWEST) ? (t + gutterTM) : 0) -
+						(isEmpty(SOUTHWEST) ? (b + gutterMB) : 0),
+					iCPref = prefH(CENTRAL, gw.c) -
+						(isEmpty(NORTH) ? (t + gutterTM) : 0) -
+						(isEmpty(SOUTH) ? (b + gutterMB) : 0),
+					iRPref = prefH(EAST, gw.r) -
+						(isEmpty(NORTHEAST) ? (t + gutterTM) : 0) -
+						(isEmpty(SOUTHEAST) ? (b + gutterMB) : 0);
 
-				iM=max(iLPref,iCPref,iRPref);
+				m = max(iLPref, iCPref, iRPref);
 			}
 			else // CORNERS_LEAVEBLANK or CORNERS_HORIZONTALFILL
 			{
-				iM=max(prefH(gW,gw.iL),prefH(gC,gw.iC),prefH(gE,gw.iR));
+				m = max(prefH(WEST, gw.l), prefH(CENTRAL, gw.c), prefH(EAST, gw.r));
 			}
 		}
 
 		/**
 		 * Fit to specified height.
-		 * @param iAvailableHeight Height to be used
+		 * @param availableHeight Height to be used
 		 */
-		void fitHeight(int iAvailableHeight)
+		void fitHeight(int availableHeight)
 		{
-			int iExtraSpace=iAvailableHeight - getTotalHeight();
-			if(iExtraSpace>0)
+			int extraSpace = availableHeight - getTotalHeight();
+			if(extraSpace>0)
 			{
-				iM+=iExtraSpace;
+				m += extraSpace;
 			}
-			else if(iExtraSpace<0)
+			else if(extraSpace < 0)
 			{
-				iM+=iExtraSpace;
-				if(iM<0)
+				m += extraSpace;
+				if(m < 0)
 				{
-					int iOverflow=-iM;
-					iM=0;
-					iT-=iOverflow/2;
-					iT-=(iOverflow+1)/2; // The +1 ensures that we use the complete total
-					if(iT<0)
+					int overflow = -m;
+					m = 0;
+					t -= overflow/2;
+					t -= (overflow + 1)/2; // The +1 ensures that we use the complete total
+					if(t < 0)
 					{
-						int iOverflowOverflow=-iT;
-						iT=0;
+						int overflowOverflow = -t;
+						t = 0;
 
-						iB-=iOverflowOverflow;
-						if(iB<0) iB=0;
+						b -= overflowOverflow;
+						if(b < 0)
+						{
+							b = 0;
+						}
 					}
-					else if(iB<0)
+					else if(b < 0)
 					{
-						int iOverflowOverflow=-iB;
-						iB=0;
+						int overflowOverflow = -b;
+						b = 0;
 
-						iT-=iOverflowOverflow;
-						if(iT<0) iT=0;
+						t -= overflowOverflow;
+						if(t < 0)
+						{
+							t = 0;
+						}
 					}
 				}
 			}
@@ -491,34 +517,39 @@ public class BorderPanelImp extends JComponent
 	}
 
 	/** Interface available to public */
-	private BorderPanel bpInterface=new BorderPanelInterface();
+	private BorderPanel publicInterface = new BorderPanelInterface();
 
-	/** Interface available to public */
-	class BorderPanelInterface extends BasicWidget implements BorderPanel,InternalWidget
+	/**
+	 * Interface available to public.
+	 */
+	class BorderPanelInterface extends BasicWidget implements BorderPanel, InternalWidget
 	{
 		@Override
-		public int getContentType() { return CONTENT_NAMEDSLOTS; }
+		public int getContentType()
+		{
+			return CONTENT_NAMEDSLOTS;
+		}
 
 		@Override
-		public void set(final int iSlot,Widget w)
+		public void set(final int slot, Widget w)
 		{
-			final InternalWidget iw=(InternalWidget)w;
+			final InternalWidget iw = (InternalWidget)w;
 			iw.setParent(this);
 			UISingleton.runInSwing(new Runnable()
 			{
 				@Override
 				public void run()
 				{
-					if(aiw[iSlot]!=null)
+					if(slots[slot] != null)
 					{
-						BorderPanelImp.this.remove(aiw[iSlot].getJComponent());
-						aiw[iSlot]=null;
+						BorderPanelImp.this.remove(slots[slot].getJComponent());
+						slots[slot] = null;
 					}
-					if(iw!=null)
+					if(iw != null)
 					{
 						add(iw.getJComponent());
 						iw.getJComponent().revalidate();
-						aiw[iSlot]=iw;
+						slots[slot] = iw;
 					}
 					updateLayout();
 				}
@@ -528,7 +559,21 @@ public class BorderPanelImp extends JComponent
 		@Override
 		public Widget get(int slot)
 		{
-			return aiw[slot];
+			return slots[slot];
+		}
+
+		@Override
+		public Widget[] getWidgets()
+		{
+			List<Widget> all = new LinkedList<Widget>();
+			for(InternalWidget w : slots)
+			{
+				if(w != null)
+				{
+					all.add(w);
+				}
+			}
+			return all.toArray(new Widget[all.size()]);
 		}
 
 		@Override
@@ -545,7 +590,7 @@ public class BorderPanelImp extends JComponent
 						case BorderPanel.CORNERS_VERTICALFILL:
 						case BorderPanel.CORNERS_LEAVEBLANK:
 						{
-							iCornerHandling=iCorners;
+							cornerHandling = iCorners;
 							updateLayout();
 							return;
 						}
@@ -560,17 +605,17 @@ public class BorderPanelImp extends JComponent
 		@Override
 		public void remove(Widget w)
 		{
-			final InternalWidget iw=(InternalWidget)w;
+			final InternalWidget iw = (InternalWidget)w;
 			UISingleton.runInSwing(new Runnable()
 			{
 				@Override
 				public void run()
 				{
-					for(int i=0;i<aiw.length;i++)
+					for(int i=0; i<slots.length; i++)
 					{
-						if(aiw[i]==iw)
+						if(slots[i] == iw)
 						{
-							aiw[i]=null;
+							slots[i] = null;
 							BorderPanelImp.this.remove(iw.getJComponent());
 						}
 					}
@@ -587,12 +632,12 @@ public class BorderPanelImp extends JComponent
 				@Override
 				public void run()
 				{
-					for(int i=0;i<aiw.length;i++)
+					for(int i=0; i<slots.length; i++)
 					{
-						if(aiw[i]!=null)
+						if(slots[i] != null)
 						{
-							InternalWidget iw=aiw[i];
-							aiw[i]=null;
+							InternalWidget iw = slots[i];
+							slots[i] = null;
 							BorderPanelImp.this.remove(iw.getJComponent());
 						}
 					}
@@ -610,68 +655,98 @@ public class BorderPanelImp extends JComponent
 		@Override
 		public int getPreferredWidth()
 		{
-			GridWidths gw=new GridWidths();
-			return gw.getTotalWidth()+2*iBorder;
+			GridWidths gw = new GridWidths();
+			return gw.getTotalWidth() + 2 * border;
 		}
 
 		@Override
-		public int getPreferredHeight(int iWidth)
+		public int getPreferredHeight(int width)
 		{
-			if(iWidth==0) return 0;
+			if(width == 0) return 0;
 
-			GridWidths gw=new GridWidths();
-			gw.fitWidth(iWidth-2*iBorder);
+			GridWidths gw = new GridWidths();
+			gw.fitWidth(width - 2 * border);
 
-			GridHeights gh=new GridHeights(gw);
-			int iHeight=gh.getTotalHeight()+2*iBorder;
-			return iHeight;
+			GridHeights gh = new GridHeights(gw);
+			int height = gh.getTotalHeight() + 2 * border;
+			return height;
 		}
 
 		@Override
-		public void setSpacing(final int iSpacing)
-		{
-			UISingleton.runInSwing(new Runnable()
-			{
-				@Override
-				public void run()
-				{
-					BorderPanelImp.this.iSpacing=iSpacing;
-					updateLayout();
-				}
-			});
-		}
-
-		@Override
-		public void setBorder(final int iBorder)
+		public void setSpacing(final int spacing)
 		{
 			UISingleton.runInSwing(new Runnable()
 			{
 				@Override
 				public void run()
 				{
-					BorderPanelImp.this.iBorder=iBorder;
+					BorderPanelImp.this.spacing = spacing;
 					updateLayout();
 				}
 			});
 		}
 
 		@Override
-		public void addXMLChild(String sSlotName, Widget wChild)
+		public void setBorder(final int border)
 		{
-			int iSlot;
-			if(sSlotName.equals("north")) iSlot=NORTH;
-			else if(sSlotName.equals("northeast")) iSlot=NORTHEAST;
-			else if(sSlotName.equals("east")) iSlot=EAST;
-			else if(sSlotName.equals("southeast")) iSlot=SOUTHEAST;
-			else if(sSlotName.equals("south")) iSlot=SOUTH;
-			else if(sSlotName.equals("southwest")) iSlot=SOUTHWEST;
-			else if(sSlotName.equals("west")) iSlot=WEST;
-			else if(sSlotName.equals("northwest")) iSlot=NORTHWEST;
-			else if(sSlotName.equals("central")) iSlot=CENTRAL;
-			else throw new BugException(
-			  "Slot name invalid, expecting 'north', 'northeast', etc.: "+sSlotName);
+			UISingleton.runInSwing(new Runnable()
+			{
+				@Override
+				public void run()
+				{
+					BorderPanelImp.this.border = border;
+					updateLayout();
+				}
+			});
+		}
 
-			set(iSlot,wChild);
+		@Override
+		public void addXMLChild(String slotName, Widget child)
+		{
+			int slot;
+			if(slotName.equals("north"))
+			{
+				slot = NORTH;
+			}
+			else if(slotName.equals("northeast"))
+			{
+				slot = NORTHEAST;
+			}
+			else if(slotName.equals("east"))
+			{
+				slot = EAST;
+			}
+			else if(slotName.equals("southeast"))
+			{
+				slot = SOUTHEAST;
+			}
+			else if(slotName.equals("south"))
+			{
+				slot = SOUTH;
+			}
+			else if(slotName.equals("southwest"))
+			{
+				slot = SOUTHWEST;
+			}
+			else if(slotName.equals("west"))
+			{
+				slot = WEST;
+			}
+			else if(slotName.equals("northwest"))
+			{
+				slot = NORTHWEST;
+			}
+			else if(slotName.equals("central"))
+			{
+				slot = CENTRAL;
+			}
+			else
+			{
+				throw new BugException(
+					"Slot name invalid, expecting 'north', 'northeast', etc.: " + slotName);
+			}
+
+			set(slot, child);
 		}
 
 		@Override

@@ -14,11 +14,13 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with leafChat. If not, see <http://www.gnu.org/licenses/>.
 
-Copyright 2011 Samuel Marshall.
+Copyright 2012 Samuel Marshall.
 */
 package com.leafdigital.ui;
 
 import java.awt.*;
+import java.util.*;
+import java.util.List;
 
 import javax.swing.JComponent;
 
@@ -143,6 +145,20 @@ public class ButtonPanelImp extends JComponent
 					updateLayout();
 				}
 			});
+		}
+
+		@Override
+		public Widget[] getWidgets()
+		{
+			List<Widget> all = new LinkedList<Widget>();
+			for(InternalWidget w : slots)
+			{
+				if(w != null)
+				{
+					all.add(w);
+				}
+			}
+			return all.toArray(new Widget[all.size()]);
 		}
 
 		@Override
