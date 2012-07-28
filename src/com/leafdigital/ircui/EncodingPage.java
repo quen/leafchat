@@ -26,7 +26,7 @@ import com.leafdigital.prefs.api.*;
 import com.leafdigital.ui.api.*;
 import com.leafdigital.ui.api.TreeBox.Item;
 
-import leafchat.core.api.PluginContext;
+import leafchat.core.api.*;
 
 /**
  * Preferences page containing character encoding options.
@@ -160,6 +160,7 @@ public class EncodingPage implements TreeBox.SingleSelectionHandler
 			String context=overridesUI.getString(index,COL_CONTEXT);
 			addEditName=overridesUI.getString(index,COL_NAME);
 			addEditType=context;
+			addEditGroup = null;
 			if(context.equals(CONTEXT_CHANNEL))
 			{
 				PreferencesGroup[] chans=encoding.getChild(IRCPrefs.PREFGROUP_BYCHAN).getAnon();
@@ -202,6 +203,11 @@ public class EncodingPage implements TreeBox.SingleSelectionHandler
 				initEditFromServerOverride(
 					prefs.getGroup("Plugin_com.leafdigital.irc.IRCPlugin").getChild("servers"),
 					context.equals(CONTEXT_NETWORK),addEditName);
+			}
+			if(addEditGroup == null)
+			{
+				throw new BugException("Failed to identify preferences group for edit (" +
+					addEditType + ":" + addEditName + ")");
 			}
 			addAddUI.setLabel("Save changes");
 		}
