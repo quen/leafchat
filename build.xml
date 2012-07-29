@@ -38,9 +38,9 @@
 		consistent).
 		-->
 	<property name="numericversion" value="2.5"/>
-	<property name="stringversion" value="2.5a"/>
-	<property name="fileversion" value="25a"/>
-	<property name="fullrelease" value="n"/>
+	<property name="stringversion" value="2.5"/>
+	<property name="fileversion" value="25"/>
+	<property name="fullrelease" value="y"/>
 
 	<!--
 		Target locations for final build products.
