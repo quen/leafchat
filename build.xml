@@ -77,6 +77,7 @@
 		Required only for 'makesignatures' target.
 		Set to the main folder of a leafChat installation that you want to make
 		signatures for. The main folder is the one that contains 'leafChat.jar'.
+		To create this, build 'zip' target (or 'all') and expand the zipfile.
 		-->
 	<property name="sigbase" value=""/>
 
@@ -391,6 +392,7 @@
 				<include name="lib/leafdigital/*.jar"/>
 			</fileset>
 
+			<local name="jarfiles"/>
 			<pathconvert property="jarfiles" refid="jar.files"/>
 
 			<java jar="${sigtest}/sigtestdev.jar" fork="true">

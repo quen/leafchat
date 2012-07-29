@@ -1,0 +1,891 @@
+#Signature file v4.1
+#Version 
+
+CLSS public com.leafdigital.irc.api.CTCPCommandFilter
+cons public <init>(java.lang.String)
+fld public static leafchat.core.api.FilterInfo info
+intf leafchat.core.api.MessageFilter
+meth public boolean accept(leafchat.core.api.Msg)
+supr java.lang.Object
+hfds command
+
+CLSS public com.leafdigital.irc.api.ChanActionIRCMsg
+cons public <init>(com.leafdigital.irc.api.IRCUserAddress,java.lang.String,byte[])
+fld public static leafchat.core.api.MessageInfo info
+supr com.leafdigital.irc.api.ChanCTCPRequestIRCMsg
+
+CLSS public com.leafdigital.irc.api.ChanAndServerFilter
+cons public <init>(com.leafdigital.irc.api.Server,java.lang.String)
+meth public boolean accept(leafchat.core.api.Msg)
+supr com.leafdigital.irc.api.ServerFilter
+hfds chan
+
+CLSS public com.leafdigital.irc.api.ChanCTCPRequestIRCMsg
+cons public <init>(com.leafdigital.irc.api.IRCUserAddress,java.lang.String,java.lang.String,byte[])
+fld public static leafchat.core.api.MessageInfo info
+meth public byte[] getText()
+meth public java.lang.String getRequest()
+meth public java.lang.String toString()
+supr com.leafdigital.irc.api.ChanIRCMsg
+hfds request,text
+
+CLSS public com.leafdigital.irc.api.ChanFilter
+cons public <init>(java.lang.String)
+fld public static leafchat.core.api.FilterInfo info
+intf leafchat.core.api.MessageFilter
+meth public boolean accept(leafchat.core.api.Msg)
+supr java.lang.Object
+hfds chan
+
+CLSS public com.leafdigital.irc.api.ChanIRCMsg
+cons public <init>(com.leafdigital.irc.api.IRCUserAddress,java.lang.String)
+fld public static leafchat.core.api.MessageInfo info
+meth public java.lang.String getChannel()
+meth public java.lang.String toString()
+supr com.leafdigital.irc.api.UserSourceIRCMsg
+hfds channel
+
+CLSS public com.leafdigital.irc.api.ChanMessageIRCMsg
+cons public <init>(com.leafdigital.irc.api.IRCUserAddress,java.lang.String,byte[])
+fld public static leafchat.core.api.MessageInfo info
+meth public byte[] getText()
+meth public java.lang.String toString()
+supr com.leafdigital.irc.api.ChanIRCMsg
+hfds text
+
+CLSS public com.leafdigital.irc.api.ChanModeIRCMsg
+cons public <init>(com.leafdigital.irc.api.IRCUserAddress,java.lang.String,java.lang.String,java.lang.String[],com.leafdigital.irc.api.ChanModeIRCMsg$ModeChange[])
+fld public static leafchat.core.api.MessageInfo info
+innr public static ModeChange
+meth public com.leafdigital.irc.api.ChanModeIRCMsg$ModeChange[] getChanges()
+meth public java.lang.String getModes()
+meth public java.lang.String toString()
+meth public java.lang.String[] getModeParams()
+supr com.leafdigital.irc.api.ChanIRCMsg
+hfds changes,modeParams,modes
+
+CLSS public static com.leafdigital.irc.api.ChanModeIRCMsg$ModeChange
+ outer com.leafdigital.irc.api.ChanModeIRCMsg
+cons public <init>(char,boolean,java.lang.String)
+meth public boolean isPositive()
+meth public char getMode()
+meth public java.lang.String getParam()
+meth public java.lang.String toString()
+supr java.lang.Object
+hfds mode,param,positive
+
+CLSS public com.leafdigital.irc.api.ChanNoticeIRCMsg
+cons public <init>(com.leafdigital.irc.api.IRCUserAddress,java.lang.String,char,byte[])
+fld public static leafchat.core.api.MessageInfo info
+meth public byte[] getText()
+meth public char getStatus()
+meth public java.lang.String toString()
+supr com.leafdigital.irc.api.ChanIRCMsg
+hfds status,text
+
+CLSS public com.leafdigital.irc.api.CommandFilter
+cons public <init>(java.lang.String)
+fld public static leafchat.core.api.FilterInfo info
+intf leafchat.core.api.MessageFilter
+meth public boolean accept(leafchat.core.api.Msg)
+supr java.lang.Object
+hfds command
+
+CLSS public abstract interface com.leafdigital.irc.api.Commands
+intf leafchat.core.api.Singleton
+meth public abstract boolean isCommandCharacter(char)
+meth public abstract void doCommand(java.lang.String,com.leafdigital.irc.api.Server,com.leafdigital.irc.api.IRCUserAddress,java.lang.String,com.leafdigital.irc.api.MessageDisplay,boolean)
+
+CLSS public abstract interface com.leafdigital.irc.api.Connections
+intf leafchat.core.api.Singleton
+meth public abstract com.leafdigital.irc.api.Server getNumbered(int)
+meth public abstract com.leafdigital.irc.api.Server newServer()
+meth public abstract com.leafdigital.irc.api.Server[] getConnected()
+meth public abstract void setDefaultMessageDisplay(com.leafdigital.irc.api.DefaultMessageDisplay)
+
+CLSS public abstract interface com.leafdigital.irc.api.DefaultMessageDisplay
+meth public abstract com.leafdigital.irc.api.MessageDisplay getMessageDisplay(com.leafdigital.irc.api.Server)
+
+CLSS public com.leafdigital.irc.api.ErrorIRCMsg
+cons public <init>(java.lang.String)
+fld public static leafchat.core.api.MessageInfo info
+meth public java.lang.String getMessage()
+meth public java.lang.String toString()
+supr com.leafdigital.irc.api.IRCMsg
+hfds message
+
+CLSS public abstract interface com.leafdigital.irc.api.IRCEncoding
+innr public abstract interface static EncodingInfo
+intf leafchat.core.api.Singleton
+meth public abstract com.leafdigital.irc.api.IRCEncoding$EncodingInfo getEncoding(com.leafdigital.irc.api.Server,java.lang.String,com.leafdigital.irc.api.IRCUserAddress)
+meth public abstract java.lang.String processEscapes(java.lang.String,boolean,boolean)
+
+CLSS public abstract interface static com.leafdigital.irc.api.IRCEncoding$EncodingInfo
+ outer com.leafdigital.irc.api.IRCEncoding
+meth public abstract boolean isUTF8()
+meth public abstract byte[] convertOutgoing(java.lang.String)
+meth public abstract java.lang.String convertIncoming(byte[])
+meth public abstract java.lang.String getEncoding()
+meth public abstract java.lang.String getOutgoing()
+
+CLSS public com.leafdigital.irc.api.IRCMsg
+cons public <init>()
+fld public static leafchat.core.api.MessageInfo info
+meth public boolean hasEncoding()
+meth public boolean includesPostfix()
+meth public boolean isParamInteger(int)
+meth public byte[] getCommandBytes()
+meth public byte[] getLine()
+meth public byte[] getPrefixBytes()
+meth public byte[][] getParams()
+meth public com.leafdigital.irc.api.Server getServer()
+meth public java.lang.String convertEncoding(byte[])
+meth public java.lang.String getCommand()
+meth public java.lang.String getLineISO()
+meth public java.lang.String getParamISO(int)
+meth public java.lang.String getPrefix()
+meth public java.lang.String toString()
+meth public static byte[] constructBytes(java.lang.String)
+meth public static byte[] constructBytes(java.lang.String,byte[])
+meth public static byte[][] splitBytes(byte[])
+meth public static java.lang.String convertISO(byte[])
+meth public void init(com.leafdigital.irc.api.IRCMsg)
+meth public void init(com.leafdigital.irc.api.Server,byte[],byte[],byte[],byte[][],boolean)
+meth public void setEncoding(com.leafdigital.irc.api.IRCEncoding$EncodingInfo)
+supr leafchat.core.api.Msg
+hfds command,encoding,includesPostfix,line,params,prefix,s
+
+CLSS public abstract interface com.leafdigital.irc.api.IRCPrefs
+fld public final static java.lang.String IRCPLUGIN_CLASS = "com.leafdigital.irc.IRCPlugin"
+fld public final static java.lang.String PREFDEFAULT_AUTORECONNECT = "t"
+fld public final static java.lang.String PREFDEFAULT_AWAYMULTISERVER = "t"
+fld public final static java.lang.String PREFDEFAULT_ENCODING = "ISO-8859-15"
+fld public final static java.lang.String PREFDEFAULT_EXTRACOMMANDCHAR = ""
+fld public final static java.lang.String PREFDEFAULT_FREQUENTPINGS = "f"
+fld public final static java.lang.String PREFDEFAULT_IDENTIFYCOMMAND = "/identify"
+fld public final static java.lang.String PREFDEFAULT_IDENTIFYPATTERN = "/identify ${password}"
+fld public final static java.lang.String PREFDEFAULT_OUTGOING = "UTF-8"
+fld public final static java.lang.String PREFDEFAULT_PORTRANGE = "6667"
+fld public final static java.lang.String PREFDEFAULT_QUITMESSAGE = "Using leafChat 2"
+fld public final static java.lang.String PREFDEFAULT_REALNAME = "leafChat 2 user"
+fld public final static java.lang.String PREFDEFAULT_SECUREMODE = "optional"
+fld public final static java.lang.String PREFDEFAULT_SERVERPASSWORD = ""
+fld public final static java.lang.String PREFDEFAULT_USER = "lc"
+fld public final static java.lang.String PREFDEFAULT_UTF8 = "t"
+fld public final static java.lang.String PREFGROUP_BYCHAN = "bychan"
+fld public final static java.lang.String PREFGROUP_BYUSER = "byuser"
+fld public final static java.lang.String PREFGROUP_CHANNELS = "channels"
+fld public final static java.lang.String PREFGROUP_ENCODING = "encoding"
+fld public final static java.lang.String PREFGROUP_IGNORE = "ignore"
+fld public final static java.lang.String PREFGROUP_NICKS = "nicks"
+fld public final static java.lang.String PREFGROUP_SERVERS = "servers"
+fld public final static java.lang.String PREFGROUP_WATCH = "watch"
+fld public final static java.lang.String PREF_AUTOIDENTIFY = "autoidentify"
+fld public final static java.lang.String PREF_AUTOJOIN = "autojoin"
+fld public final static java.lang.String PREF_AUTORECONNECT = "auto-reconnect"
+fld public final static java.lang.String PREF_AWAYMULTISERVER = "away-multi-server"
+fld public final static java.lang.String PREF_BYCHAN_ENCODING = "encoding"
+fld public final static java.lang.String PREF_BYCHAN_NAME = "name"
+fld public final static java.lang.String PREF_BYCHAN_OUTGOING = "outgoing"
+fld public final static java.lang.String PREF_BYCHAN_UTF8 = "utf8"
+fld public final static java.lang.String PREF_BYUSER_ENCODING = "encoding"
+fld public final static java.lang.String PREF_BYUSER_MASK = "mask"
+fld public final static java.lang.String PREF_BYUSER_OUTGOING = "outgoing"
+fld public final static java.lang.String PREF_BYUSER_UTF8 = "utf8"
+fld public final static java.lang.String PREF_DEFAULTNICK = "defaultnick"
+fld public final static java.lang.String PREF_ENCODING = "encoding"
+fld public final static java.lang.String PREF_EXTRACOMMANDCHAR = "extra-command-character"
+fld public final static java.lang.String PREF_FAILURES = "failures"
+fld public final static java.lang.String PREF_FREQUENTPINGS = "frequent-pings"
+fld public final static java.lang.String PREF_HANDADDED = "handadded"
+fld public final static java.lang.String PREF_HOST = "host"
+fld public final static java.lang.String PREF_IDENTIFYCOMMAND = "identifycommand"
+fld public final static java.lang.String PREF_IDENTIFYPATTERN = "identifypattern"
+fld public final static java.lang.String PREF_IGNORE_HOST = "host"
+fld public final static java.lang.String PREF_IGNORE_NICK = "nick"
+fld public final static java.lang.String PREF_IGNORE_USER = "user"
+fld public final static java.lang.String PREF_KEY = "key"
+fld public final static java.lang.String PREF_NAME = "name"
+fld public final static java.lang.String PREF_NETWORK = "network"
+fld public final static java.lang.String PREF_NETWORKSUFFIX = "networksuffix"
+fld public final static java.lang.String PREF_NICK = "nick"
+fld public final static java.lang.String PREF_OUTGOING = "outgoing"
+fld public final static java.lang.String PREF_PASSWORD = "password"
+fld public final static java.lang.String PREF_PORTRANGE = "portrange"
+fld public final static java.lang.String PREF_QUITMESSAGE = "quitmessage"
+fld public final static java.lang.String PREF_REALNAME = "realname"
+fld public final static java.lang.String PREF_REDIRECTOR = "redirector"
+fld public final static java.lang.String PREF_REFUSEDNETWORK = "refusednetwork"
+fld public final static java.lang.String PREF_REPORTED = "reported"
+fld public final static java.lang.String PREF_SECUREMODE = "secure-mode"
+fld public final static java.lang.String PREF_SECUREMODE_NONE = "none"
+fld public final static java.lang.String PREF_SECUREMODE_OPTIONAL = "optional"
+fld public final static java.lang.String PREF_SECUREMODE_REQUIRED = "required"
+fld public final static java.lang.String PREF_SERVERPASSWORD = "password"
+fld public final static java.lang.String PREF_USER = "user"
+fld public final static java.lang.String PREF_UTF8 = "utf8"
+fld public final static java.lang.String PREF_WATCH_HOST = "host"
+fld public final static java.lang.String PREF_WATCH_NICK = "nick"
+fld public final static java.lang.String PREF_WATCH_USER = "user"
+
+CLSS public com.leafdigital.irc.api.IRCUserAddress
+cons public <init>(java.lang.String,boolean)
+cons public <init>(java.lang.String,java.lang.String,java.lang.String)
+intf java.lang.Comparable<java.lang.Object>
+meth public boolean equals(java.lang.Object)
+meth public boolean matches(com.leafdigital.irc.api.IRCUserAddress)
+meth public int compareTo(java.lang.Object)
+meth public int hashCode()
+meth public java.lang.String getHost()
+meth public java.lang.String getNick()
+meth public java.lang.String getUser()
+meth public java.lang.String toString()
+supr java.lang.Object
+hfds host,nick,user
+
+CLSS public abstract interface com.leafdigital.irc.api.IgnoreList
+intf leafchat.core.api.Singleton
+meth public abstract boolean addMask(com.leafdigital.irc.api.IRCUserAddress)
+meth public abstract boolean removeMask(com.leafdigital.irc.api.IRCUserAddress)
+meth public abstract com.leafdigital.irc.api.IRCUserAddress[] getMasks()
+
+CLSS public com.leafdigital.irc.api.IgnoreListChangeMsg
+cons public <init>()
+supr leafchat.core.api.Msg
+
+CLSS public com.leafdigital.irc.api.InviteIRCMsg
+cons public <init>(com.leafdigital.irc.api.IRCUserAddress,java.lang.String,java.lang.String)
+fld public static leafchat.core.api.MessageInfo info
+meth public java.lang.String getChannel()
+meth public java.lang.String toString()
+supr com.leafdigital.irc.api.UserIRCMsg
+hfds channel
+
+CLSS public com.leafdigital.irc.api.JoinIRCMsg
+cons public <init>(com.leafdigital.irc.api.IRCUserAddress,java.lang.String)
+fld public static leafchat.core.api.MessageInfo info
+meth public java.lang.String toString()
+supr com.leafdigital.irc.api.ChanIRCMsg
+
+CLSS public com.leafdigital.irc.api.KickIRCMsg
+cons public <init>(com.leafdigital.irc.api.IRCUserAddress,java.lang.String,java.lang.String,byte[])
+fld public static leafchat.core.api.MessageInfo info
+meth public byte[] getText()
+meth public java.lang.String getVictim()
+meth public java.lang.String toString()
+supr com.leafdigital.irc.api.ChanIRCMsg
+hfds text,victim
+
+CLSS public abstract interface com.leafdigital.irc.api.MessageDisplay
+fld public final static int TYPE_ACTION = 3
+fld public final static int TYPE_MSG = 1
+fld public final static int TYPE_NOTICE = 2
+meth public abstract void clear()
+meth public abstract void showError(java.lang.String)
+meth public abstract void showInfo(java.lang.String)
+meth public abstract void showOwnText(int,java.lang.String,java.lang.String)
+
+CLSS public com.leafdigital.irc.api.NetworkException
+cons public <init>(java.lang.String)
+cons public <init>(java.lang.String,java.lang.Throwable)
+cons public <init>(java.lang.Throwable)
+supr leafchat.core.api.GeneralException
+
+CLSS public com.leafdigital.irc.api.NickAndServerFilter
+cons public <init>(com.leafdigital.irc.api.Server,java.lang.String)
+fld public static leafchat.core.api.FilterInfo info
+meth public boolean accept(leafchat.core.api.Msg)
+supr com.leafdigital.irc.api.ServerFilter
+hfds nick
+
+CLSS public com.leafdigital.irc.api.NickFilter
+cons public <init>(java.lang.String)
+fld public static leafchat.core.api.FilterInfo info
+intf leafchat.core.api.MessageFilter
+meth public boolean accept(leafchat.core.api.Msg)
+supr java.lang.Object
+hfds nick
+
+CLSS public com.leafdigital.irc.api.NickIRCMsg
+cons public <init>(com.leafdigital.irc.api.IRCUserAddress,java.lang.String)
+fld public static leafchat.core.api.MessageInfo info
+meth public java.lang.String getNewNick()
+meth public java.lang.String toString()
+supr com.leafdigital.irc.api.UserSourceIRCMsg
+hfds nick
+
+CLSS public com.leafdigital.irc.api.NumericFilter
+cons public <init>(int)
+fld public static leafchat.core.api.FilterInfo info
+intf leafchat.core.api.MessageFilter
+meth public boolean accept(leafchat.core.api.Msg)
+supr java.lang.Object
+hfds numeric
+
+CLSS public com.leafdigital.irc.api.NumericIRCMsg
+cons public <init>(java.lang.String,java.lang.String,int,com.leafdigital.irc.api.IRCMsg)
+fld public final static int ERR_ALREADYREGISTRED = 462
+fld public final static int ERR_BADCHANNELKEY = 475
+fld public final static int ERR_BANNEDFROMCHAN = 474
+fld public final static int ERR_CANNOTSENDTOCHAN = 404
+fld public final static int ERR_CANTKILLSERVER = 483
+fld public final static int ERR_CHANNELISFULL = 471
+fld public final static int ERR_CHANOPRIVSNEEDED = 482
+fld public final static int ERR_ERRONEUSNICKNAME = 432
+fld public final static int ERR_FILEERROR = 424
+fld public final static int ERR_INVITEONLYCHAN = 473
+fld public final static int ERR_KEYSET = 467
+fld public final static int ERR_NEEDMOREPARAMS = 461
+fld public final static int ERR_NICKCOLLISION = 436
+fld public final static int ERR_NICKNAMEINUSE = 433
+fld public final static int ERR_NOADMININFO = 423
+fld public final static int ERR_NOLOGIN = 444
+fld public final static int ERR_NOMOTD = 422
+fld public final static int ERR_NONICKNAMEGIVEN = 431
+fld public final static int ERR_NOOPERHOST = 491
+fld public final static int ERR_NOORIGIN = 409
+fld public final static int ERR_NOPERMFORHOST = 463
+fld public final static int ERR_NOPRIVILEGES = 481
+fld public final static int ERR_NORECIPIENT = 411
+fld public final static int ERR_NOSUCHCHANNEL = 403
+fld public final static int ERR_NOSUCHNICK = 401
+fld public final static int ERR_NOSUCHSERVER = 402
+fld public final static int ERR_NOTEXTTOSEND = 412
+fld public final static int ERR_NOTONCHANNEL = 442
+fld public final static int ERR_NOTOPLEVEL = 413
+fld public final static int ERR_NOTREGISTERED = 451
+fld public final static int ERR_PASSWDMISMATCH = 464
+fld public final static int ERR_SUMMONDISABLED = 445
+fld public final static int ERR_TOOMANYCHANNELS = 405
+fld public final static int ERR_TOOMANYTARGETS = 407
+fld public final static int ERR_UMODEUNKNOWNFLAG = 501
+fld public final static int ERR_UNKNOWNCOMMAND = 421
+fld public final static int ERR_UNKNOWNMODE = 472
+fld public final static int ERR_USERNOTINCHANNEL = 441
+fld public final static int ERR_USERONCHANNEL = 443
+fld public final static int ERR_USERSDISABLED = 446
+fld public final static int ERR_USERSDONTMATCH = 502
+fld public final static int ERR_WASNOSUCHNICK = 406
+fld public final static int ERR_WILDTOPLEVEL = 414
+fld public final static int ERR_YOUREBANNEDCREEP = 465
+fld public final static int RPL_ADMINEMAIL = 259
+fld public final static int RPL_ADMINLOC1 = 2571
+fld public final static int RPL_ADMINLOC2 = 2582
+fld public final static int RPL_ADMINME = 256
+fld public final static int RPL_AWAY = 301
+fld public final static int RPL_BANLIST = 367
+fld public final static int RPL_CHANNELMODEIS = 324
+fld public final static int RPL_CREATED = 3
+fld public final static int RPL_CREATIONTIME = 329
+fld public final static int RPL_ENDOFBANLIST = 368
+fld public final static int RPL_ENDOFINFO = 374
+fld public final static int RPL_ENDOFLINKS = 365
+fld public final static int RPL_ENDOFMOTD = 376
+fld public final static int RPL_ENDOFNAMES = 366
+fld public final static int RPL_ENDOFSTATS = 219
+fld public final static int RPL_ENDOFUSERS = 394
+fld public final static int RPL_ENDOFWHO = 315
+fld public final static int RPL_ENDOFWHOIS = 318
+fld public final static int RPL_ENDOFWHOWAS = 369
+fld public final static int RPL_GLOBALUSERS = 266
+fld public final static int RPL_INFO = 371
+fld public final static int RPL_INVITING = 341
+fld public final static int RPL_ISON = 303
+fld public final static int RPL_ISUPPORT = 5
+fld public final static int RPL_LINKS = 364
+fld public final static int RPL_LIST = 322
+fld public final static int RPL_LISTEND = 323
+fld public final static int RPL_LISTSTART = 321
+fld public final static int RPL_LOCALUSERS = 265
+fld public final static int RPL_LOGOFF = 601
+fld public final static int RPL_LOGON = 600
+fld public final static int RPL_LUSERCHANNELS = 254
+fld public final static int RPL_LUSERCLIENT = 251
+fld public final static int RPL_LUSERME = 255
+fld public final static int RPL_LUSEROP = 252
+fld public final static int RPL_LUSERUNKNOWN = 253
+fld public final static int RPL_MOTD = 372
+fld public final static int RPL_MOTDSTART = 375
+fld public final static int RPL_MYINFO = 4
+fld public final static int RPL_NAMREPLY = 353
+fld public final static int RPL_NONE = 300
+fld public final static int RPL_NOTOPIC = 331
+fld public final static int RPL_NOUSERS = 395
+fld public final static int RPL_NOWAWAY = 306
+fld public final static int RPL_NOWOFF = 605
+fld public final static int RPL_NOWON = 604
+fld public final static int RPL_REHASHING = 382
+fld public final static int RPL_STATSCLINE = 213
+fld public final static int RPL_STATSCOMMANDS = 212
+fld public final static int RPL_STATSCONN = 250
+fld public final static int RPL_STATSHLINE = 244
+fld public final static int RPL_STATSILINE = 215
+fld public final static int RPL_STATSKLINE = 216
+fld public final static int RPL_STATSLINKINFO = 211
+fld public final static int RPL_STATSLLINE = 241
+fld public final static int RPL_STATSNLINE = 214
+fld public final static int RPL_STATSOLINE = 243
+fld public final static int RPL_STATSUPTIME = 242
+fld public final static int RPL_STATSYLINE = 218
+fld public final static int RPL_SUMMONING = 342
+fld public final static int RPL_TIME = 391
+fld public final static int RPL_TOPIC = 332
+fld public final static int RPL_TOPICWHOTIME = 333
+fld public final static int RPL_TRACECONNECTING = 201
+fld public final static int RPL_TRACEHANDSHAKE = 202
+fld public final static int RPL_TRACELINK = 200
+fld public final static int RPL_TRACELOG = 261
+fld public final static int RPL_TRACENEWTYPE = 208
+fld public final static int RPL_TRACEOPERATOR = 204
+fld public final static int RPL_TRACESERVER = 206
+fld public final static int RPL_TRACEUNKNOWN = 203
+fld public final static int RPL_TRACEUSER = 205
+fld public final static int RPL_UMODEIS = 221
+fld public final static int RPL_UNAWAY = 305
+fld public final static int RPL_USERHOST = 302
+fld public final static int RPL_USERS = 393
+fld public final static int RPL_USERSSTART = 392
+fld public final static int RPL_VERSION = 351
+fld public final static int RPL_WATCHOFF = 602
+fld public final static int RPL_WATCHSTAT = 603
+fld public final static int RPL_WELCOME = 1
+fld public final static int RPL_WHOISCHANNELS = 319
+fld public final static int RPL_WHOISHOST = 378
+fld public final static int RPL_WHOISIDLE = 317
+fld public final static int RPL_WHOISMASKED = 550
+fld public final static int RPL_WHOISOPERATOR = 313
+fld public final static int RPL_WHOISREGNICK = 307
+fld public final static int RPL_WHOISSERVER = 312
+fld public final static int RPL_WHOISUSER = 311
+fld public final static int RPL_WHOREPLY = 352
+fld public final static int RPL_WHOWASUSER = 314
+fld public final static int RPL_YOUREOPER = 381
+fld public final static int RPL_YOURHOST = 2
+fld public static leafchat.core.api.MessageInfo info
+meth public com.leafdigital.irc.api.IRCMsg getSimilar()
+meth public int getNumeric()
+meth public java.lang.String toString()
+supr com.leafdigital.irc.api.ServerIRCMsg
+hfds numeric,similar
+
+CLSS public com.leafdigital.irc.api.OffWatchMsg
+cons public <init>(com.leafdigital.irc.api.Server,com.leafdigital.irc.api.IRCUserAddress,boolean)
+fld public static leafchat.core.api.MessageInfo info
+supr com.leafdigital.irc.api.WatchMsg
+
+CLSS public com.leafdigital.irc.api.OnWatchMsg
+cons public <init>(com.leafdigital.irc.api.Server,com.leafdigital.irc.api.IRCUserAddress,boolean)
+fld public static leafchat.core.api.MessageInfo info
+supr com.leafdigital.irc.api.WatchMsg
+
+CLSS public com.leafdigital.irc.api.PartIRCMsg
+cons public <init>(com.leafdigital.irc.api.IRCUserAddress,java.lang.String,byte[])
+fld public static leafchat.core.api.MessageInfo info
+meth public byte[] getText()
+meth public java.lang.String toString()
+supr com.leafdigital.irc.api.ChanIRCMsg
+hfds text
+
+CLSS public com.leafdigital.irc.api.PingIRCMsg
+cons public <init>(java.lang.String)
+fld public static leafchat.core.api.MessageInfo info
+meth public java.lang.String getCode()
+meth public java.lang.String toString()
+supr com.leafdigital.irc.api.IRCMsg
+hfds code
+
+CLSS public com.leafdigital.irc.api.QuitIRCMsg
+cons public <init>(com.leafdigital.irc.api.IRCUserAddress,byte[])
+fld public static leafchat.core.api.MessageInfo info
+meth public byte[] getMessage()
+meth public java.lang.String toString()
+supr com.leafdigital.irc.api.UserSourceIRCMsg
+hfds message
+
+CLSS public abstract interface com.leafdigital.irc.api.Server
+fld public final static int CHANMODE_ADDRESS = 1
+fld public final static int CHANMODE_ALWAYSPARAM = 2
+fld public final static int CHANMODE_NOPARAM = 4
+fld public final static int CHANMODE_SETPARAM = 3
+fld public final static int CHANMODE_UNKNOWN = 0
+fld public final static int CHANMODE_USERSTATUS = 5
+fld public final static int UNTRACKED_REQUEST = 0
+fld public final static java.lang.String IDENTIFYEVENT_CONNECT = "connect"
+fld public final static java.lang.String IDENTIFYEVENT_NICK = "nick"
+fld public final static java.lang.String IDENTIFYEVENT_SERVICES = "services"
+innr public abstract interface static ConnectionProgress
+innr public static StatusPrefix
+meth public abstract boolean isAway()
+meth public abstract boolean isConnected()
+meth public abstract boolean isConnectionFinished()
+meth public abstract boolean isPrefixAtLeast(char,char)
+meth public abstract boolean isSecureConnection()
+meth public abstract boolean shouldIdentify(java.lang.String)
+meth public abstract boolean silence(java.lang.String)
+meth public abstract boolean unsilence(java.lang.String)
+meth public abstract boolean wasQuitRequested()
+meth public abstract com.leafdigital.irc.api.MessageDisplay getDefaultMessageDisplay()
+meth public abstract com.leafdigital.irc.api.NetworkException getError()
+meth public abstract com.leafdigital.irc.api.Server$StatusPrefix[] getPrefix()
+meth public abstract com.leafdigital.prefs.api.PreferencesGroup getPreferences()
+meth public abstract int getApproxPrefixLength()
+meth public abstract int getChanModeParamCount()
+meth public abstract int getChanModeType(char)
+meth public abstract int getConnectedPort()
+meth public abstract int getMaxModeParams()
+meth public abstract int getMaxTopicLength()
+meth public abstract int sendServerRequest(byte[])
+meth public abstract java.lang.Object getProperty(java.lang.Class<?>,java.lang.String)
+meth public abstract java.lang.Object setProperty(java.lang.Class<?>,java.lang.String,java.lang.Object)
+meth public abstract java.lang.String getChanModes()
+meth public abstract java.lang.String getChanTypes()
+meth public abstract java.lang.String getConnectedHost()
+meth public abstract java.lang.String getConnectedIpAddress()
+meth public abstract java.lang.String getCurrentShortName()
+meth public abstract java.lang.String getDefaultNick()
+meth public abstract java.lang.String getISupport(java.lang.String)
+meth public abstract java.lang.String getIdentifyCommand()
+meth public abstract java.lang.String getIdentifyPattern()
+meth public abstract java.lang.String getNickPassword(java.lang.String)
+meth public abstract java.lang.String getOurHost()
+meth public abstract java.lang.String getOurNick()
+meth public abstract java.lang.String getOurUser()
+meth public abstract java.lang.String getQuitMessage()
+meth public abstract java.lang.String getReportedHost()
+meth public abstract java.lang.String getReportedOrConnectedHost()
+meth public abstract java.lang.String getServerPassword()
+meth public abstract java.lang.String getStatusMsg()
+meth public abstract java.lang.String getVersion()
+meth public abstract java.net.InetAddress getLocalAddress()
+meth public abstract void beginConnect(java.lang.String,int,com.leafdigital.irc.api.Server$ConnectionProgress)
+meth public abstract void disconnect()
+meth public abstract void disconnectGracefully()
+meth public abstract void sendLine(byte[])
+meth public abstract void suppressAutoJoin()
+
+CLSS public abstract interface static com.leafdigital.irc.api.Server$ConnectionProgress
+ outer com.leafdigital.irc.api.Server
+meth public abstract void progress(java.lang.String)
+
+CLSS public static com.leafdigital.irc.api.Server$StatusPrefix
+ outer com.leafdigital.irc.api.Server
+cons public <init>(char,char)
+meth public char getMode()
+meth public char getPrefix()
+supr java.lang.Object
+hfds mode,prefix
+
+CLSS public com.leafdigital.irc.api.ServerConnectedMsg
+cons public <init>(com.leafdigital.irc.api.Server,int)
+fld public static leafchat.core.api.MessageInfo info
+supr com.leafdigital.irc.api.ServerMsg
+
+CLSS public com.leafdigital.irc.api.ServerConnectionFinishedMsg
+cons public <init>(com.leafdigital.irc.api.Server,int)
+fld public static leafchat.core.api.MessageInfo info
+supr com.leafdigital.irc.api.ServerMsg
+
+CLSS public com.leafdigital.irc.api.ServerDisconnectedMsg
+cons public <init>(com.leafdigital.irc.api.Server,com.leafdigital.irc.api.NetworkException,int,boolean)
+fld public static leafchat.core.api.MessageInfo info
+meth public boolean isRequested()
+meth public com.leafdigital.irc.api.NetworkException getException()
+supr com.leafdigital.irc.api.ServerMsg
+hfds ne,requested
+
+CLSS public com.leafdigital.irc.api.ServerFilter
+cons public <init>(com.leafdigital.irc.api.Server)
+fld public static leafchat.core.api.FilterInfo info
+intf leafchat.core.api.MessageFilter
+meth public boolean accept(leafchat.core.api.Msg)
+supr java.lang.Object
+hfds s
+
+CLSS public com.leafdigital.irc.api.ServerIRCMsg
+cons public <init>(java.lang.String,java.lang.String)
+fld public static leafchat.core.api.MessageInfo info
+meth public int getResponseID()
+meth public java.lang.String getSourceServer()
+meth public java.lang.String getTarget()
+meth public java.lang.String toString()
+meth public void setResponseID(int)
+supr com.leafdigital.irc.api.IRCMsg
+hfds responseID,sourceServer,target
+
+CLSS public com.leafdigital.irc.api.ServerLineMsg
+cons public <init>(com.leafdigital.irc.api.Server,byte[],int)
+fld public static leafchat.core.api.MessageInfo info
+meth public byte[] getLine()
+supr com.leafdigital.irc.api.ServerMsg
+hfds line
+
+CLSS public abstract com.leafdigital.irc.api.ServerMsg
+cons public <init>(com.leafdigital.irc.api.Server,int)
+fld public static leafchat.core.api.MessageInfo info
+meth public com.leafdigital.irc.api.Server getServer()
+supr leafchat.core.api.Msg
+hfds NOSEQUENCE,SEQUENCE,s
+
+CLSS public com.leafdigital.irc.api.ServerNoticeIRCMsg
+cons public <init>(java.lang.String,java.lang.String,byte[])
+fld public static leafchat.core.api.MessageInfo info
+meth public byte[] getText()
+meth public java.lang.String toString()
+supr com.leafdigital.irc.api.ServerIRCMsg
+hfds text
+
+CLSS public com.leafdigital.irc.api.ServerRearrangeMsg
+cons public <init>(com.leafdigital.irc.api.Server,java.lang.String,java.lang.String)
+cons public <init>(com.leafdigital.irc.api.Server,java.lang.String,java.lang.String,java.lang.String)
+fld public final static int CONFIRM = 1
+fld public final static int NONE = 0
+fld public final static int REJECT = 2
+fld public static leafchat.core.api.MessageInfo info
+meth public int getResult()
+meth public java.lang.String getButtonConfirm()
+meth public java.lang.String getButtonOther()
+meth public java.lang.String getText()
+meth public void confirm()
+meth public void reject()
+meth public void updateSequence(int)
+supr com.leafdigital.irc.api.ServerMsg
+hfds buttonConfirm,buttonOther,result,text
+
+CLSS public com.leafdigital.irc.api.ServerSendMsg
+cons public <init>(com.leafdigital.irc.api.Server,byte[])
+fld public static leafchat.core.api.MessageInfo info
+meth public byte[] getLine()
+meth public void setLine(byte[])
+supr com.leafdigital.irc.api.ServerMsg
+hfds line
+
+CLSS public com.leafdigital.irc.api.SilenceIRCMsg
+cons public <init>(com.leafdigital.irc.api.IRCUserAddress,boolean,java.lang.String)
+fld public static leafchat.core.api.MessageInfo info
+meth public boolean isPositive()
+meth public java.lang.String getMask()
+meth public java.lang.String toString()
+supr com.leafdigital.irc.api.UserSourceIRCMsg
+hfds mask,positive
+
+CLSS public com.leafdigital.irc.api.TopicIRCMsg
+cons public <init>(com.leafdigital.irc.api.IRCUserAddress,java.lang.String,byte[])
+fld public static leafchat.core.api.MessageInfo info
+meth public byte[] getTopic()
+meth public java.lang.String toString()
+supr com.leafdigital.irc.api.ChanIRCMsg
+hfds topic
+
+CLSS public com.leafdigital.irc.api.UnknownIRCMsg
+cons public <init>(java.lang.String)
+fld public static leafchat.core.api.MessageInfo info
+meth public java.lang.String getFailReason()
+meth public java.lang.String getFailedLine()
+meth public java.lang.String toString()
+supr com.leafdigital.irc.api.IRCMsg
+hfds failReason
+
+CLSS public com.leafdigital.irc.api.UserActionIRCMsg
+cons public <init>(com.leafdigital.irc.api.IRCUserAddress,java.lang.String,byte[])
+fld public static leafchat.core.api.MessageInfo info
+supr com.leafdigital.irc.api.UserCTCPRequestIRCMsg
+
+CLSS public com.leafdigital.irc.api.UserCTCPRequestIRCMsg
+cons public <init>(com.leafdigital.irc.api.IRCUserAddress,java.lang.String,java.lang.String,byte[])
+fld public static leafchat.core.api.MessageInfo info
+meth public boolean hasResponded()
+meth public byte[] getText()
+meth public java.lang.String getRequest()
+meth public java.lang.String toString()
+meth public void markResponded()
+supr com.leafdigital.irc.api.UserIRCMsg
+hfds request,responded,text
+
+CLSS public com.leafdigital.irc.api.UserCTCPResponseIRCMsg
+cons public <init>(com.leafdigital.irc.api.IRCUserAddress,java.lang.String,java.lang.String,byte[])
+fld public static leafchat.core.api.MessageInfo info
+meth public byte[] getText()
+meth public java.lang.String getRequest()
+meth public java.lang.String toString()
+supr com.leafdigital.irc.api.UserIRCMsg
+hfds request,text
+
+CLSS public com.leafdigital.irc.api.UserCommandListMsg
+cons public <init>()
+cons public <init>(com.leafdigital.irc.api.Server)
+fld public final static int FREQ_COMMON = 100
+fld public final static int FREQ_OBSCURE = 300
+fld public final static int FREQ_UNCOMMON = 200
+meth public com.leafdigital.irc.api.Server getServer()
+meth public java.lang.String getDescription(java.lang.String)
+meth public java.lang.String[] getCommands()
+meth public void addCommand(boolean,java.lang.String,int,java.lang.String,java.lang.String)
+supr leafchat.core.api.Msg
+hfds all,list,server
+hcls CommandDetails
+
+CLSS public com.leafdigital.irc.api.UserCommandMsg
+cons public <init>(com.leafdigital.irc.api.Server,java.lang.String,java.lang.String,java.lang.String,com.leafdigital.irc.api.IRCUserAddress,com.leafdigital.irc.api.MessageDisplay)
+fld public static leafchat.core.api.MessageInfo info
+meth public com.leafdigital.irc.api.IRCUserAddress getContextUser()
+meth public com.leafdigital.irc.api.MessageDisplay getMessageDisplay()
+meth public com.leafdigital.irc.api.Server getServer()
+meth public java.lang.String getCommand()
+meth public java.lang.String getContextChan()
+meth public java.lang.String getParams()
+meth public void error(java.lang.String)
+supr leafchat.core.api.Msg
+hfds command,contextChan,contextUser,md,params,server
+
+CLSS public com.leafdigital.irc.api.UserFilter
+cons public <init>(java.lang.String,java.lang.String,java.lang.String)
+fld public static leafchat.core.api.FilterInfo info
+intf leafchat.core.api.MessageFilter
+meth public boolean accept(leafchat.core.api.Msg)
+supr java.lang.Object
+hfds host,nick,user
+
+CLSS public com.leafdigital.irc.api.UserIRCMsg
+cons public <init>(com.leafdigital.irc.api.IRCUserAddress,java.lang.String)
+fld public static leafchat.core.api.MessageInfo info
+meth public java.lang.String getTargetNick()
+meth public java.lang.String toString()
+supr com.leafdigital.irc.api.UserSourceIRCMsg
+hfds targetNick
+
+CLSS public com.leafdigital.irc.api.UserMessageIRCMsg
+cons public <init>(com.leafdigital.irc.api.IRCUserAddress,java.lang.String,byte[])
+fld public static leafchat.core.api.MessageInfo info
+meth public byte[] getText()
+meth public java.lang.String toString()
+supr com.leafdigital.irc.api.UserIRCMsg
+hfds text
+
+CLSS public com.leafdigital.irc.api.UserModeIRCMsg
+cons public <init>(com.leafdigital.irc.api.IRCUserAddress,java.lang.String,java.lang.String)
+fld public static leafchat.core.api.MessageInfo info
+meth public java.lang.String getModes()
+meth public java.lang.String getNegativeModes()
+meth public java.lang.String getPositiveModes()
+meth public java.lang.String toString()
+supr com.leafdigital.irc.api.UserIRCMsg
+hfds modes
+
+CLSS public com.leafdigital.irc.api.UserNoticeIRCMsg
+cons public <init>(com.leafdigital.irc.api.IRCUserAddress,java.lang.String,byte[])
+fld public static leafchat.core.api.MessageInfo info
+meth public byte[] getText()
+meth public java.lang.String toString()
+supr com.leafdigital.irc.api.UserIRCMsg
+hfds text
+
+CLSS public com.leafdigital.irc.api.UserSourceIRCMsg
+cons public <init>(com.leafdigital.irc.api.IRCUserAddress)
+fld public static leafchat.core.api.MessageInfo info
+meth public com.leafdigital.irc.api.IRCUserAddress getSourceUser()
+meth public java.lang.String toString()
+supr com.leafdigital.irc.api.IRCMsg
+hfds source
+
+CLSS public abstract interface com.leafdigital.irc.api.WatchList
+intf leafchat.core.api.Singleton
+meth public abstract boolean addMask(com.leafdigital.irc.api.IRCUserAddress)
+meth public abstract boolean isKnown(com.leafdigital.irc.api.Server,java.lang.String)
+meth public abstract boolean isOnline(com.leafdigital.irc.api.Server,java.lang.String)
+meth public abstract boolean removeMask(com.leafdigital.irc.api.IRCUserAddress)
+meth public abstract com.leafdigital.irc.api.IRCUserAddress[] getMasks()
+meth public abstract void addTemporaryMask(com.leafdigital.irc.api.Server,com.leafdigital.irc.api.IRCUserAddress)
+meth public abstract void removeTemporaryMask(com.leafdigital.irc.api.Server,com.leafdigital.irc.api.IRCUserAddress)
+
+CLSS public com.leafdigital.irc.api.WatchListChangeMsg
+cons public <init>()
+supr leafchat.core.api.Msg
+
+CLSS public abstract com.leafdigital.irc.api.WatchMsg
+cons protected <init>(com.leafdigital.irc.api.Server,com.leafdigital.irc.api.IRCUserAddress,boolean)
+fld public static leafchat.core.api.MessageInfo info
+meth public boolean isRealChange()
+meth public com.leafdigital.irc.api.IRCUserAddress getUserAddress()
+meth public com.leafdigital.irc.api.Server getServer()
+meth public java.lang.String getNick()
+supr leafchat.core.api.Msg
+hfds realChange,s,ua
+
+CLSS public abstract interface java.io.Serializable
+
+CLSS public abstract interface java.lang.Comparable<%0 extends java.lang.Object>
+meth public abstract int compareTo({java.lang.Comparable%0})
+
+CLSS public java.lang.Exception
+cons public <init>()
+cons public <init>(java.lang.String)
+cons public <init>(java.lang.String,java.lang.Throwable)
+cons public <init>(java.lang.Throwable)
+supr java.lang.Throwable
+hfds serialVersionUID
+
+CLSS public java.lang.Object
+cons public <init>()
+meth protected java.lang.Object clone() throws java.lang.CloneNotSupportedException
+meth protected void finalize() throws java.lang.Throwable
+meth public boolean equals(java.lang.Object)
+meth public final java.lang.Class<?> getClass()
+meth public final void notify()
+meth public final void notifyAll()
+meth public final void wait() throws java.lang.InterruptedException
+meth public final void wait(long) throws java.lang.InterruptedException
+meth public final void wait(long,int) throws java.lang.InterruptedException
+meth public int hashCode()
+meth public java.lang.String toString()
+
+CLSS public java.lang.Throwable
+cons public <init>()
+cons public <init>(java.lang.String)
+cons public <init>(java.lang.String,java.lang.Throwable)
+cons public <init>(java.lang.Throwable)
+intf java.io.Serializable
+meth public java.lang.StackTraceElement[] getStackTrace()
+meth public java.lang.String getLocalizedMessage()
+meth public java.lang.String getMessage()
+meth public java.lang.String toString()
+meth public java.lang.Throwable fillInStackTrace()
+meth public java.lang.Throwable getCause()
+meth public java.lang.Throwable initCause(java.lang.Throwable)
+meth public void printStackTrace()
+meth public void printStackTrace(java.io.PrintStream)
+meth public void printStackTrace(java.io.PrintWriter)
+meth public void setStackTrace(java.lang.StackTraceElement[])
+supr java.lang.Object
+hfds backtrace,cause,detailMessage,serialVersionUID,stackTrace
+
+CLSS public leafchat.core.api.GeneralException
+cons public <init>()
+cons public <init>(java.lang.String)
+cons public <init>(java.lang.String,java.lang.Throwable)
+cons public <init>(java.lang.Throwable)
+supr java.lang.Exception
+
+CLSS public abstract interface leafchat.core.api.MessageFilter
+meth public abstract boolean accept(leafchat.core.api.Msg)
+
+CLSS public abstract leafchat.core.api.Msg
+cons public <init>()
+fld public final static int PRIORITY_AFTERNORMAL = 9000
+fld public final static int PRIORITY_BEFORENORMAL = 11000
+fld public final static int PRIORITY_EARLY = 12000
+fld public final static int PRIORITY_FIRST = 14000
+fld public final static int PRIORITY_LAST = 6000
+fld public final static int PRIORITY_LATE = 8000
+fld public final static int PRIORITY_NORMAL = 10000
+meth public boolean isHandled()
+meth public boolean isStopped()
+meth public boolean sequenceBefore(leafchat.core.api.Msg)
+meth public void markHandled()
+meth public void markStopped()
+meth public void setSequence(java.lang.String,int)
+meth public void setSequence(leafchat.core.api.Msg)
+supr java.lang.Object
+hfds handled,sequenceName,sequenceNumber,stopped
+
+CLSS public abstract interface leafchat.core.api.Singleton
+

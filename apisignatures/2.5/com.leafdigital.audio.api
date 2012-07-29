@@ -1,0 +1,68 @@
+#Signature file v4.1
+#Version 
+
+CLSS public abstract interface com.leafdigital.audio.api.Audio
+intf leafchat.core.api.Singleton
+meth public abstract boolean soundExists(java.lang.String)
+meth public abstract java.lang.String[] getSounds() throws leafchat.core.api.GeneralException
+meth public abstract void play(java.io.File) throws leafchat.core.api.GeneralException
+meth public abstract void play(java.io.InputStream) throws leafchat.core.api.GeneralException
+meth public abstract void play(java.lang.String) throws leafchat.core.api.GeneralException
+
+CLSS public com.leafdigital.audio.api.AudioSetupException
+cons public <init>(java.lang.Throwable)
+supr leafchat.core.api.GeneralException
+
+CLSS public abstract interface java.io.Serializable
+
+CLSS public java.lang.Exception
+cons public <init>()
+cons public <init>(java.lang.String)
+cons public <init>(java.lang.String,java.lang.Throwable)
+cons public <init>(java.lang.Throwable)
+supr java.lang.Throwable
+hfds serialVersionUID
+
+CLSS public java.lang.Object
+cons public <init>()
+meth protected java.lang.Object clone() throws java.lang.CloneNotSupportedException
+meth protected void finalize() throws java.lang.Throwable
+meth public boolean equals(java.lang.Object)
+meth public final java.lang.Class<?> getClass()
+meth public final void notify()
+meth public final void notifyAll()
+meth public final void wait() throws java.lang.InterruptedException
+meth public final void wait(long) throws java.lang.InterruptedException
+meth public final void wait(long,int) throws java.lang.InterruptedException
+meth public int hashCode()
+meth public java.lang.String toString()
+
+CLSS public java.lang.Throwable
+cons public <init>()
+cons public <init>(java.lang.String)
+cons public <init>(java.lang.String,java.lang.Throwable)
+cons public <init>(java.lang.Throwable)
+intf java.io.Serializable
+meth public java.lang.StackTraceElement[] getStackTrace()
+meth public java.lang.String getLocalizedMessage()
+meth public java.lang.String getMessage()
+meth public java.lang.String toString()
+meth public java.lang.Throwable fillInStackTrace()
+meth public java.lang.Throwable getCause()
+meth public java.lang.Throwable initCause(java.lang.Throwable)
+meth public void printStackTrace()
+meth public void printStackTrace(java.io.PrintStream)
+meth public void printStackTrace(java.io.PrintWriter)
+meth public void setStackTrace(java.lang.StackTraceElement[])
+supr java.lang.Object
+hfds backtrace,cause,detailMessage,serialVersionUID,stackTrace
+
+CLSS public leafchat.core.api.GeneralException
+cons public <init>()
+cons public <init>(java.lang.String)
+cons public <init>(java.lang.String,java.lang.Throwable)
+cons public <init>(java.lang.Throwable)
+supr java.lang.Exception
+
+CLSS public abstract interface leafchat.core.api.Singleton
+
